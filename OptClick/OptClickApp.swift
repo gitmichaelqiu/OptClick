@@ -10,7 +10,7 @@ struct OptClickApp: App {
             SettingsView()
                 .environmentObject(inputManager)
                 .environmentObject(hotkeyManager)
-                .frame(minWidth: 400, minHeight: 250)
+                .frame(minWidth: 300, minHeight: 400)
                 .onAppear {
                     NotificationCenter.default.addObserver(
                         forName: .hotkeyTriggered,
