@@ -15,6 +15,13 @@ class InputManager: ObservableObject {
 
     private var keyDownMonitor: Any?
     private var keyUpMonitor: Any?
+    
+    
+    private func getCGMouseLocation() -> CGPoint {
+        let screenHeight = NSScreen.main?.frame.height ?? 0
+        let loc = NSEvent.mouseLocation
+        return CGPoint(x: loc.x, y: screenHeight - loc.y)
+    }
 
     // MARK: - Monitor Keyboard
     private func startMonitoring() {
@@ -59,7 +66,7 @@ class InputManager: ObservableObject {
 
     // MARK: - Mouse Simulation
     private func simulateRightMouseDown() {
-        let location = NSEvent.mouseLocation
+        let location = getCGMouseLocation()
         let event = CGEvent(mouseEventSource: nil,
                             mouseType: .rightMouseDown,
                             mouseCursorPosition: location,
@@ -68,7 +75,7 @@ class InputManager: ObservableObject {
     }
 
     private func simulateRightMouseUp() {
-        let location = NSEvent.mouseLocation
+        let location = getCGMouseLocation()
         let event = CGEvent(mouseEventSource: nil,
                             mouseType: .rightMouseUp,
                             mouseCursorPosition: location,
