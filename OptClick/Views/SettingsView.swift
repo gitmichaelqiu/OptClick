@@ -1,49 +1,25 @@
 import SwiftUI
 
+enum SettingsTab {
+    case general, shortcuts, about
+}
+
 struct SettingsView: View {
-    @EnvironmentObject var inputManager: InputManager
-    @EnvironmentObject var hotkeyManager: HotkeyManager
+    @State private var selectedTab: SettingsTab = .general
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 20) {
-            Text("OptClick Settings")
-                .font(.largeTitle)
-                .bold()
-
-            Toggle(isOn: $inputManager.isEnabled) {
-                Text("Enable Option → Right Click")
+        TabView {
+            Tab("General", systemImage: "gearshape.fill") {
+                GeneralSettingsView()
             }
-            .toggleStyle(SwitchToggleStyle())
-
-            Divider()
-
-            VStack(alignment: .leading, spacing: 10) {
-                Text("Toggle Hotkey")
-                    .font(.headline)
-
-                HStack {
-                    Text("Current: \(hotkeyManager.shortcutDescription)")
-                        .font(.body)
-
-                    Spacer()
-
-                    Button("Change…") {
-                        hotkeyManager.startListeningForNewShortcut()
-                    }
-
-                    Button("Reset") {
-                        hotkeyManager.resetToDefault()
-                    }
-                }
-
-                Text("Press the hotkey to toggle OptClick on/off")
-                    .font(.caption)
-                    .foregroundColor(.secondary)
+            Tab("Shortcuts", systemImage: "keyboard.fill") {
+                ShortcutsSettingsView()
             }
-
-            Spacer()
+            Tab("About", systemImage: "info.circle.fill") {
+                AboutView()
+            }
         }
-        .frame(width: 420, height: 240)
-        .padding()
+        .scenePadding()
+        .frame(maxWidth: 350, minHeight: 100)
     }
 }
