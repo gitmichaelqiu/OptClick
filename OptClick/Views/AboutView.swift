@@ -20,7 +20,7 @@ struct AboutView: View {
                 Image(nsImage: nsImage)
                     .resizable()
                     .scaledToFit()
-                    .frame(width: 64, height: 64)
+                    .frame(width: 128, height: 128)
                     .padding(.bottom, 8)
             }
 
@@ -35,9 +35,14 @@ struct AboutView: View {
             Divider()
                 .padding(.vertical, 8)
 
-            Text("OptClick lets you simulate right-clicks by pressing the Option (⌥) key or via a customizable hotkey.")
+            Text("OptClick lets you simulate right-clicks by pressing the Option (⌥) key.")
                 .multilineTextAlignment(.center)
-                .frame(maxWidth: 360)
+                 .frame(maxWidth: 360, alignment: .center)
+                 .fixedSize(horizontal: false, vertical: true)
+            
+            Link("GitHub Repo", destination: URL(string: "https://github.com/gitmichaelqiu/OptClick")!)
+                .font(.caption)
+                .foregroundColor(.blue)
 
             Spacer()
 
@@ -49,4 +54,3 @@ struct AboutView: View {
         .padding()
     }
 }
-
