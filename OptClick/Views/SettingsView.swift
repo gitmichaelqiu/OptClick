@@ -20,6 +20,6 @@ struct SettingsView: View {
             }
         }
         .scenePadding()
-        .frame(maxWidth: 350, minHeight: 100)
+//        .frame(maxWidth: 400, minHeight: 250)
     }
 }
