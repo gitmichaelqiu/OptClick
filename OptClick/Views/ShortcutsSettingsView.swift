@@ -9,21 +9,21 @@ struct ShortcutsSettingsView: View {
                 .font(.headline)
 
             HStack {
-                Text("Current: \(hotkeyManager.shortcutDescription)")
+                Text(NSLocalizedString("Settings.Shortcuts.Hotkey.Current", comment: "Current") + hotkeyManager.shortcutDescription)
                     .font(.body)
 
                 Spacer()
 
-                Button("Change…") {
+                Button(NSLocalizedString("Settings.Shortcuts.Hotkey.Change", comment: "Change")) {
                     hotkeyManager.startListeningForNewShortcut()
                 }
 
-                Button("Reset") {
+                Button(NSLocalizedString("Settings.Shortcuts.Hotkey.Reset", comment: "Reset")) {
                     hotkeyManager.resetToDefault()
                 }
             }
 
-            Text("Press this hotkey to enable or disable OptClick.")
+            Text(NSLocalizedString("Settings.Shortcuts.Hotkey.Hint", comment: "Press this hotkey to enable or disable OptClick."))
                 .font(.caption)
                 .foregroundColor(.secondary)
 

@@ -6,14 +6,14 @@ struct GeneralSettingsView: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
-            Toggle("Enable Option → Right Click", isOn: $inputManager.isEnabled)
+            Toggle(NSLocalizedString("Settings.General.Option.Enable", comment: "Enable option to right click"), isOn: $inputManager.isEnabled)
             
-            Toggle("Automatically check for updates", isOn: $autoCheckForUpdates)
+            Toggle(NSLocalizedString("Settings.General.Update.AutoCheck", comment: "Automatically check for updates"), isOn: $autoCheckForUpdates)
                 .onChange(of: autoCheckForUpdates) {
                     UpdateManager.isAutoCheckEnabled = autoCheckForUpdates
                 }
             
-            Button("Check for Updates") {
+            Button(NSLocalizedString("Settings.General.Update.ManualCheck", comment: "Check for Updates")) {
                 UpdateManager.shared.checkForUpdate(from: nil)
             }
             

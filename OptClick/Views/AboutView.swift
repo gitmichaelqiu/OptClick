@@ -35,18 +35,18 @@ struct AboutView: View {
             Divider()
                 .padding(.vertical, 8)
 
-            Text("OptClick lets you simulate right-clicks by pressing the Option (⌥) key.")
+            Text(NSLocalizedString("Settings.About.Description", comment: "Description"))
                 .multilineTextAlignment(.center)
                  .frame(maxWidth: 360, alignment: .center)
                  .fixedSize(horizontal: false, vertical: true)
             
-            Link("GitHub Repo", destination: URL(string: "https://github.com/gitmichaelqiu/OptClick")!)
+            Link(NSLocalizedString("Settings.About.Repo", comment: "GitHub Repo"), destination: URL(string: "https://github.com/gitmichaelqiu/OptClick")!)
                 .font(.caption)
                 .foregroundColor(.blue)
 
             Spacer()
 
-            Text("© \(currentYear) Michael Yicheng Qiu. All rights reserved.")
+            Text("© \(currentYear) Michael Yicheng Qiu.")
                 .font(.caption2)
                 .foregroundColor(.secondary)
         }

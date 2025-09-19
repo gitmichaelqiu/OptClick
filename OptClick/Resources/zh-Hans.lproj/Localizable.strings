@@ -1,1 +1,27 @@
+// Settings - General
 
+"Settings.General" = "通用";
+
+"Settings.General.PressNew" = "按下新快捷键...";
+"Settings.General.Option.Enable" = "启用 Option → 右键";
+"Settings.General.Update.AutoCheck" = "自动检查更新";
+"Settings.General.Update.ManualCheck" = "检查更新";
+
+// Settings - Shortcuts
+
+"Settings.Shortcuts" = "捷径";
+
+"Settings.Shortcuts.Unassigned" = "未分配";
+
+"Settings.Shortcuts.Hotkey.Toggle" = "快捷键";
+"Settings.Shortcuts.Hotkey.Current" = "当前: ";
+"Settings.Shortcuts.Hotkey.Change" = "修改…";
+"Settings.Shortcuts.Hotkey.Reset" = "重置";
+"Settings.Shortcuts.Hotkey.Hint" = "用此快捷键启用/禁用 OptClick.";
+
+// Settigns - About
+
+"Settings.About" = "关于";
+
+"Settings.About.Description" = "OptClick让你可以用Option键模拟鼠标右键。";
+"Settings.About.Repo" = "GitHub Repo";

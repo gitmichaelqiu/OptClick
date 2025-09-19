@@ -25,7 +25,7 @@ class HotkeyManager: ObservableObject {
     }
 
     var shortcutDescription: String {
-        isListeningForShortcut ? "Press new shortcut…" : shortcut.description
+        isListeningForShortcut ? NSLocalizedString("Settings.General.PressNew", comment: "Press new shortcut…") : shortcut.description
     }
 
     // MARK: - Carbon Event Handler Setup
@@ -155,7 +155,7 @@ struct Shortcut: Equatable {
     }
 
     var description: String {
-        if key.isEmpty { return "Unassigned" }
+        if key.isEmpty { return NSLocalizedString("Settings.Shortcuts.Unassgiend", comment: "Unassigned") }
 
         var parts: [String] = []
         if modifiers.contains(.command) { parts.append("⌘") }

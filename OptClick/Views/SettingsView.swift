@@ -9,13 +9,13 @@ struct SettingsView: View {
 
     var body: some View {
         TabView {
-            Tab("General", systemImage: "gearshape.fill") {
+            Tab(NSLocalizedString("Settings.General", comment: "General"), systemImage: "gearshape.fill") {
                 GeneralSettingsView()
             }
-            Tab("Shortcuts", systemImage: "keyboard.fill") {
+            Tab(NSLocalizedString("Settings.Shortcuts", comment: "Shortcuts"), systemImage: "keyboard.fill") {
                 ShortcutsSettingsView()
             }
-            Tab("About", systemImage: "info.circle.fill") {
+            Tab(NSLocalizedString("Settings.About", comment: "About"), systemImage: "info.circle.fill") {
                 AboutView()
             }
         }
