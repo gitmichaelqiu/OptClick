@@ -6,6 +6,7 @@ struct GeneralSettingsView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
             Toggle("Enable Option → Right Click", isOn: $inputManager.isEnabled)
+            
             Spacer()
         }
         .padding()
