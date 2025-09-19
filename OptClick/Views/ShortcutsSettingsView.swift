@@ -9,7 +9,7 @@ struct ShortcutsSettingsView: View {
                 .font(.headline)
 
             HStack {
-                Text(NSLocalizedString("Settings.Shortcuts.Hotkey.Current", comment: "Current") + hotkeyManager.shortcutDescription)
+                Text(String(format: NSLocalizedString("Settings.Shortcuts.Hotkey.Current", comment: "Current"), hotkeyManager.shortcutDescription))
                     .font(.body)
 
                 Spacer()

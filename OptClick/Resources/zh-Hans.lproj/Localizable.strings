@@ -4,8 +4,20 @@
 
 "Settings.General.PressNew" = "按下新快捷键...";
 "Settings.General.Option.Enable" = "启用 Option → 右键";
+
 "Settings.General.Update.AutoCheck" = "自动检查更新";
 "Settings.General.Update.ManualCheck" = "检查更新";
+
+"Settings.General.Update.Failed.Title" = "检查更新失败";
+"Settings.General.Update.Failed.Msg" = "无法检查更新。";
+
+"Settings.General.Update.Available.Title" = "有新版本可用";
+"Settings.General.Update.Available.Msg" = "版本 %@ 已发布。是否打开发布页面下载并安装？";
+"Settings.General.Update.Available.Button.Update" = "更新";
+"Settings.General.Update.Available.Button.Cancel" = "取消";
+
+"Settings.General.Update.UpToDate.Title" = "已是最新版";
+"Settings.General.Update.UpToDate.Msg" = "您正在使用最新版本 (%@)。";
 
 // Settings - Shortcuts
 
@@ -14,7 +26,7 @@
 "Settings.Shortcuts.Unassigned" = "未分配";
 
 "Settings.Shortcuts.Hotkey.Toggle" = "快捷键";
-"Settings.Shortcuts.Hotkey.Current" = "当前: ";
+"Settings.Shortcuts.Hotkey.Current" = "当前: %@";
 "Settings.Shortcuts.Hotkey.Change" = "修改…";
 "Settings.Shortcuts.Hotkey.Reset" = "重置";
 "Settings.Shortcuts.Hotkey.Hint" = "用此快捷键启用/禁用 OptClick.";

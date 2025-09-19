@@ -4,8 +4,20 @@
 
 "Settings.General.PressNew" = "Press new shortcut…";
 "Settings.General.Option.Enable" = "Enable Option → Right Click";
+
 "Settings.General.Update.AutoCheck" = "Automatically check for updates";
 "Settings.General.Update.ManualCheck" = "Check for updates";
+
+"Settings.General.Update.Failed.Title" = "Update Check Failed";
+"Settings.General.Update.Failed.Msg" = "Could not check for updates.";
+
+"Settings.General.Update.Available.Title" = "Update Available";
+"Settings.General.Update.Available.Msg" = "Version %@ is available. Open the releases page to download and install?";
+"Settings.General.Update.Available.Button.Update" = "Update";
+"Settings.General.Update.Available.Button.Cancel" = "Cancel";
+
+"Settings.General.Update.UpToDate.Title" = "Up to Date";
+"Settings.General.Update.UpToDate.Msg" = "You are running the latest version (%@).";
 
 // Settings - Shortcuts
 
@@ -14,7 +26,7 @@
 "Settings.Shortcuts.Unassigned" = "Unassigned";
 
 "Settings.Shortcuts.Hotkey.Toggle" = "Toggle Hotkey";
-"Settings.Shortcuts.Hotkey.Current" = "Current: ";
+"Settings.Shortcuts.Hotkey.Current" = "Current: %@";
 "Settings.Shortcuts.Hotkey.Change" = "Change…";
 "Settings.Shortcuts.Hotkey.Reset" = "Reset";
 "Settings.Shortcuts.Hotkey.Hint" = "Press this hotkey to enable or disable OptClick.";
