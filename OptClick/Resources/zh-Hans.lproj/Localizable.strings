@@ -25,6 +25,7 @@
 
 "Settings.Shortcuts.Unassigned" = "未分配";
 
+"Settings.Shortcuts.Hotkey" = "启用/禁用 OptClick";
 "Settings.Shortcuts.Hotkey.Toggle" = "快捷键";
 "Settings.Shortcuts.Hotkey.Current" = "当前: %@";
 "Settings.Shortcuts.Hotkey.Change" = "修改…";
@@ -35,5 +36,6 @@
 
 "Settings.About" = "关于";
 
-"Settings.About.Description" = "OptClick让你可以用Option键模拟鼠标右键。";
-"Settings.About.Repo" = "GitHub Repo";
+"Settings.About.Version" = "版本 %@";
+"Settings.About.Description" = "OptClick 用 Option 键模拟鼠标右键.";
+"Settings.About.Repo" = "GitHub 仓库";
