@@ -1,3 +1,8 @@
+// Menu bar
+
+"Menu.Settings" = "Settings...";
+"Menu.Quit" = "Quit";
+
 // Settings - General
 
 "Settings.General" = "General";

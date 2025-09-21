@@ -68,7 +68,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         
         // Settings menu item
         let settingsItem = NSMenuItem(
-            title: NSLocalizedString("Settings...", comment: "Settings menu item"),
+            title: NSLocalizedString("Menu.Settings", comment: "Settings"),
             action: #selector(openSettingsWindow),
             keyEquivalent: ","
         )
@@ -80,7 +80,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         
         // Quit menu item
         let quitItem = NSMenuItem(
-            title: NSLocalizedString("Quit OptClick", comment: "Quit menu item"),
+            title: NSLocalizedString("Menu.Quit", comment: "Quit"),
             action: #selector(quitApp),
             keyEquivalent: "q"
         )
@@ -150,7 +150,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         combinedImage.lockFocus()
 
         // Draw option
-        if let optionImage = NSImage(systemSymbolName: "option", accessibilityDescription: nil) {
+        if let optionImage = NSImage(systemSymbolName: "option", accessibilityDescription: "Option") {
             let resizedOption = resizeImage(optionImage, to: size)
             resizedOption.draw(in: NSRect(origin: .zero, size: size))
         }
