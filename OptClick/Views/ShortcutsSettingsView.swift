@@ -5,7 +5,7 @@ struct ShortcutsSettingsView: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
-            Text("Toggle Hotkey")
+            Text(NSLocalizedString("Settings.Shortcuts.Hotkey", comment: "Toggle Hotkey"))
                 .font(.headline)
 
             HStack {

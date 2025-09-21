@@ -25,6 +25,7 @@
 
 "Settings.Shortcuts.Unassigned" = "Unassigned";
 
+"Settings.Shortcuts.Hotkey" = "Toggle Hotkey";
 "Settings.Shortcuts.Hotkey.Toggle" = "Toggle Hotkey";
 "Settings.Shortcuts.Hotkey.Current" = "Current: %@";
 "Settings.Shortcuts.Hotkey.Change" = "Change…";
@@ -35,5 +36,6 @@
 
 "Settings.About" = "About";
 
+"Settings.About.Version" = "Version %@";
 "Settings.About.Description" = "OptClick lets you simulate right-clicks by pressing the Option (⌥) key.";
 "Settings.About.Repo" = "GitHub Repo";
