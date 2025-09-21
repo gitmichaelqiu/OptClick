@@ -35,11 +35,32 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             
             settingsWindow?.minSize = windowSize
             settingsWindow?.maxSize = windowSize
+            
+            settingsWindow?.level = .normal
+            settingsWindow?.collectionBehavior = [.participatesInCycle]
+            
+            NotificationCenter.default.addObserver(
+                self,
+                selector: #selector(settingsWindowWillClose),
+                name: NSWindow.willCloseNotification,
+                object: settingsWindow
+            )
         }
+        
+        NSApp.setActivationPolicy(.regular)
         
         // Show the window and bring app to front
         settingsWindow?.makeKeyAndOrderFront(nil)
         NSApp.activate(ignoringOtherApps: true)
+    }
+    
+    @objc func settingsWindowWillClose(_ notification: Notification) {
+        let otherVisibleWindows = NSApp.windows.filter {
+            $0.isVisible && $0 != settingsWindow
+        }
+        if otherVisibleWindows.isEmpty {
+            NSApp.setActivationPolicy(.accessory)
+        }
     }
     
     func setupMenuItems() {
