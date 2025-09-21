@@ -159,6 +159,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         path.move(to: NSPoint(x: 2, y: 1))
         path.line(to: NSPoint(x: size.width-2, y: size.height-1))
         path.lineWidth = 2
+        path.lineCapStyle = .round
         path.stroke()
 
         combinedImage.unlockFocus()
