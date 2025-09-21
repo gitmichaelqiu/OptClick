@@ -3,41 +3,94 @@ import AppKit
 
 class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     var statusItem: NSStatusItem?
-    var popover = NSPopover()
+    var settingsWindow: NSWindow?
     
-    @StateObject private var inputManager = InputManager()
-    @StateObject private var hotkeyManager = HotkeyManager()
+    let inputManager = InputManager()
+    let hotkeyManager = HotkeyManager()
     
-    @objc func showSettings() {
-        guard let statusBarButton = statusItem?.button else { return }
-        popover.show(relativeTo: statusBarButton.bounds, of: statusBarButton, preferredEdge: .maxY)
+    @objc func quitApp() {
+        NSApplication.shared.terminate(self)
     }
     
-    func addMenuItems() {
-        statusItem?.menu?.removeAllItems()
-        statusItem?.menu?.addItem(withTitle: "Settings...", action: #selector(showSettings), keyEquivalent: "")
+    @objc func openSettingsWindow() {
+        if settingsWindow == nil {
+            // Create settingsView
+            let settingsView = SettingsView(inputManager: inputManager)
+                .environmentObject(hotkeyManager)
+            
+            let windowSize = NSSize(width: 450, height: 400)
+            
+            // Create a new window
+            settingsWindow = NSWindow(
+                contentRect: NSRect(x: 0, y: 0, width: windowSize.width, height: windowSize.height),
+                styleMask: [.titled, .closable, .miniaturizable],
+                backing: .buffered,
+                defer: false
+            )
+            
+            settingsWindow?.center()
+            settingsWindow?.setFrameAutosaveName("Settings")
+            settingsWindow?.contentView = NSHostingView(rootView: settingsView)
+            settingsWindow?.isReleasedWhenClosed = false
+            
+            settingsWindow?.minSize = windowSize
+            settingsWindow?.maxSize = windowSize
+        }
+        
+        // Show the window and bring app to front
+        settingsWindow?.makeKeyAndOrderFront(nil)
+        NSApp.activate(ignoringOtherApps: true)
+    }
+    
+    func setupMenuItems() {
+        let menu = NSMenu()
+        
+        // Settings menu item
+        let settingsItem = NSMenuItem(
+            title: NSLocalizedString("Settings...", comment: "Settings menu item"),
+            action: #selector(openSettingsWindow),
+            keyEquivalent: ","
+        )
+        settingsItem.target = self
+        menu.addItem(settingsItem)
+        
+        // Seaparator
+        menu.addItem(NSMenuItem.separator())
+        
+        // Quit menu item
+        let quitItem = NSMenuItem(
+            title: NSLocalizedString("Quit OptClick", comment: "Quit menu item"),
+            action: #selector(quitApp),
+            keyEquivalent: "q"
+        )
+        quitItem.target = self
+        menu.addItem(quitItem)
+        
+        statusItem?.menu = menu
     }
     
     func applicationDidFinishLaunching(_ notification: Notification) {
         statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
-        statusItem?.button?.title = "OptClick"
         
-        statusItem?.menu = NSMenu()
-        statusItem?.menu?.delegate = self
-        
-        let settingsView = SettingsView()
-        popover.contentSize = CGSize(width: 500, height: 400)
-        popover.contentViewController = NSHostingController(rootView: settingsView)
-        
-        NSEvent.addGlobalMonitorForEvents(matching: [.leftMouseDown, .rightMouseDown]) { [weak self] event in
-            self?.popover.performClose(event)
+        if let button = statusItem?.button {
+            button.image = NSImage(systemSymbolName: "cursorarrow.click.2", accessibilityDescription: "OptClick")
         }
+        
+        setupMenuItems()
+        
+        // Setup hotkey observer
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(handleHotkeyTriggered),
+            name: .hotkeyTriggered,
+            object: nil
+        )
     }
     
-    func menuWillOpen(_ menu: NSMenu) {
-        addMenuItems()
-        popover.performClose(self)
+    @objc private func handleHotkeyTriggered() {
+        inputManager.isEnabled.toggle()
     }
+    
 }
 
 @main
@@ -45,21 +98,8 @@ struct OptClickApp: App {
     @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     
     var body: some Scene {
-//        WindowGroup {
-//            SettingsView()
-//                .environmentObject(inputManager)
-//                .environmentObject(hotkeyManager)
-//                .frame(width: 450, height: 450)
-//                .onAppear {
-//                    NotificationCenter.default.addObserver(
-//                        forName: .hotkeyTriggered,
-//                        object: nil,
-//                        queue: .main
-//                    ) { _ in
-//                        inputManager.isEnabled.toggle()
-//                    }
-//                }
-//        }
-//        .windowResizability(.contentSize)
+        Settings {
+            EmptyView()
+        }
     }
 }

@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct GeneralSettingsView: View {
-    @EnvironmentObject var inputManager: InputManager
+    @ObservedObject var inputManager: InputManager
     @State private var autoCheckForUpdates = UpdateManager.isAutoCheckEnabled
 
     var body: some View {

@@ -6,11 +6,12 @@ enum SettingsTab {
 
 struct SettingsView: View {
     @State private var selectedTab: SettingsTab = .general
-
+    @ObservedObject var inputManager: InputManager
+    
     var body: some View {
         TabView {
             Tab(NSLocalizedString("Settings.General", comment: "General"), systemImage: "gearshape.fill") {
-                GeneralSettingsView()
+                GeneralSettingsView(inputManager: inputManager)
             }
             Tab(NSLocalizedString("Settings.Shortcuts", comment: "Shortcuts"), systemImage: "keyboard.fill") {
                 ShortcutsSettingsView()
