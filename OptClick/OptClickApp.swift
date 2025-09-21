@@ -144,6 +144,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 
     private func makeOptionWithSlashIcon() -> NSImage {
         let size = NSSize(width: 15, height: 15)
+        let padding: CGFloat = 3
 
         let combinedImage = NSImage(size: size)
         combinedImage.lockFocus()
@@ -153,12 +154,29 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             let resizedOption = resizeImage(optionImage, to: size)
             resizedOption.draw(in: NSRect(origin: .zero, size: size))
         }
+        
+        // Erase path
+        let erasePath = NSBezierPath()
+        erasePath.move(to: NSPoint(x: padding, y: padding))
+        erasePath.line(to: NSPoint(x: size.width-padding, y: size.height-padding))
+        erasePath.lineWidth = 4.0
+        erasePath.lineCapStyle = .round
+        
+        if let context = NSGraphicsContext.current {
+            let originalOp = context.compositingOperation
+            context.compositingOperation = .destinationOut
 
+            NSColor.white.set()
+            erasePath.stroke()
+
+            context.compositingOperation = originalOp
+        }
+        
         // Draw slash
         let path = NSBezierPath()
         path.move(to: NSPoint(x: 2, y: 1))
         path.line(to: NSPoint(x: size.width-2, y: size.height-1))
-        path.lineWidth = 2
+        path.lineWidth = 1.5
         path.lineCapStyle = .round
         path.stroke()
 
