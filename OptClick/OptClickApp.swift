@@ -24,10 +24,19 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         
         statusItem?.menu = NSMenu()
         statusItem?.menu?.delegate = self
+        
+        let settingsView = SettingsView()
+        popover.contentSize = CGSize(width: 500, height: 400)
+        popover.contentViewController = NSHostingController(rootView: settingsView)
+        
+        NSEvent.addGlobalMonitorForEvents(matching: [.leftMouseDown, .rightMouseDown]) { [weak self] event in
+            self?.popover.performClose(event)
+        }
     }
     
     func menuWillOpen(_ menu: NSMenu) {
         addMenuItems()
+        popover.performClose(self)
     }
 }
 
