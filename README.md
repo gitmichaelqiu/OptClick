@@ -1,7 +1,6 @@
-# OptClick
-
 <h1 align="center">
-  <img src="/OptClick/Resources/OptClickIcon_Default.png" width="30%" alt=""/>  
+  <img src="/OptClick/Resources/OptClickIcon_Default.png" width="25%" alt=""/>  
+  <p></p>
   <p align="center">OptClick</p>
 </h1>
 
