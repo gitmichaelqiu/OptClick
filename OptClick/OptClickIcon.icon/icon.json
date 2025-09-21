@@ -20,7 +20,7 @@
           ],
           "glass" : true,
           "hidden" : false,
-          "image-name" : "cursor_PNG78.png",
+          "image-name" : "Cursor.png",
           "name" : "Cursor",
           "position" : {
             "scale" : 0.23,
@@ -31,7 +31,7 @@
           }
         },
         {
-          "image-name" : "EXPORT ME.png",
+          "image-name" : "Option.png",
           "name" : "Option",
           "position" : {
             "scale" : 0.85,
