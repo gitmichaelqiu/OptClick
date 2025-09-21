@@ -1,5 +1,5 @@
 <h1 align="center">
-  <img src="/OptClick/Resources/OptClickIcon_Default.png" width="30%" alt=""/>  
+  <img src="/OptClick/Resources/OptClickIcon_Default.png" width="20%" alt=""/>  
   <p align="center">OptClick</p>
 </h1>
 
