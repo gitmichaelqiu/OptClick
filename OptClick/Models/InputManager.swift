@@ -3,16 +3,16 @@ import AppKit
 import Combine
 
 enum LaunchBehavior: String, CaseIterable {
-    case disabled = "disabled"
     case enabled = "enabled"
+    case disabled = "disabled"
     case lastState = "lastState"
 
     var localizedDescription: String {
         switch self {
-        case .disabled:
-            return NSLocalizedString("Settings.General.LaunchBehavior.Disabled", comment: "Disabled")
         case .enabled:
             return NSLocalizedString("Settings.General.LaunchBehavior.Enabled", comment: "Enabled")
+        case .disabled:
+            return NSLocalizedString("Settings.General.LaunchBehavior.Disabled", comment: "Disabled")
         case .lastState:
             return NSLocalizedString("Settings.General.LaunchBehavior.LastState", comment: "Last State")
         }
@@ -41,10 +41,10 @@ class InputManager: ObservableObject {
         let launchBehavior = LaunchBehavior(rawValue: behaviorString) ?? .lastState
 
         switch launchBehavior {
-        case .disabled:
-            isEnabled = false
         case .enabled:
             isEnabled = true
+        case .disabled:
+            isEnabled = false
         case .lastState:
             isEnabled = UserDefaults.standard.bool(forKey: Self.lastStateKey)
         }
