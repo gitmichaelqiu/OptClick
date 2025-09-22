@@ -75,7 +75,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         settingsItem.target = self
         menu.addItem(settingsItem)
         
-        // Seaparator
+        // Separator
         menu.addItem(NSMenuItem.separator())
         
         // Quit menu item
@@ -133,32 +133,32 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 
         button.image = icon
     }
+    
+    private let iconSize = NSSize(width: 15, height: 15)
 
     private func makeOptionIcon() -> NSImage {
-        let size = NSSize(width: 15, height: 15)
         let image = NSImage(systemSymbolName: "option", accessibilityDescription: "Option")!
-        let resized = resizeImage(image, to: size)
+        let resized = resizeImage(image, to: iconSize)
         resized.isTemplate = true
         return resized
     }
 
     private func makeOptionWithSlashIcon() -> NSImage {
-        let size = NSSize(width: 15, height: 15)
         let padding: CGFloat = 3
 
-        let combinedImage = NSImage(size: size)
+        let combinedImage = NSImage(size: iconSize)
         combinedImage.lockFocus()
 
         // Draw option
         if let optionImage = NSImage(systemSymbolName: "option", accessibilityDescription: "Option") {
-            let resizedOption = resizeImage(optionImage, to: size)
-            resizedOption.draw(in: NSRect(origin: .zero, size: size))
+            let resizedOption = resizeImage(optionImage, to: iconSize)
+            resizedOption.draw(in: NSRect(origin: .zero, size: iconSize))
         }
         
         // Erase path
         let erasePath = NSBezierPath()
         erasePath.move(to: NSPoint(x: padding, y: padding))
-        erasePath.line(to: NSPoint(x: size.width-padding, y: size.height-padding))
+        erasePath.line(to: NSPoint(x: iconSize.width-padding, y: iconSize.height-padding))
         erasePath.lineWidth = 4.0
         erasePath.lineCapStyle = .round
         
@@ -175,7 +175,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         // Draw slash
         let path = NSBezierPath()
         path.move(to: NSPoint(x: 2, y: 1))
-        path.line(to: NSPoint(x: size.width-2, y: size.height-1))
+        path.line(to: NSPoint(x: iconSize.width-2, y: iconSize.height-1))
         path.lineWidth = 1.5
         path.lineCapStyle = .round
         path.stroke()
