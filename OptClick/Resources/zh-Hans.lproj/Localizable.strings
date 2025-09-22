@@ -7,10 +7,17 @@
 
 "Settings.General" = "通用";
 
-"Settings.General.Option.Enable" = "启用 Option → 右键";
+"Settings.General.OptClick" = "OptClick";
+"Settings.General.OptClick.Enable" = "启用 Option → 右键";
 
-"Settings.General.Launch" = "登录时启动";
+"Settings.General.Launch" = "启动";
+"Settings.General.Launch.AtLogin" = "登录时启动";
+"Settings.General.LaunchBehavior" = "启动行为";
+"Settings.General.LaunchBehavior.Disabled" = "禁用 OptClick";
+"Settings.General.LaunchBehavior.Enabled" = "启用 OptClick";
+"Settings.General.LaunchBehavior.LastState" = "跟随上一次";
 
+"Settings.General.Update" = "更新";
 "Settings.General.Update.AutoCheck" = "自动检查更新";
 "Settings.General.Update.ManualCheck" = "检查更新";
 
@@ -24,11 +31,6 @@
 
 "Settings.General.Update.UpToDate.Title" = "已是最新版";
 "Settings.General.Update.UpToDate.Msg" = "您正在使用最新版本 (%@)。";
-
-"Settings.General.LaunchBehavior" = "启动行为";
-"Settings.General.LaunchBehavior.Disabled" = "禁用 OptClick";
-"Settings.General.LaunchBehavior.Enabled" = "启用 OptClick";
-"Settings.General.LaunchBehavior.LastState" = "跟随上一次";
 
 // Settings - Shortcuts
 

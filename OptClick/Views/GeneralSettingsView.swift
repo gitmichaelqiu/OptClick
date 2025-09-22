@@ -11,21 +11,18 @@ struct GeneralSettingsView: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
-            Toggle(NSLocalizedString("Settings.General.Option.Enable", comment: "Enable option to right click"), isOn: $inputManager.isEnabled)
+            Text(NSLocalizedString("Settings.General.OptClick", comment: "OptClick"))
+                .font(.headline)
             
-            Toggle(NSLocalizedString("Settings.General.Launch", comment: "Launch at login"), isOn: $launchAtLogin)
+            Toggle(NSLocalizedString("Settings.General.OptClick.Enable", comment: "Enable option to right click"), isOn: $inputManager.isEnabled)
+            
+            Text("\n" + NSLocalizedString("Settings.General.Launch", comment: "Launch"))
+                .font(.headline)
+            
+            Toggle(NSLocalizedString("Settings.General.Launch.AtLogin", comment: "Launch at login"), isOn: $launchAtLogin)
                 .onChange(of: launchAtLogin) {
                     LaunchManager.setEnabled(launchAtLogin)
                 }
-            
-            Toggle(NSLocalizedString("Settings.General.Update.AutoCheck", comment: "Automatically check for updates"), isOn: $autoCheckForUpdates)
-                .onChange(of: autoCheckForUpdates) {
-                    UpdateManager.isAutoCheckEnabled = autoCheckForUpdates
-                }
-            
-            Button(NSLocalizedString("Settings.General.Update.ManualCheck", comment: "Check for Updates")) {
-                UpdateManager.shared.checkForUpdate(from: nil)
-            }
             
             Picker(NSLocalizedString("Settings.General.LaunchBehavior", comment: "Launch Behavior"), selection: $selectedLaunchBehavior) {
                 ForEach(LaunchBehavior.allCases, id: \.self) { behavior in
@@ -35,6 +32,18 @@ struct GeneralSettingsView: View {
             .pickerStyle(.menu)
             .onChange(of: selectedLaunchBehavior) { _, newValue in
                 UserDefaults.standard.set(newValue.rawValue, forKey: InputManager.launchBehaviorKey)
+            }
+            
+            Text("\n" + NSLocalizedString("Settings.General.Update", comment: "Update"))
+                .font(.headline)
+            
+            Toggle(NSLocalizedString("Settings.General.Update.AutoCheck", comment: "Automatically check for updates"), isOn: $autoCheckForUpdates)
+                .onChange(of: autoCheckForUpdates) {
+                    UpdateManager.isAutoCheckEnabled = autoCheckForUpdates
+                }
+            
+            Button(NSLocalizedString("Settings.General.Update.ManualCheck", comment: "Check for Updates")) {
+                UpdateManager.shared.checkForUpdate(from: nil)
             }
             
             Spacer()

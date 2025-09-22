@@ -7,10 +7,17 @@
 
 "Settings.General" = "General";
 
-"Settings.General.Option.Enable" = "Enable Option → Right Click";
+"Settings.General.OptClick" = "OptClick";
+"Settings.General.OptClick.Enable" = "Enable Option → Right Click";
 
-"Settings.General.Launch" = "Launch at login";
+"Settings.General.Launch" = "Launch";
+"Settings.General.Launch.AtLogin" = "Launch at login";
+"Settings.General.LaunchBehavior" = "Launch Behavior";
+"Settings.General.LaunchBehavior.Disabled" = "Disable OptClick";
+"Settings.General.LaunchBehavior.Enabled" = "Enable OptClick";
+"Settings.General.LaunchBehavior.LastState" = "Follow the last time";
 
+"Settings.General.Update" = "Update";
 "Settings.General.Update.AutoCheck" = "Automatically check for updates";
 "Settings.General.Update.ManualCheck" = "Check for updates";
 
@@ -24,11 +31,6 @@
 
 "Settings.General.Update.UpToDate.Title" = "Up to Date";
 "Settings.General.Update.UpToDate.Msg" = "You are running the latest version (%@).";
-
-"Settings.General.LaunchBehavior" = "Launch Behavior";
-"Settings.General.LaunchBehavior.Disabled" = "Disable OptClick";
-"Settings.General.LaunchBehavior.Enabled" = "Enable OptClick";
-"Settings.General.LaunchBehavior.LastState" = "Follow the last time";
 
 // Settings - Shortcuts
 
