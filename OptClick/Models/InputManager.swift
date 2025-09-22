@@ -2,6 +2,23 @@ import Foundation
 import AppKit
 import Combine
 
+enum LaunchBehavior: String, CaseIterable {
+    case disabled = "disabled"
+    case enabled = "enabled"
+    case lastState = "lastState"
+
+    var localizedDescription: String {
+        switch self {
+        case .disabled:
+            return NSLocalizedString("Settings.General.LaunchBehavior.Disabled", comment: "Disabled")
+        case .enabled:
+            return NSLocalizedString("Settings.General.LaunchBehavior.Enabled", comment: "Enabled")
+        case .lastState:
+            return NSLocalizedString("Settings.General.LaunchBehavior.LastState", comment: "Last State")
+        }
+    }
+}
+
 class InputManager: ObservableObject {
     @Published var isEnabled: Bool = false {
         didSet {
@@ -10,12 +27,32 @@ class InputManager: ObservableObject {
             } else {
                 stopMonitoring()
             }
+            UserDefaults.standard.set(isEnabled, forKey: Self.lastStateKey)
         }
     }
 
     private var keyDownMonitor: Any?
     private var keyUpMonitor: Any?
+    static let launchBehaviorKey = "LaunchBehavior"
+    static let lastStateKey = "LastState"
     
+    init() {
+        let behaviorString = UserDefaults.standard.string(forKey: Self.launchBehaviorKey) ?? LaunchBehavior.lastState.rawValue
+        let launchBehavior = LaunchBehavior(rawValue: behaviorString) ?? .lastState
+
+        switch launchBehavior {
+        case .disabled:
+            isEnabled = false
+        case .enabled:
+            isEnabled = true
+        case .lastState:
+            isEnabled = UserDefaults.standard.bool(forKey: Self.lastStateKey)
+        }
+
+        if isEnabled {
+            startMonitoring()
+        }
+    }
     
     private func getCGMouseLocation() -> CGPoint {
         let screenHeight = NSScreen.main?.frame.height ?? 0

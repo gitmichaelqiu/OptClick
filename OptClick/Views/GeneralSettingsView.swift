@@ -4,6 +4,10 @@ struct GeneralSettingsView: View {
     @ObservedObject var inputManager: InputManager
     @State private var autoCheckForUpdates = UpdateManager.isAutoCheckEnabled
     @State private var launchAtLogin = LaunchManager.isEnabled
+    @State private var selectedLaunchBehavior: LaunchBehavior = {
+        let behaviorString = UserDefaults.standard.string(forKey: InputManager.launchBehaviorKey) ?? LaunchBehavior.lastState.rawValue
+        return LaunchBehavior(rawValue: behaviorString) ?? .lastState
+    }()
 
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
@@ -21,6 +25,16 @@ struct GeneralSettingsView: View {
             
             Button(NSLocalizedString("Settings.General.Update.ManualCheck", comment: "Check for Updates")) {
                 UpdateManager.shared.checkForUpdate(from: nil)
+            }
+            
+            Picker(NSLocalizedString("Settings.General.LaunchBehavior", comment: "Launch Behavior"), selection: $selectedLaunchBehavior) {
+                ForEach(LaunchBehavior.allCases, id: \.self) { behavior in
+                    Text(behavior.localizedDescription).tag(behavior)
+                }
+            }
+            .pickerStyle(.menu)
+            .onChange(of: selectedLaunchBehavior) { _, newValue in
+                UserDefaults.standard.set(newValue.rawValue, forKey: InputManager.launchBehaviorKey)
             }
             
             Spacer()

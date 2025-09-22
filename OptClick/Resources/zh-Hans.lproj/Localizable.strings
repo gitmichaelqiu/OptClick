@@ -25,6 +25,11 @@
 "Settings.General.Update.UpToDate.Title" = "已是最新版";
 "Settings.General.Update.UpToDate.Msg" = "您正在使用最新版本 (%@)。";
 
+"Settings.General.LaunchBehavior" = "启动行为";
+"Settings.General.LaunchBehavior.Disabled" = "禁用 OptClick";
+"Settings.General.LaunchBehavior.Enabled" = "启用 OptClick";
+"Settings.General.LaunchBehavior.LastState" = "跟随上一次";
+
 // Settings - Shortcuts
 
 "Settings.Shortcuts" = "捷径";
