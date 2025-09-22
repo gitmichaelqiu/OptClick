@@ -22,7 +22,7 @@ class HotkeyManager: ObservableObject {
     }
 
     var shortcutDescription: String {
-        isListeningForShortcut ? NSLocalizedString("Settings.General.PressNew", comment: "Press new shortcut…") : shortcut.description
+        isListeningForShortcut ? NSLocalizedString("Settings.Shotcuts.Hotkey.PressNew", comment: "Press new shortcut…") : shortcut.description
     }
 
     // MARK: - Shortcut Handling

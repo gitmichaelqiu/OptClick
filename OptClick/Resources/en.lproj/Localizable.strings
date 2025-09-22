@@ -1,10 +1,23 @@
+// Menu bar
+
+"Menu.Settings" = "Settings...";
+"Menu.Quit" = "Quit";
+
 // Settings - General
 
 "Settings.General" = "General";
 
-"Settings.General.PressNew" = "Press new shortcut…";
-"Settings.General.Option.Enable" = "Enable Option → Right Click";
+"Settings.General.OptClick" = "OptClick";
+"Settings.General.OptClick.Enable" = "Enable Option → Right Click";
 
+"Settings.General.Launch" = "Launch";
+"Settings.General.Launch.AtLogin" = "Launch at login";
+"Settings.General.LaunchBehavior" = "Launch Behavior";
+"Settings.General.LaunchBehavior.Disabled" = "Disable OptClick";
+"Settings.General.LaunchBehavior.Enabled" = "Enable OptClick";
+"Settings.General.LaunchBehavior.LastState" = "Follow last time";
+
+"Settings.General.Update" = "Update";
 "Settings.General.Update.AutoCheck" = "Automatically check for updates";
 "Settings.General.Update.ManualCheck" = "Check for updates";
 
@@ -28,6 +41,7 @@
 "Settings.Shortcuts.Hotkey" = "Toggle Hotkey";
 "Settings.Shortcuts.Hotkey.Toggle" = "Toggle Hotkey";
 "Settings.Shortcuts.Hotkey.Current" = "Current: %@";
+"Settings.Shotcuts.Hotkey.PressNew" = "Press new shortcut…";
 "Settings.Shortcuts.Hotkey.Change" = "Change…";
 "Settings.Shortcuts.Hotkey.Reset" = "Reset";
 "Settings.Shortcuts.Hotkey.Hint" = "Press this hotkey to enable or disable OptClick.";

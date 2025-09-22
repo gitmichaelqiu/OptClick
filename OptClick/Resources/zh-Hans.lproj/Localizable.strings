@@ -1,10 +1,23 @@
+// Menu bar
+
+"Menu.Settings" = "设置...";
+"Menu.Quit" = "退出";
+
 // Settings - General
 
 "Settings.General" = "通用";
 
-"Settings.General.PressNew" = "按下新快捷键...";
-"Settings.General.Option.Enable" = "启用 Option → 右键";
+"Settings.General.OptClick" = "OptClick";
+"Settings.General.OptClick.Enable" = "启用 Option → 右键";
 
+"Settings.General.Launch" = "启动";
+"Settings.General.Launch.AtLogin" = "登录时启动";
+"Settings.General.LaunchBehavior" = "启动行为";
+"Settings.General.LaunchBehavior.Disabled" = "禁用 OptClick";
+"Settings.General.LaunchBehavior.Enabled" = "启用 OptClick";
+"Settings.General.LaunchBehavior.LastState" = "跟随上一次";
+
+"Settings.General.Update" = "更新";
 "Settings.General.Update.AutoCheck" = "自动检查更新";
 "Settings.General.Update.ManualCheck" = "检查更新";
 
@@ -28,6 +41,7 @@
 "Settings.Shortcuts.Hotkey" = "启用/禁用 OptClick";
 "Settings.Shortcuts.Hotkey.Toggle" = "快捷键";
 "Settings.Shortcuts.Hotkey.Current" = "当前: %@";
+"Settings.Shotcuts.Hotkey.PressNew" = "按下新快捷键...";
 "Settings.Shortcuts.Hotkey.Change" = "修改…";
 "Settings.Shortcuts.Hotkey.Reset" = "重置";
 "Settings.Shortcuts.Hotkey.Hint" = "用此快捷键启用/禁用 OptClick.";
