@@ -55,12 +55,13 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     }
     
     @objc func settingsWindowWillClose(_ notification: Notification) {
-        let otherVisibleWindows = NSApp.windows.filter {
-            $0.isVisible && $0 != settingsWindow
-        }
-        if otherVisibleWindows.isEmpty {
-            NSApp.setActivationPolicy(.accessory)
-        }
+//        let otherVisibleWindows = NSApp.windows.filter {
+//            $0.isVisible && $0 != settingsWindow
+//        }
+//        if otherVisibleWindows.isEmpty {
+//            print("HI")
+        NSApp.setActivationPolicy(.accessory)
+//        }
     }
     
     func setupMenuItems() {
