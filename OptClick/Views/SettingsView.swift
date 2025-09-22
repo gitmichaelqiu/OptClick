@@ -9,17 +9,49 @@ struct SettingsView: View {
     @ObservedObject var inputManager: InputManager
     
     var body: some View {
-        TabView {
-            Tab(NSLocalizedString("Settings.General", comment: "General"), systemImage: "gearshape.fill") {
+        if #available(macOS 15.0, *) {
+            TabView {
+                Tab(NSLocalizedString("Settings.General", comment: "General"), systemImage: "gearshape.fill") {
+                    GeneralSettingsView(inputManager: inputManager)
+                }
+                Tab(NSLocalizedString("Settings.Shortcuts", comment: "Shortcuts"), systemImage: "keyboard.fill") {
+                    ShortcutsSettingsView()
+                }
+                Tab(NSLocalizedString("Settings.About", comment: "About"), systemImage: "info.circle.fill") {
+                    AboutView()
+                }
+            }
+            .scenePadding()
+        } else {
+            TabView(selection: $selectedTab) {
                 GeneralSettingsView(inputManager: inputManager)
-            }
-            Tab(NSLocalizedString("Settings.Shortcuts", comment: "Shortcuts"), systemImage: "keyboard.fill") {
+                   .tabItem {
+                       Label(
+                           NSLocalizedString("Settings.General", comment: "General"),
+                           systemImage: "gearshape.fill"
+                       )
+                   }
+                   .tag(SettingsTab.general)
+
                 ShortcutsSettingsView()
-            }
-            Tab(NSLocalizedString("Settings.About", comment: "About"), systemImage: "info.circle.fill") {
+                   .tabItem {
+                       Label(
+                           NSLocalizedString("Settings.Shortcuts", comment: "Shortcuts"),
+                           systemImage: "keyboard.fill"
+                       )
+                   }
+                   .tag(SettingsTab.shortcuts)
+
                 AboutView()
-            }
+                   .tabItem {
+                       Label(
+                           NSLocalizedString("Settings.About", comment: "About"),
+                           systemImage: "info.circle.fill"
+                       )
+                   }
+                   .tag(SettingsTab.about)
+                }
+                .scenePadding()
         }
-        .scenePadding()
     }
 }
