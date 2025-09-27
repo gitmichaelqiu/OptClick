@@ -15,11 +15,13 @@ struct GeneralSettingsView: View {
                 .font(.headline)
             
             Toggle(NSLocalizedString("Settings.General.OptClick.Enable", comment: "Enable option to right click"), isOn: $inputManager.isEnabled)
+                .toggleStyle(.switch)
             
             Text("\n" + NSLocalizedString("Settings.General.Launch", comment: "Launch"))
                 .font(.headline)
             
             Toggle(NSLocalizedString("Settings.General.Launch.AtLogin", comment: "Launch at login"), isOn: $launchAtLogin)
+                .toggleStyle(.switch)
                 .onChange(of: launchAtLogin) {
                     LaunchManager.setEnabled(launchAtLogin)
                 }
@@ -38,6 +40,7 @@ struct GeneralSettingsView: View {
                 .font(.headline)
             
             Toggle(NSLocalizedString("Settings.General.Update.AutoCheck", comment: "Automatically check for updates"), isOn: $autoCheckForUpdates)
+                .toggleStyle(.switch)
                 .onChange(of: autoCheckForUpdates) {
                     UpdateManager.isAutoCheckEnabled = autoCheckForUpdates
                 }
