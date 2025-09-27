@@ -208,9 +208,6 @@ struct OptClickApp: App {
                 Button("About OptClick") {
                     // Set the tab to About before opening Settings
                     UserDefaults.standard.set(SettingsTab.about.rawValue, forKey: "selectedSettingsTab")
-                    
-                    // Open the Settings window
-                    NSApp.sendAction(Selector(("showSettingsWindow:")), to: nil, from: nil)
                 }
             }
         }
