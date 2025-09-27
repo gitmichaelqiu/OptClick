@@ -6,9 +6,9 @@ struct ShortcutsSettingsView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 20) {
-                SettingsSection("Settings.Shortcuts.Hotkey") {
+                SettingsSection("Settings.Shortcuts.General") {
                     // Row: label + current shortcut
-                    SettingsRow("Settings.Shortcuts.Hotkey.Toggle") {
+                    SettingsRow("Settings.Shortcuts.Hotkey") {
                         Text(hotkeyManager.shortcutDescription)
                             .font(.body)
                             .foregroundColor(.primary)
