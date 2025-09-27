@@ -1,5 +1,35 @@
 import SwiftUI
 
+struct SettingsSection<Content: View>: View {
+    let title: LocalizedStringKey
+    let content: Content
+
+    init(_ title: LocalizedStringKey, @ViewBuilder content: () -> Content) {
+        self.title = title
+        self.content = content()
+    }
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text(title)
+                .font(.headline)
+                .padding(.leading, 4)
+
+            VStack(spacing: 0) {
+                content
+                    .padding(.vertical, 6)
+                    .padding(.horizontal, 10)
+            }
+            .background(RoundedRectangle(cornerRadius: 10, style: .continuous)
+                .fill(Color(NSColor.controlBackgroundColor)))
+            .overlay(
+                RoundedRectangle(cornerRadius: 10, style: .continuous)
+                    .stroke(Color(NSColor.separatorColor), lineWidth: 0.5)
+            )
+        }
+    }
+}
+
 struct GeneralSettingsView: View {
     @ObservedObject var inputManager: InputManager
     @State private var autoCheckForUpdates = UpdateManager.isAutoCheckEnabled
@@ -10,48 +40,63 @@ struct GeneralSettingsView: View {
     }()
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 16) {
-            Text(NSLocalizedString("Settings.General.OptClick", comment: "OptClick"))
-                .font(.headline)
-            
-            Toggle(NSLocalizedString("Settings.General.OptClick.Enable", comment: "Enable option to right click"), isOn: $inputManager.isEnabled)
-                .toggleStyle(.switch)
-            
-            Text("\n" + NSLocalizedString("Settings.General.Launch", comment: "Launch"))
-                .font(.headline)
-            
-            Toggle(NSLocalizedString("Settings.General.Launch.AtLogin", comment: "Launch at login"), isOn: $launchAtLogin)
-                .toggleStyle(.switch)
-                .onChange(of: launchAtLogin) {
-                    LaunchManager.setEnabled(launchAtLogin)
+        ScrollView {
+            VStack(alignment: .leading, spacing: 20) {
+                SettingsSection("Settings.General.OptClick") {
+                    Toggle(
+                        NSLocalizedString("Settings.General.OptClick.Enable", comment: "Enable option to right click"),
+                        isOn: $inputManager.isEnabled
+                    )
+                    .toggleStyle(.switch)
                 }
-            
-            Picker(NSLocalizedString("Settings.General.LaunchBehavior", comment: "Launch Behavior"), selection: $selectedLaunchBehavior) {
-                ForEach(LaunchBehavior.allCases, id: \.self) { behavior in
-                    Text(behavior.localizedDescription).tag(behavior)
+
+                SettingsSection("Settings.General.Launch") {
+                    Toggle(
+                        NSLocalizedString("Settings.General.Launch.AtLogin", comment: "Launch at login"),
+                        isOn: $launchAtLogin
+                    )
+                    .toggleStyle(.switch)
+                    .onChange(of: launchAtLogin) {
+                        LaunchManager.setEnabled(launchAtLogin)
+                    }
+
+                    Divider()
+
+                    Picker(
+                        NSLocalizedString("Settings.General.LaunchBehavior", comment: "Launch Behavior"),
+                        selection: $selectedLaunchBehavior
+                    ) {
+                        ForEach(LaunchBehavior.allCases, id: \.self) { behavior in
+                            Text(behavior.localizedDescription).tag(behavior)
+                        }
+                    }
+                    .pickerStyle(.menu)
+                    .onChange(of: selectedLaunchBehavior) { _, newValue in
+                        UserDefaults.standard.set(newValue.rawValue, forKey: InputManager.launchBehaviorKey)
+                    }
                 }
-            }
-            .pickerStyle(.menu)
-            .onChange(of: selectedLaunchBehavior) { _, newValue in
-                UserDefaults.standard.set(newValue.rawValue, forKey: InputManager.launchBehaviorKey)
-            }
-            
-            Text("\n" + NSLocalizedString("Settings.General.Update", comment: "Update"))
-                .font(.headline)
-            
-            Toggle(NSLocalizedString("Settings.General.Update.AutoCheck", comment: "Automatically check for updates"), isOn: $autoCheckForUpdates)
-                .toggleStyle(.switch)
-                .onChange(of: autoCheckForUpdates) {
-                    UpdateManager.isAutoCheckEnabled = autoCheckForUpdates
+
+                SettingsSection("Settings.General.Update") {
+                    Toggle(
+                        NSLocalizedString("Settings.General.Update.AutoCheck", comment: "Automatically check for updates"),
+                        isOn: $autoCheckForUpdates
+                    )
+                    .toggleStyle(.switch)
+                    .onChange(of: autoCheckForUpdates) {
+                        UpdateManager.isAutoCheckEnabled = autoCheckForUpdates
+                    }
+
+                    Divider()
+
+                    Button(NSLocalizedString("Settings.General.Update.ManualCheck", comment: "Check for Updates")) {
+                        UpdateManager.shared.checkForUpdate(from: nil)
+                    }
                 }
-            
-            Button(NSLocalizedString("Settings.General.Update.ManualCheck", comment: "Check for Updates")) {
-                UpdateManager.shared.checkForUpdate(from: nil)
+
+                Spacer()
             }
-            
-            Spacer()
+            .padding()
+            .frame(maxWidth: .infinity, alignment: .topLeading)
         }
-        .padding()
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
     }
 }
