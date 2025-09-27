@@ -203,5 +203,16 @@ struct OptClickApp: App {
         Settings {
             EmptyView()
         }
+        .commands {
+            CommandGroup(replacing: .appInfo) {
+                Button("About OptClick") {
+                    // Turn to about page directly because menu bar is only available when settings are opened
+                    UserDefaults.standard.set(SettingsTab.about.rawValue, forKey: "selectedSettingsTab")
+                }
+            }
+            CommandGroup(replacing: .appSettings) {
+                // Remove default settings
+            }
+        }
     }
 }
