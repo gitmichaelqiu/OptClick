@@ -4,15 +4,18 @@
   <p align="center">OptClick</p>
 </h1>
 
-<p align="center">
-  <img src="/OptClick/Resources/Demo/OptClick_v1-0-0_Settings_General.png" width="50%" ><br>
-  <i>Provide useful settings</i>
-</p>
-
-<p align="center">
-  <img src="/OptClick/Resources/Demo/OptClick_v1-0-0_Settings_Shortcuts.png" width="50%" ><br>
-  <i>Set a global hotkey</i>
-</p>
+<table align="center" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td align="center">
+      <img src="/OptClick/Resources/Demo/OptClick_v1-0-0_Settings_General.png" width="300" /><br>
+      <i>Provide useful settings</i>
+    </td>
+    <td align="center">
+      <img src="/OptClick/Resources/Demo/OptClick_v1-0-0_Settings_Shortcuts.png" width="300" /><br>
+      <i>Set a global hotkey</i>
+    </td>
+  </tr>
+</table>
 
 **OptClick** is a minimal macOS app that allows you to simulate a right-click or a right-click hold by pressing the Option key.
 
