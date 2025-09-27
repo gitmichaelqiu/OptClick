@@ -13,7 +13,7 @@ struct ShortcutsSettingsView: View {
                             .font(.body)
                             .foregroundColor(.primary)
                     }
-                    .frame(minHeight: 36) // unify row height
+                    .frame(minHeight: 36)
 
                     Divider()
 
@@ -29,7 +29,7 @@ struct ShortcutsSettingsView: View {
                         }
                         .frame(maxWidth: .infinity, alignment: .trailing)
                     }
-                    .frame(minHeight: 36) // unify row height
+                    .frame(minHeight: 36)
                 }
 
                 Spacer()

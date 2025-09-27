@@ -332,7 +332,7 @@ struct Shortcut: Equatable {
     }
 }
 
-// MARK: - Notification
+// Notification
 extension Notification.Name {
     static let hotkeyTriggered = Notification.Name("HotkeyTriggered")
 }

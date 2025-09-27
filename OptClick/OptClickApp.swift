@@ -210,6 +210,9 @@ struct OptClickApp: App {
                     UserDefaults.standard.set(SettingsTab.about.rawValue, forKey: "selectedSettingsTab")
                 }
             }
+            CommandGroup(replacing: .appSettings) {
+                // Remove default settings
+            }
         }
     }
 }
