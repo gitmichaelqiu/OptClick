@@ -5,12 +5,12 @@
 </h1>
 
 <p align="center">
-  <img src="/OptClick/Resources/Demo/OptClick_v1-0-0_Settings_General" width="50%" ><br>
+  <img src="/OptClick/Resources/Demo/OptClick_v1-0-0_Settings_General.png" width="50%" ><br>
   <i>Provide useful settings</i>
 </p>
 
 <p align="center">
-  <img src="/OptClick/Resources/Demo/OptClick_v1-0-0_Settings_Shortcuts" width="50%" ><br>
+  <img src="/OptClick/Resources/Demo/OptClick_v1-0-0_Settings_Shortcuts.png" width="50%" ><br>
   <i>Set a global hotkey</i>
 </p>
 
