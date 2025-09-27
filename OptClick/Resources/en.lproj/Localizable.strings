@@ -38,13 +38,15 @@
 
 "Settings.Shortcuts.Unassigned" = "Unassigned";
 
-"Settings.Shortcuts.Hotkey" = "Toggle Hotkey";
+"Settings.Shortcuts.Hotkey.General" = "General";
+"Settings.Shortcuts.Hotkey" = "Toggle OptClick";
 "Settings.Shortcuts.Hotkey.Toggle" = "Toggle Hotkey";
 "Settings.Shortcuts.Hotkey.Current" = "Current: %@";
 "Settings.Shotcuts.Hotkey.PressNew" = "Press new shortcut…";
 "Settings.Shortcuts.Hotkey.Change" = "Change…";
 "Settings.Shortcuts.Hotkey.Reset" = "Reset";
 "Settings.Shortcuts.Hotkey.Hint" = "Press this hotkey to enable or disable OptClick.";
+"Settings.Shortcuts.Unassgined" = "Unassigned";
 
 // Settigns - About
 

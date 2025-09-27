@@ -38,6 +38,7 @@
 
 "Settings.Shortcuts.Unassigned" = "未分配";
 
+"Settings.Shortcuts.Hotkey.General" = "通用";
 "Settings.Shortcuts.Hotkey" = "启用/禁用 OptClick";
 "Settings.Shortcuts.Hotkey.Toggle" = "快捷键";
 "Settings.Shortcuts.Hotkey.Current" = "当前: %@";
@@ -45,6 +46,7 @@
 "Settings.Shortcuts.Hotkey.Change" = "修改…";
 "Settings.Shortcuts.Hotkey.Reset" = "重置";
 "Settings.Shortcuts.Hotkey.Hint" = "用此快捷键启用/禁用 OptClick.";
+"Settings.Shortcuts.Unassgined" = "未分配";
 
 // Settigns - About
 

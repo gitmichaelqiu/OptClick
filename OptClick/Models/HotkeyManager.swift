@@ -126,7 +126,7 @@ struct Shortcut: Equatable {
     }
 
     var description: String {
-        if key == nil { return NSLocalizedString("Settings.Shortcuts.Unassgiend", comment: "Unassigned") }
+        if key == nil { return NSLocalizedString("Settings.Shortcuts.Unassgined", comment: "Unassigned") }
 
         var parts: [String] = []
         if modifiers.contains(.command) { parts.append("⌘") }
