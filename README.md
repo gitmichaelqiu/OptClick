@@ -8,11 +8,11 @@
   <tr>
     <td align="center">
       <img src="/OptClick/Resources/Demo/OptClick_v1-0-0_Settings_General.png" width="300" /><br>
-      <i>Provide useful settings</i>
+      <i>Useful settings items</i>
     </td>
     <td align="center">
       <img src="/OptClick/Resources/Demo/OptClick_v1-0-0_Settings_Shortcuts.png" width="300" /><br>
-      <i>Set a global hotkey</i>
+      <i>Customize gobal hotkeys</i>
     </td>
   </tr>
 </table>
@@ -20,6 +20,14 @@
 **OptClick** is a minimal macOS app that allows you to simulate a right-click or a right-click hold by pressing the Option key.
 
 It will be quite helpful in **gaming with a touchpad**, as it allows you to perform left and right clicks simultaneously.
+
+## Usage
+
+When OptClick is enabled, press `option` to simulate a right-click, hold `option` to perform a right-click hold (e.g. for aiming).
+
+The default global hotkey for toggling OptClick is `control + R`.
+
+You can modify it in Settings -> Shortcuts. Press `esc` while changing the hotkey to disable it.
 
 ## Installation
 
