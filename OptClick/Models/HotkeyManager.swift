@@ -24,6 +24,11 @@ class HotkeyManager: ObservableObject {
     var shortcutDescription: String {
         isListeningForShortcut ? NSLocalizedString("Settings.Shotcuts.Hotkey.PressNew", comment: "Press new shortcut…") : shortcut.description
     }
+    
+    private static let functionKeys: Set<Key> = [
+        .f1, .f2, .f3, .f4, .f5, .f6,
+        .f7, .f8, .f9, .f10, .f11, .f12
+    ]
 
     // MARK: - Shortcut Handling
     private func registerShortcut() {
@@ -63,21 +68,37 @@ class HotkeyManager: ObservableObject {
 
         monitor = NSEvent.addLocalMonitorForEvents(matching: .keyDown) { [weak self] event in
             guard let self = self else { return event }
-
-            let keyName = Shortcut.keyName(from: event)
-
-            if keyName == "Escape" {
+            
+            if Shortcut.keyName(from: event) == "Escape" {
                 self.shortcut = Shortcut(key: nil, modifiers: [])
-            } else if let key = Shortcut.keyFromEvent(event) {
-                let modifiers = event.modifierFlags.intersection([.command, .option, .control, .shift])
-                self.shortcut = Shortcut(key: key, modifiers: self.convertToHotkeyModifiers(modifiers))
+                self.finishListening()
+                return nil
             }
-
-            self.isListeningForShortcut = false
-            self.removeKeyListener()
-            self.registerShortcut()
-            return nil // swallow the event
+            
+            guard let key = Shortcut.keyFromEvent(event) else {
+                return event
+            }
+            
+            let rawModifiers = event.modifierFlags.intersection([.command, .option, .control, .shift])
+            let cleanedModifiers = self.convertToHotkeyModifiers(rawModifiers)
+            
+            let isFunctionKey = HotkeyManager.functionKeys.contains(key)
+            let hasModifiers = !cleanedModifiers.isEmpty
+            
+            if hasModifiers || isFunctionKey {
+                self.shortcut = Shortcut(key: key, modifiers: cleanedModifiers)
+                self.finishListening()
+                return nil
+            } else {
+                return nil
+            }
         }
+    }
+    
+    private func finishListening() {
+        isListeningForShortcut = false
+        removeKeyListener()
+        registerShortcut()
     }
     
     private func removeKeyListener() {
