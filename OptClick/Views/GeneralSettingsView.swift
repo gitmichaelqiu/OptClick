@@ -41,7 +41,7 @@ struct SettingsSection<Content: View>: View {
             }
             .background(
                 RoundedRectangle(cornerRadius: 12, style: .continuous)
-                    .fill(backgroundColor) // solid adaptive base
+                    .fill(backgroundColor.opacity(0.6))
                     .overlay(
                         RoundedRectangle(cornerRadius: 12, style: .continuous)
                             .fill(.regularMaterial) // blur overlay
@@ -53,9 +53,9 @@ struct SettingsSection<Content: View>: View {
     private var backgroundColor: Color {
         let nsColor = NSColor(name: nil) { appearance in
             if appearance.bestMatch(from: [.darkAqua, .aqua]) == .darkAqua {
-                return NSColor(calibratedWhite: 0.15, alpha: 1.0) // Dark mode
+                return NSColor(calibratedWhite: 0.20, alpha: 1.0)
             } else {
-                return NSColor(calibratedWhite: 0.95, alpha: 1.0) // Light mode
+                return NSColor(calibratedWhite: 1.00, alpha: 1.0)
             }
         }
         return Color(nsColor: nsColor)
