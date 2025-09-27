@@ -37,7 +37,7 @@ Requires **macOS 14.0 Sonoma** or above.
 2. Drag the app to the *Applications* folder
 3. All set!
 
-Because I do **NOT** have an Apple developer account, you may receive alerts such as "App is broken". To resolve this, you need to go to the *terminal* and run the following command:
+Because I do **NOT** have an Apple developer account for the app releases ~~(Apple charges an annual fee for this)~~, you may receive alerts such as "App is broken". To resolve this, you need to go to the *terminal* and run the following command:
 
 ```bash
 sudo xattr -r -d com.apple.quarantine /Applications/OptClick.app
