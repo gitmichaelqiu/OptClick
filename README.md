@@ -21,15 +21,15 @@
 
 It will be quite helpful in **gaming with a touchpad**, as it allows you to perform left and right clicks simultaneously.
 
-## Usage
+## 🖱️ Usage
 
-When OptClick is enabled, press `option` to simulate a right-click, hold `option` to perform a right-click hold (e.g. for aiming).
+When OptClick is enabled, press `option` to simulate a right-click, hold `option` to perform a right-click hold (e.g., for aiming).
 
 The default global hotkey for toggling OptClick is `control + R`.
 
 You can modify it in Settings -> Shortcuts. Press `esc` while changing the hotkey to disable it.
 
-## Installation
+## 📦 Installation
 
 Requires **macOS 14.0 Sonoma** or above.
 
@@ -37,19 +37,19 @@ Requires **macOS 14.0 Sonoma** or above.
 2. Drag the app to the *Applications* folder
 3. All set!
 
-Because I do **NOT** have an Apple developer account, you may receive alerts such as "App is broken". To resolve this, you need to go to *terminal* and run the following command:
+Because I do **NOT** have an Apple developer account, you may receive alerts such as "App is broken". To resolve this, you need to go to the *terminal* and run the following command:
 
 ```bash
 sudo xattr -r -d com.apple.quarantine /Applications/OptClick.app
 ```
 
-You may be required to enter the password. When you are entering the password, the password is not shown. This is required by Apple. The app will **NOT** steal your password or personal information.
+You may be required to enter the password. When you are entering, the password is not displayed. Apple requires this. The app will **NOT** steal your password or personal information.
 
-## Have Any Issues
+## ⚠️ Issues/Suggestions
 
-Create issues in [GitHub Issues](https://github.com/gitmichaelqiu/OptClick/issues).
+You are welcome to create issues/suggestions in [GitHub Issues](https://github.com/gitmichaelqiu/OptClick/issues).
 
-## Support This Project
+## ⭐ Support This Project
 
 You can simply click on the **Star** to support this project for free. Thank you for your support!
 
