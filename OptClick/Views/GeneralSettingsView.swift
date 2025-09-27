@@ -41,13 +41,24 @@ struct SettingsSection<Content: View>: View {
             }
             .background(
                 RoundedRectangle(cornerRadius: 12, style: .continuous)
-                    .fill(Color(NSColor.windowBackgroundColor).opacity(0.6)) // transparent feel
-            )
-            .overlay(
-                RoundedRectangle(cornerRadius: 12, style: .continuous)
-                    .stroke(Color(NSColor.separatorColor).opacity(0.4), lineWidth: 0.5)
+                    .fill(backgroundColor) // solid adaptive base
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 12, style: .continuous)
+                            .fill(.regularMaterial) // blur overlay
+                    )
             )
         }
+    }
+
+    private var backgroundColor: Color {
+        let nsColor = NSColor(name: nil) { appearance in
+            if appearance.bestMatch(from: [.darkAqua, .aqua]) == .darkAqua {
+                return NSColor(calibratedWhite: 0.15, alpha: 1.0) // Dark mode
+            } else {
+                return NSColor(calibratedWhite: 0.95, alpha: 1.0) // Light mode
+            }
+        }
+        return Color(nsColor: nsColor)
     }
 }
 
