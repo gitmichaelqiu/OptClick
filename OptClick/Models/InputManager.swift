@@ -60,7 +60,7 @@ class InputManager: ObservableObject {
         return CGPoint(x: loc.x, y: screenHeight - loc.y)
     }
 
-    // MARK: - Monitor Keyboard
+    // Monitor Keyboard
     private func startMonitoring() {
         stopMonitoring() // ensure no duplicate monitors
 
@@ -101,7 +101,7 @@ class InputManager: ObservableObject {
         }
     }
 
-    // MARK: - Mouse Simulation
+    // Mouse Simulation
     private func simulateRightMouseDown() {
         let location = getCGMouseLocation()
         let event = CGEvent(mouseEventSource: nil,

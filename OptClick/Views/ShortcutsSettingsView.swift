@@ -4,31 +4,38 @@ struct ShortcutsSettingsView: View {
     @EnvironmentObject var hotkeyManager: HotkeyManager
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 16) {
-            Text(NSLocalizedString("Settings.Shortcuts.Hotkey", comment: "Toggle Hotkey"))
-                .font(.headline)
+        ScrollView {
+            VStack(alignment: .leading, spacing: 20) {
+                SettingsSection("Settings.Shortcuts.General") {
+                    // Row: label + current shortcut
+                    SettingsRow("Settings.Shortcuts.Hotkey") {
+                        Text(hotkeyManager.shortcutDescription)
+                            .font(.body)
+                            .foregroundColor(.primary)
+                    }
+                    .frame(minHeight: 36)
 
-            HStack {
-                Text(String(format: NSLocalizedString("Settings.Shortcuts.Hotkey.Current", comment: "Current"), hotkeyManager.shortcutDescription))
-                    .font(.body)
+                    Divider()
+
+                    // Row: buttons aligned right
+                    SettingsRow("") {
+                        HStack(spacing: 8) {
+                            Button(NSLocalizedString("Settings.Shortcuts.Hotkey.Change", comment: "Change")) {
+                                hotkeyManager.startListeningForNewShortcut()
+                            }
+                            Button(NSLocalizedString("Settings.Shortcuts.Hotkey.Reset", comment: "Reset")) {
+                                hotkeyManager.resetToDefault()
+                            }
+                        }
+                        .frame(maxWidth: .infinity, alignment: .trailing)
+                    }
+                    .frame(minHeight: 36)
+                }
 
                 Spacer()
-
-                Button(NSLocalizedString("Settings.Shortcuts.Hotkey.Change", comment: "Change")) {
-                    hotkeyManager.startListeningForNewShortcut()
-                }
-
-                Button(NSLocalizedString("Settings.Shortcuts.Hotkey.Reset", comment: "Reset")) {
-                    hotkeyManager.resetToDefault()
-                }
             }
-
-            Text(NSLocalizedString("Settings.Shortcuts.Hotkey.Hint", comment: "Press this hotkey to enable or disable OptClick."))
-                .font(.caption)
-                .foregroundColor(.secondary)
-
-            Spacer()
+            .padding()
+            .frame(maxWidth: .infinity, alignment: .topLeading)
         }
-        .padding()
     }
 }
