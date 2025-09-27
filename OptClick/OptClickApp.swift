@@ -206,7 +206,7 @@ struct OptClickApp: App {
         .commands {
             CommandGroup(replacing: .appInfo) {
                 Button("About OptClick") {
-                    // Set the tab to About before opening Settings
+                    // Turn to about page directly because menu bar is only available when settings are opened
                     UserDefaults.standard.set(SettingsTab.about.rawValue, forKey: "selectedSettingsTab")
                 }
             }
