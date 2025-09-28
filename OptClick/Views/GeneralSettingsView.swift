@@ -87,8 +87,8 @@ struct GeneralSettingsView: View {
                         Toggle("", isOn: $launchAtLogin)
                             .labelsHidden()
                             .toggleStyle(.switch)
-                            .onChange(of: launchAtLogin) {
-                                LaunchManager.setEnabled(launchAtLogin)
+                            .onChange(of: launchAtLogin) { newValue in
+                                LaunchManager.setEnabled(newValue)
                             }
                     }
 
@@ -102,7 +102,7 @@ struct GeneralSettingsView: View {
                         }
                         .labelsHidden()
                         .pickerStyle(.menu)
-                        .onChange(of: selectedLaunchBehavior) { _, newValue in
+                        .onChange(of: selectedLaunchBehavior) { newValue in
                             UserDefaults.standard.set(newValue.rawValue, forKey: InputManager.launchBehaviorKey)
                         }
                     }
@@ -113,8 +113,8 @@ struct GeneralSettingsView: View {
                         Toggle("", isOn: $autoCheckForUpdates)
                             .labelsHidden()
                             .toggleStyle(.switch)
-                            .onChange(of: autoCheckForUpdates) {
-                                UpdateManager.isAutoCheckEnabled = autoCheckForUpdates
+                            .onChange(of: autoCheckForUpdates) { newValue in
+                                UpdateManager.isAutoCheckEnabled = newValue
                             }
                     }
 
