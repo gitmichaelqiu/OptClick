@@ -31,7 +31,7 @@ You can modify it in Settings -> Shortcuts. Press `esc` while changing the hotke
 
 ## 📦 Installation
 
-Requires **macOS 14.0 Sonoma** or above.
+Requires **macOS 13.0 Ventura** or above.
 
 1. Download the package from [Releases](https://github.com/gitmichaelqiu/OptClick/releases/)
 2. Drag the app to the *Applications* folder
