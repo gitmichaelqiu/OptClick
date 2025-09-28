@@ -49,6 +49,14 @@ You may be required to enter the password. When you are entering, the password i
 
 You are welcome to create issues/suggestions in [GitHub Issues](https://github.com/gitmichaelqiu/OptClick/issues).
 
+## 🙏 Acknowlegements
+
+This app uses the following packages:
+
+- [HotKey by @soffes](https://github.com/soffes/HotKey)
+
+Thanks all the wonderful authors!
+
 ## ⭐ Support This Project
 
 You can simply click on the **Star** to support this project for free. Thank you for your support!
