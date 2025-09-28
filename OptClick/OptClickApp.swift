@@ -1,9 +1,12 @@
 import SwiftUI
+import Combine
 import AppKit
 
 class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     var statusItem: NSStatusItem?
     var settingsWindow: NSWindow?
+    
+    private var inputManagerCancellable: AnyCancellable?
     
     let inputManager = InputManager()
     let hotkeyManager = HotkeyManager()
@@ -108,12 +111,20 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             object: nil
         )
         
+        inputManagerCancellable = inputManager.objectWillChange
+            .sink { [weak self] _ in
+                // 当 InputManager 的任何 @Published 属性即将改变时，更新图标
+                DispatchQueue.main.async {
+                    self?.updateStatusBarIcon()
+                }
+            }
+        
         updateStatusBarIcon()
     }
     
     @objc private func handleHotkeyTriggered() {
         inputManager.isEnabled.toggle()
-        updateStatusBarIcon()
+//        updateStatusBarIcon()
     }
     
     // Menu bar icon
@@ -133,6 +144,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         }
 
         button.image = icon
+    }
+    
+    deinit {
+        inputManagerCancellable?.cancel()
     }
     
     private let iconSize = NSSize(width: 15, height: 15)
