@@ -21,7 +21,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             let settingsView = SettingsView(inputManager: inputManager)
                 .environmentObject(hotkeyManager)
             
-            let windowSize = NSSize(width: 450, height: 400)
+            let windowSize = NSSize(width: 450, height: 420)
             
             // Create a new window
             settingsWindow = NSWindow(

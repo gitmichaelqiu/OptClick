@@ -43,14 +43,14 @@ struct AboutView: View {
             Link(NSLocalizedString("Settings.About.Repo", comment: "GitHub Repo"), destination: URL(string: "https://github.com/gitmichaelqiu/OptClick")!)
                 .font(.caption)
                 .foregroundColor(.blue)
-
+            
             Spacer()
 
             Text("© \(currentYear) Michael Yicheng Qiu.")
-                .font(.caption2)
+                .font(.caption)
                 .foregroundColor(.secondary)
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
         .padding()
+        .frame(maxWidth: .infinity, maxHeight: 420, alignment: .topLeading)
     }
 }
