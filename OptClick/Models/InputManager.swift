@@ -38,8 +38,8 @@ class InputManager: ObservableObject {
     // Auto toggle properties
     private var frontmostAppMonitor: Any?
     private var lastManualState: Bool = false
-    private var autoToggleAppBundleId: String {
-        UserDefaults.standard.string(forKey: "AutoToggleAppBundleId") ?? ""
+    private var autoToggleAppBundleIds: [String] {
+        UserDefaults.standard.stringArray(forKey: "AutoToggleAppBundleIds") ?? []
     }
     private var autoToggleBehavior: AutoToggleBehavior {
         let raw = UserDefaults.standard.string(forKey: "AutoToggleBehavior") ?? AutoToggleBehavior.disable.rawValue
@@ -100,12 +100,12 @@ class InputManager: ObservableObject {
     }
 
     private func handleFrontmostAppChange(notification: Notification) {
-        guard !autoToggleAppBundleId.isEmpty else { return }
+        guard !autoToggleAppBundleIds.isEmpty else { return }
         guard let userInfo = notification.userInfo,
               let runningApp = userInfo[NSWorkspace.applicationUserInfoKey] as? NSRunningApplication,
               let bundleId = runningApp.bundleIdentifier else { return }
 
-        if bundleId == autoToggleAppBundleId {
+        if autoToggleAppBundleIds.contains(bundleId) {
             // Target app is now frontmost
             isAutoToggling = true
             if !isEnabled {

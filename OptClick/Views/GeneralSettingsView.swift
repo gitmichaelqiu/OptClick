@@ -71,7 +71,10 @@ struct GeneralSettingsView: View {
         let behaviorString = UserDefaults.standard.string(forKey: InputManager.launchBehaviorKey) ?? LaunchBehavior.lastState.rawValue
         return LaunchBehavior(rawValue: behaviorString) ?? .lastState
     }()
-    @State private var autoToggleAppBundleId: String = UserDefaults.standard.string(forKey: "AutoToggleAppBundleId") ?? ""
+    @State private var autoToggleAppBundleIds: [String] = (UserDefaults.standard.stringArray(forKey: "AutoToggleAppBundleIds") ?? [])
+    @State private var selectedAppIndex: Int? = nil
+    @State private var isAppTableExpanded: Bool = false
+    @State private var isAppPickerPresented: Bool = false
     @State private var autoToggleBehavior: AutoToggleBehavior = {
         let raw = UserDefaults.standard.string(forKey: "AutoToggleBehavior") ?? AutoToggleBehavior.disable.rawValue
         return AutoToggleBehavior(rawValue: raw) ?? .disable
@@ -90,15 +93,66 @@ struct GeneralSettingsView: View {
 
                 SettingsSection("Settings.General.AutoToggle") {
                     SettingsRow("Settings.General.AutoToggle.TargetApps") {
-                        TextField("com.example.app", text: $autoToggleAppBundleId)
-                            .onChange(of: autoToggleAppBundleId) { newValue in
-                                UserDefaults.standard.set(newValue, forKey: "AutoToggleAppBundleId")
+                        HStack(spacing: 8) {
+                            Button(action: { isAppTableExpanded.toggle() }) {
+                                Image(systemName: isAppTableExpanded ? "chevron.down" : "chevron.right")
+                                    .frame(width: 20, height: 20)
                             }
-                            .frame(width: 220)
+                        }
                     }
-                    
+                    if isAppTableExpanded {
+                        VStack(alignment: .leading, spacing: 0) {
+                            List(selection: $selectedAppIndex) {
+                                ForEach(autoToggleAppBundleIds.indices, id: \ .self) { idx in
+                                    HStack {
+                                        Text(autoToggleAppBundleIds[idx])
+                                        Spacer()
+                                    }
+                                    .contentShape(Rectangle())
+                                    .onTapGesture {
+                                        selectedAppIndex = idx
+                                    }
+                                    .background(selectedAppIndex == idx ? Color.accentColor.opacity(0.2) : Color.clear)
+                                }
+                            }
+                            .frame(height: min(160, CGFloat(autoToggleAppBundleIds.count) * 28 + 28))
+                            HStack {
+                                Spacer()
+                                Button(action: {
+                                    let panel = NSOpenPanel()
+                                    panel.allowedFileTypes = ["app"]
+                                    panel.allowsMultipleSelection = false
+                                    panel.canChooseDirectories = false
+                                    panel.title = "Choose Application"
+                                    if panel.runModal() == .OK, let url = panel.url {
+                                        if let bundle = Bundle(url: url), let bundleId = bundle.bundleIdentifier {
+                                            if !autoToggleAppBundleIds.contains(bundleId) {
+                                                autoToggleAppBundleIds.append(bundleId)
+                                                UserDefaults.standard.set(autoToggleAppBundleIds, forKey: "AutoToggleAppBundleIds")
+                                            }
+                                        }
+                                    }
+                                }) {
+                                    Image(systemName: "plus")
+                                }
+                                .help("Add App")
+                                Button(action: {
+                                    if let idx = selectedAppIndex, autoToggleAppBundleIds.indices.contains(idx) {
+                                        autoToggleAppBundleIds.remove(at: idx)
+                                        UserDefaults.standard.set(autoToggleAppBundleIds, forKey: "AutoToggleAppBundleIds")
+                                        selectedAppIndex = nil
+                                    }
+                                }) {
+                                    Image(systemName: "minus")
+                                }
+                                .help("Remove Selected App")
+                            }
+                            .padding(.top, 4)
+                        }
+                        .padding(.horizontal, 16)
+                        .padding(.bottom, 8)
+                    }
                     Divider()
-                    
                     SettingsRow("Settings.General.AutoToggle.NotFrontmost") {
                         Picker("", selection: $autoToggleBehavior) {
                             ForEach(AutoToggleBehavior.allCases, id: \.self) { behavior in
