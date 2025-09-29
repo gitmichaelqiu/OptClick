@@ -153,6 +153,8 @@ struct GeneralSettingsView: View {
                                         }
                                     }) {
                                         Image(systemName: "plus")
+                                            .frame(width: 24, height: 24)
+                                            .contentShape(Rectangle())
                                     }
                                     .buttonStyle(.borderless)
                                     .help("Add App")
@@ -170,6 +172,8 @@ struct GeneralSettingsView: View {
                                         }
                                     }) {
                                         Image(systemName: "minus")
+                                            .frame(width: 24, height: 24)
+                                            .contentShape(Rectangle())
                                     }
                                     .buttonStyle(.borderless)
                                     .disabled(selection == nil)
