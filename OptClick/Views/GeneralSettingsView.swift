@@ -101,7 +101,7 @@ struct GeneralSettingsView: View {
                                 }
                             }) {
                                 Image(systemName: isAppTableExpanded ? "chevron.down" : "chevron.right")
-                                    .frame(width: 20, height: 20)
+                                    .frame(width: 20, height: 16)
                             }
                         }
                     }
@@ -153,7 +153,7 @@ struct GeneralSettingsView: View {
                                         }
                                     }) {
                                         Image(systemName: "plus")
-                                            .frame(width: 24, height: 24)
+                                            .frame(width: 24, height: 14)
                                             .contentShape(Rectangle())
                                     }
                                     .buttonStyle(.borderless)
@@ -172,7 +172,7 @@ struct GeneralSettingsView: View {
                                         }
                                     }) {
                                         Image(systemName: "minus")
-                                            .frame(width: 24, height: 24)
+                                            .frame(width: 24, height: 14)
                                             .contentShape(Rectangle())
                                     }
                                     .buttonStyle(.borderless)
@@ -184,8 +184,7 @@ struct GeneralSettingsView: View {
                                 .padding(.bottom, 8)
                             }
                             .padding(.horizontal, 16)
-                            .padding(.bottom, 8)
-//                            .animation(.easeInOut(duration: 0.22), value: isAppTableExpanded)
+                            .padding(.bottom, 2)
                         }
                     Divider()
                     SettingsRow("Settings.General.AutoToggle.NotFrontmost") {
