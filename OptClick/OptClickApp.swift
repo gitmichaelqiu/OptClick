@@ -2,6 +2,9 @@ import SwiftUI
 import Combine
 import AppKit
 
+let defaultSettingsWindowWidth = 500
+let defaultSettingsWindowHeight = 500
+
 class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     var statusItem: NSStatusItem?
     var settingsWindow: NSWindow?
@@ -21,7 +24,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             let settingsView = SettingsView(inputManager: inputManager)
                 .environmentObject(hotkeyManager)
             
-            let windowSize = NSSize(width: 450, height: 400)
+            let windowSize = NSSize(width: defaultSettingsWindowWidth, height: defaultSettingsWindowHeight)
             
             // Create a new window
             settingsWindow = NSWindow(
