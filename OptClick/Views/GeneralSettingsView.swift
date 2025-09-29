@@ -72,7 +72,7 @@ struct GeneralSettingsView: View {
         return LaunchBehavior(rawValue: behaviorString) ?? .lastState
     }()
     @State private var autoToggleAppBundleIds: [String] = (UserDefaults.standard.stringArray(forKey: "AutoToggleAppBundleIds") ?? [])
-    @State private var selectedAppIndex: Int? = nil
+    @State private var selection: String? = nil
     @State private var isAppTableExpanded: Bool = false
     @State private var isAppPickerPresented: Bool = false
     @State private var autoToggleBehavior: AutoToggleBehavior = {
@@ -102,22 +102,31 @@ struct GeneralSettingsView: View {
                     }
                     if isAppTableExpanded {
                         VStack(alignment: .leading, spacing: 0) {
-                            List(selection: $selectedAppIndex) {
-                                ForEach(autoToggleAppBundleIds.indices, id: \ .self) { idx in
+                            let sortedApps = autoToggleAppBundleIds.compactMap { bundleId -> (String, String, NSImage?)? in
+                                guard let url = NSWorkspace.shared.urlForApplication(withBundleIdentifier: bundleId),
+                                      let bundle = Bundle(url: url) else { return nil }
+                                let name = bundle.object(forInfoDictionaryKey: "CFBundleName") as? String ?? bundleId
+                                let icon = NSWorkspace.shared.icon(forFile: url.path)
+                                return (bundleId, name, icon)
+                            }.sorted { $0.1.localizedCaseInsensitiveCompare($1.1) == .orderedAscending }
+
+                            List(selection: $selection) {
+                                ForEach(sortedApps, id: \ .0) { (bundleId, name, icon) in
                                     HStack {
-                                        Text(autoToggleAppBundleIds[idx])
+                                        if let icon = icon {
+                                            Image(nsImage: icon)
+                                                .resizable()
+                                                .frame(width: 20, height: 20)
+                                                .cornerRadius(4)
+                                        }
+                                        Text(name)
                                         Spacer()
                                     }
-                                    .contentShape(Rectangle())
-                                    .onTapGesture {
-                                        selectedAppIndex = idx
-                                    }
-                                    .background(selectedAppIndex == idx ? Color.accentColor.opacity(0.2) : Color.clear)
+                                    .tag(bundleId)
                                 }
                             }
-                            .frame(height: min(160, CGFloat(autoToggleAppBundleIds.count) * 28 + 28))
+                            .frame(height: min(160, CGFloat(sortedApps.count) * 28 + 28))
                             HStack {
-                                Spacer()
                                 Button(action: {
                                     let panel = NSOpenPanel()
                                     panel.allowedFileTypes = ["app"]
@@ -135,19 +144,27 @@ struct GeneralSettingsView: View {
                                 }) {
                                     Image(systemName: "plus")
                                 }
+                                .buttonStyle(.borderless)
                                 .help("Add App")
+
+                                Divider().frame(height: 16)
+
                                 Button(action: {
-                                    if let idx = selectedAppIndex, autoToggleAppBundleIds.indices.contains(idx) {
+                                    if let selected = selection, let idx = autoToggleAppBundleIds.firstIndex(of: selected) {
                                         autoToggleAppBundleIds.remove(at: idx)
                                         UserDefaults.standard.set(autoToggleAppBundleIds, forKey: "AutoToggleAppBundleIds")
-                                        selectedAppIndex = nil
+                                        selection = nil
                                     }
                                 }) {
                                     Image(systemName: "minus")
                                 }
+                                .buttonStyle(.borderless)
+                                .disabled(selection == nil)
                                 .help("Remove Selected App")
                             }
+                            .padding(.horizontal, 4)
                             .padding(.top, 4)
+                            .padding(.bottom, 8)
                         }
                         .padding(.horizontal, 16)
                         .padding(.bottom, 8)
