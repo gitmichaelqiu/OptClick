@@ -1,5 +1,6 @@
 import AppKit
 import SwiftUI
+import UniformTypeIdentifiers
 
 struct SettingsRow<Content: View>: View {
     let title: LocalizedStringKey
@@ -138,7 +139,7 @@ struct GeneralSettingsView: View {
                                 HStack {
                                     Button(action: {
                                         let panel = NSOpenPanel()
-                                        panel.allowedFileTypes = ["app"]
+                                        panel.allowedContentTypes = [.application]
                                         panel.allowsMultipleSelection = false
                                         panel.canChooseDirectories = false
                                         panel.title = "Choose Application"
