@@ -12,7 +12,7 @@
 
 "Settings.General.Launch" = "Launch";
 "Settings.General.Launch.AtLogin" = "Launch at login";
-"Settings.General.LaunchBehavior" = "Launch Behavior";
+"Settings.General.LaunchBehavior" = "Launch behavior";
 "Settings.General.LaunchBehavior.Disabled" = "Disable OptClick";
 "Settings.General.LaunchBehavior.Enabled" = "Enable OptClick";
 "Settings.General.LaunchBehavior.LastState" = "Follow last setting";
