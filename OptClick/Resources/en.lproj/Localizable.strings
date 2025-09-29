@@ -17,6 +17,12 @@
 "Settings.General.LaunchBehavior.Enabled" = "Enable OptClick";
 "Settings.General.LaunchBehavior.LastState" = "Follow last setting";
 
+"Settings.General.AutoToggle" = "Auto Toggle";
+"Settings.General.AutoToggle.TargetApps" = "Target Apps";
+"Settings.General.AutoToggle.NotFrontmost" = "When not frontmost";
+"Settings.General.AutoToggle.NotFrontmost.Disable" = "Disable OptClick";
+"Settings.General.AutoToggle.NotFrontmost.FollowLast" = "Follow last setting";
+
 "Settings.General.Update" = "Update";
 "Settings.General.Update.AutoCheck" = "Automatically check for updates";
 "Settings.General.Update.ManualCheck" = "Check for updates";

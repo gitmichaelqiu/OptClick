@@ -1,4 +1,7 @@
-import os.log
+import Foundation
+import AppKit
+import Combine
+
 enum AutoToggleBehavior: String, CaseIterable {
     case disable = "disable"
     case followLast = "followLast"
@@ -6,15 +9,12 @@ enum AutoToggleBehavior: String, CaseIterable {
     var localizedDescription: String {
         switch self {
         case .disable:
-            return "Disable OptClick"
+            return NSLocalizedString("Settings.General.AutoToggle.NotFrontmost.Disable", comment: "Disable")
         case .followLast:
-            return "Follow last setting"
+            return NSLocalizedString("Settings.General.AutoToggle.NotFrontmost.FollowLast", comment: "Follow last setting")
         }
     }
 }
-import Foundation
-import AppKit
-import Combine
 
 enum LaunchBehavior: String, CaseIterable {
     case enabled = "enabled"

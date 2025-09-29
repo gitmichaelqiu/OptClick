@@ -15,7 +15,13 @@
 "Settings.General.LaunchBehavior" = "启动行为";
 "Settings.General.LaunchBehavior.Disabled" = "禁用 OptClick";
 "Settings.General.LaunchBehavior.Enabled" = "启用 OptClick";
-"Settings.General.LaunchBehavior.LastState" = "跟随上一次";
+"Settings.General.LaunchBehavior.LastState" = "跟随上一次设置";
+
+"Settings.General.AutoToggle" = "自动切换";
+"Settings.General.AutoToggle.TargetApps" = "目标 App";
+"Settings.General.AutoToggle.NotFrontmost" = "当不再最前面";
+"Settings.General.AutoToggle.NotFrontmost.Disable" = "禁用 OptClick";
+"Settings.General.AutoToggle.NotFrontmost.FollowLast" = "跟随上一次设置";
 
 "Settings.General.Update" = "更新";
 "Settings.General.Update.AutoCheck" = "自动检查更新";

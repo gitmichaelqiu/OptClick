@@ -88,9 +88,8 @@ struct GeneralSettingsView: View {
                     }
                 }
 
-                // --- Auto Toggle Section ---
-                SettingsSection("Auto Toggle") {
-                    SettingsRow("Target App Bundle ID") {
+                SettingsSection("Settings.General.AutoToggle") {
+                    SettingsRow("Settings.General.AutoToggle.TargetApps") {
                         TextField("com.example.app", text: $autoToggleAppBundleId)
                             .onChange(of: autoToggleAppBundleId) { newValue in
                                 UserDefaults.standard.set(newValue, forKey: "AutoToggleAppBundleId")
@@ -100,7 +99,7 @@ struct GeneralSettingsView: View {
                     
                     Divider()
                     
-                    SettingsRow("When no longer frontmost") {
+                    SettingsRow("Settings.General.AutoToggle.NotFrontmost") {
                         Picker("", selection: $autoToggleBehavior) {
                             ForEach(AutoToggleBehavior.allCases, id: \.self) { behavior in
                                 Text(behavior.localizedDescription).tag(behavior)
