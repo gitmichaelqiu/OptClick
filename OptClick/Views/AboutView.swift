@@ -51,6 +51,6 @@ struct AboutView: View {
                 .foregroundColor(.secondary)
         }
         .padding()
-        .frame(maxWidth: .infinity, maxHeight: 420, alignment: .topLeading)
+        .frame(maxWidth: .infinity, maxHeight: CGFloat(defaultSettingsWindowHeight), alignment: .topLeading)
     }
 }

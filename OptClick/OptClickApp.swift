@@ -2,8 +2,8 @@ import SwiftUI
 import Combine
 import AppKit
 
-let defaultSettingsWindowWidth = 500
-let defaultSettingsWindowHeight = 500
+let defaultSettingsWindowWidth = 450
+let defaultSettingsWindowHeight = 450
 
 class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     var statusItem: NSStatusItem?
