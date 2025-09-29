@@ -111,7 +111,7 @@ class InputManager: ObservableObject {
             if !isEnabled {
                 isEnabled = true
             }
-            // isAutoToggling = false
+            isAutoToggling = false
         } else {
             // Target app is no longer frontmost
             isAutoToggling = true
@@ -125,7 +125,7 @@ class InputManager: ObservableObject {
                     isEnabled = lastManualState
                 }
             }
-            // isAutoToggling = false
+            isAutoToggling = false
         }
     }
     
