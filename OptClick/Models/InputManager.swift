@@ -8,7 +8,7 @@ enum AutoToggleBehavior: String, CaseIterable {
         case .disable:
             return "Disable OptClick"
         case .followLast:
-            return "Follow last manual setting"
+            return "Follow last setting"
         }
     }
 }

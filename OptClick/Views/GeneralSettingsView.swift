@@ -97,7 +97,10 @@ struct GeneralSettingsView: View {
                             }
                             .frame(width: 220)
                     }
-                    SettingsRow("When app is no longer frontmost") {
+                    
+                    Divider()
+                    
+                    SettingsRow("When no longer frontmost") {
                         Picker("", selection: $autoToggleBehavior) {
                             ForEach(AutoToggleBehavior.allCases, id: \.self) { behavior in
                                 Text(behavior.localizedDescription).tag(behavior)
