@@ -1,3 +1,4 @@
+import AppKit
 import SwiftUI
 
 struct SettingsRow<Content: View>: View {
@@ -70,6 +71,11 @@ struct GeneralSettingsView: View {
         let behaviorString = UserDefaults.standard.string(forKey: InputManager.launchBehaviorKey) ?? LaunchBehavior.lastState.rawValue
         return LaunchBehavior(rawValue: behaviorString) ?? .lastState
     }()
+    @State private var autoToggleAppBundleId: String = UserDefaults.standard.string(forKey: "AutoToggleAppBundleId") ?? ""
+    @State private var autoToggleBehavior: AutoToggleBehavior = {
+        let raw = UserDefaults.standard.string(forKey: "AutoToggleBehavior") ?? AutoToggleBehavior.disable.rawValue
+        return AutoToggleBehavior(rawValue: raw) ?? .disable
+    }()
 
     var body: some View {
         ScrollView {
@@ -79,6 +85,29 @@ struct GeneralSettingsView: View {
                         Toggle("", isOn: $inputManager.isEnabled)
                             .labelsHidden()
                             .toggleStyle(.switch)
+                    }
+                }
+
+                // --- Auto Toggle Section ---
+                SettingsSection("Auto Toggle") {
+                    SettingsRow("Target App Bundle ID") {
+                        TextField("com.example.app", text: $autoToggleAppBundleId)
+                            .onChange(of: autoToggleAppBundleId) { newValue in
+                                UserDefaults.standard.set(newValue, forKey: "AutoToggleAppBundleId")
+                            }
+                            .frame(width: 220)
+                    }
+                    SettingsRow("When app is no longer frontmost") {
+                        Picker("", selection: $autoToggleBehavior) {
+                            ForEach(AutoToggleBehavior.allCases, id: \.self) { behavior in
+                                Text(behavior.localizedDescription).tag(behavior)
+                            }
+                        }
+                        .labelsHidden()
+                        .pickerStyle(.menu)
+                        .onChange(of: autoToggleBehavior) { newValue in
+                            UserDefaults.standard.set(newValue.rawValue, forKey: "AutoToggleBehavior")
+                        }
                     }
                 }
 

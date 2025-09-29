@@ -1,3 +1,17 @@
+import os.log
+enum AutoToggleBehavior: String, CaseIterable {
+    case disable = "disable"
+    case followLast = "followLast"
+
+    var localizedDescription: String {
+        switch self {
+        case .disable:
+            return "Disable OptClick"
+        case .followLast:
+            return "Follow last manual setting"
+        }
+    }
+}
 import Foundation
 import AppKit
 import Combine
@@ -20,8 +34,22 @@ enum LaunchBehavior: String, CaseIterable {
 }
 
 class InputManager: ObservableObject {
+
+    // Auto toggle properties
+    private var frontmostAppMonitor: Any?
+    private var lastManualState: Bool = false
+    private var autoToggleAppBundleId: String {
+        UserDefaults.standard.string(forKey: "AutoToggleAppBundleId") ?? ""
+    }
+    private var autoToggleBehavior: AutoToggleBehavior {
+        let raw = UserDefaults.standard.string(forKey: "AutoToggleBehavior") ?? AutoToggleBehavior.disable.rawValue
+        return AutoToggleBehavior(rawValue: raw) ?? .disable
+    }
     @Published var isEnabled: Bool = false {
         didSet {
+            if !isAutoToggling {
+                lastManualState = isEnabled
+            }
             if isEnabled {
                 startMonitoring()
             } else {
@@ -30,6 +58,8 @@ class InputManager: ObservableObject {
             UserDefaults.standard.set(isEnabled, forKey: Self.lastStateKey)
         }
     }
+
+    private var isAutoToggling = false
 
     private var keyDownMonitor: Any?
     private var keyUpMonitor: Any?
@@ -49,8 +79,53 @@ class InputManager: ObservableObject {
             isEnabled = UserDefaults.standard.bool(forKey: Self.lastStateKey)
         }
 
+        lastManualState = isEnabled
+
         if isEnabled {
             startMonitoring()
+        }
+
+        startFrontmostAppMonitor()
+    }
+
+    private func startFrontmostAppMonitor() {
+        // Use NSWorkspace notification for frontmost app change
+        NSWorkspace.shared.notificationCenter.addObserver(
+            forName: NSWorkspace.didActivateApplicationNotification,
+            object: nil,
+            queue: .main
+        ) { [weak self] notification in
+            self?.handleFrontmostAppChange(notification: notification)
+        }
+    }
+
+    private func handleFrontmostAppChange(notification: Notification) {
+        guard !autoToggleAppBundleId.isEmpty else { return }
+        guard let userInfo = notification.userInfo,
+              let runningApp = userInfo[NSWorkspace.applicationUserInfoKey] as? NSRunningApplication,
+              let bundleId = runningApp.bundleIdentifier else { return }
+
+        if bundleId == autoToggleAppBundleId {
+            // Target app is now frontmost
+            isAutoToggling = true
+            if !isEnabled {
+                isEnabled = true
+            }
+            // isAutoToggling = false
+        } else {
+            // Target app is no longer frontmost
+            isAutoToggling = true
+            switch autoToggleBehavior {
+            case .disable:
+                if isEnabled {
+                    isEnabled = false
+                }
+            case .followLast:
+                if isEnabled != lastManualState {
+                    isEnabled = lastManualState
+                }
+            }
+            // isAutoToggling = false
         }
     }
     
