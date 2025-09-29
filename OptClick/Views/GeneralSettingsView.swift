@@ -105,87 +105,87 @@ struct GeneralSettingsView: View {
                             }
                         }
                     }
-                        if isAppTableExpanded {
-                            VStack(alignment: .leading, spacing: 0) {
-                                let sortedApps = autoToggleAppBundleIds.compactMap { bundleId -> (String, String, NSImage?)? in
-                                    guard let url = NSWorkspace.shared.urlForApplication(withBundleIdentifier: bundleId),
-                                          let bundle = Bundle(url: url) else { return nil }
-                                    let name = bundle.object(forInfoDictionaryKey: "CFBundleName") as? String ?? bundleId
-                                    let icon = NSWorkspace.shared.icon(forFile: url.path)
-                                    return (bundleId, name, icon)
-                                }.sorted { $0.1.localizedCaseInsensitiveCompare($1.1) == .orderedAscending }
+                if isAppTableExpanded {
+                    VStack(alignment: .leading, spacing: 0) {
+                        let sortedApps = autoToggleAppBundleIds.compactMap { bundleId -> (String, String, NSImage?)? in
+                            guard let url = NSWorkspace.shared.urlForApplication(withBundleIdentifier: bundleId),
+                                  let bundle = Bundle(url: url) else { return nil }
+                            let name = bundle.object(forInfoDictionaryKey: "CFBundleName") as? String ?? bundleId
+                            let icon = NSWorkspace.shared.icon(forFile: url.path)
+                            return (bundleId, name, icon)
+                        }.sorted { $0.1.localizedCaseInsensitiveCompare($1.1) == .orderedAscending }
 
-                                List(selection: $selection) {
-                                    ForEach(sortedApps, id: \ .0) { (bundleId, name, icon) in
-                                        HStack {
-                                            if let icon = icon {
-                                                Image(nsImage: icon)
-                                                    .resizable()
-                                                    .frame(width: 20, height: 20)
-                                                    .cornerRadius(4)
-                                            }
-                                            Text(name)
-                                            Spacer()
-                                        }
-                                        .tag(bundleId)
-                                    }
-                                }
-                                .frame(height: min(160, CGFloat(sortedApps.count) * 28 + 28))
-                                .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: 8, style: .continuous)
-                                        .stroke(Color.secondary.opacity(0.15), lineWidth: 1)
-                                )
+                        List(selection: $selection) {
+                            ForEach(sortedApps, id: \ .0) { (bundleId, name, icon) in
                                 HStack {
-                                    Button(action: {
-                                        let panel = NSOpenPanel()
-                                        panel.allowedContentTypes = [.application]
-                                        panel.allowsMultipleSelection = false
-                                        panel.canChooseDirectories = false
-                                        panel.title = "Choose Application"
-                                        if panel.runModal() == .OK, let url = panel.url {
-                                            if let bundle = Bundle(url: url), let bundleId = bundle.bundleIdentifier {
-                                                if !autoToggleAppBundleIds.contains(bundleId) {
-                                                    autoToggleAppBundleIds.append(bundleId)
-                                                    UserDefaults.standard.set(autoToggleAppBundleIds, forKey: "AutoToggleAppBundleIds")
-                                                }
-                                            }
-                                        }
-                                    }) {
-                                        Image(systemName: "plus")
-                                            .frame(width: 24, height: 14)
-                                            .contentShape(Rectangle())
+                                    if let icon = icon {
+                                        Image(nsImage: icon)
+                                            .resizable()
+                                            .frame(width: 20, height: 20)
+                                            .cornerRadius(4)
                                     }
-                                    .buttonStyle(.borderless)
-                                    .help("Add App")
-
-                                    Divider().frame(height: 16)
-
-                                    Button(action: {
-                                        if let selected = selection {
-                                            // Remove by bundleId from the original array
-                                            if let idx = autoToggleAppBundleIds.firstIndex(of: selected) {
-                                                autoToggleAppBundleIds.remove(at: idx)
-                                                UserDefaults.standard.set(autoToggleAppBundleIds, forKey: "AutoToggleAppBundleIds")
-                                                selection = nil
-                                            }
-                                        }
-                                    }) {
-                                        Image(systemName: "minus")
-                                            .frame(width: 24, height: 14)
-                                            .contentShape(Rectangle())
-                                    }
-                                    .buttonStyle(.borderless)
-                                    .disabled(selection == nil)
-                                    .help("Remove Selected App")
+                                    Text(name)
+                                    Spacer()
                                 }
-                                .padding(.horizontal, 4)
-                                .padding(.top, 4)
-                                .padding(.bottom, 8)
+                                .tag(bundleId)
                             }
-                            .padding(.horizontal, 16)
-                            .padding(.bottom, 2)
                         }
+                        .frame(height: min(160, CGFloat(sortedApps.count) * 28 + 28))
+                        .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 8, style: .continuous)
+                                .stroke(Color.secondary.opacity(0.15), lineWidth: 1)
+                        )
+                        HStack {
+                            Button(action: {
+                                let panel = NSOpenPanel()
+                                panel.allowedContentTypes = [.application]
+                                panel.allowsMultipleSelection = false
+                                panel.canChooseDirectories = false
+                                panel.title = "Choose Application"
+                                if panel.runModal() == .OK, let url = panel.url {
+                                    if let bundle = Bundle(url: url), let bundleId = bundle.bundleIdentifier {
+                                        if !autoToggleAppBundleIds.contains(bundleId) {
+                                            autoToggleAppBundleIds.append(bundleId)
+                                            UserDefaults.standard.set(autoToggleAppBundleIds, forKey: "AutoToggleAppBundleIds")
+                                        }
+                                    }
+                                }
+                            }) {
+                                Image(systemName: "plus")
+                                    .frame(width: 24, height: 14)
+                                    .contentShape(Rectangle())
+                            }
+                            .buttonStyle(.borderless)
+                            .help("Add App")
+
+                            Divider().frame(height: 16)
+
+                            Button(action: {
+                                if let selected = selection {
+                                    // Remove by bundleId from the original array
+                                    if let idx = autoToggleAppBundleIds.firstIndex(of: selected) {
+                                        autoToggleAppBundleIds.remove(at: idx)
+                                        UserDefaults.standard.set(autoToggleAppBundleIds, forKey: "AutoToggleAppBundleIds")
+                                        selection = nil
+                                    }
+                                }
+                            }) {
+                                Image(systemName: "minus")
+                                    .frame(width: 24, height: 14)
+                                    .contentShape(Rectangle())
+                            }
+                            .buttonStyle(.borderless)
+                            .disabled(selection == nil)
+                            .help("Remove Selected App")
+                        }
+                        .padding(.horizontal, 4)
+                        .padding(.top, 4)
+                        .padding(.bottom, 8)
+                    }
+                    .padding(.horizontal, 16)
+                    .padding(.bottom, 2)
+                }
                     Divider()
                     SettingsRow("Settings.General.AutoToggle.NotFrontmost") {
                         Picker("", selection: $autoToggleBehavior) {
