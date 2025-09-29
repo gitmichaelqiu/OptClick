@@ -94,7 +94,11 @@ struct GeneralSettingsView: View {
                 SettingsSection("Settings.General.AutoToggle") {
                     SettingsRow("Settings.General.AutoToggle.TargetApps") {
                         HStack(spacing: 8) {
-                            Button(action: { isAppTableExpanded.toggle() }) {
+                            Button(action: {
+                                withAnimation(.easeInOut(duration: 0.15)) {
+                                    isAppTableExpanded.toggle()
+                                }
+                            }) {
                                 Image(systemName: isAppTableExpanded ? "chevron.down" : "chevron.right")
                                     .frame(width: 20, height: 20)
                             }
@@ -176,7 +180,7 @@ struct GeneralSettingsView: View {
                             }
                             .padding(.horizontal, 16)
                             .padding(.bottom, 8)
-                            .animation(.easeInOut(duration: 0.22), value: isAppTableExpanded)
+//                            .animation(.easeInOut(duration: 0.22), value: isAppTableExpanded)
                         }
                     Divider()
                     SettingsRow("Settings.General.AutoToggle.NotFrontmost") {
