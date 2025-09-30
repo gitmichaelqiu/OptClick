@@ -262,36 +262,45 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     private func autoToggleStatusDescription() -> String {
         let inputManager = self.inputManager
+        let state = inputManager.isEnabled
+        let stateStr = state ? "Enabled" : "Disabled"
         
         // If no auto toggle apps
         let autoToggleAppBundleIds = UserDefaults.standard.stringArray(forKey: "AutoToggleAppBundleIds") ?? []
         if autoToggleAppBundleIds.isEmpty {
-            let state = inputManager.isEnabled ? "Enabled" : "Disabled"
-            return "\(state): Manual setting"
+            return "\(stateStr): Manual setting"
         }
         
         // Get frontmost
         guard let frontmostApp = NSWorkspace.shared.frontmostApplication,
               let bundleId = frontmostApp.bundleIdentifier else {
-            let state = inputManager.isEnabled ? "Enabled" : "Disabled"
-            return "\(state): Unknown app"
+            return "\(stateStr): Unknown app"
         }
         
         let appName = frontmostApp.localizedName ?? bundleId
         
         if autoToggleAppBundleIds.contains(bundleId) {
-            return "Enabled: \(appName) is frontmost"
+            if !state {
+                return "\(stateStr): Temporary manual setting"
+            }
+            return "\(stateStr): \(appName) is frontmost"
         } else {
             let behaviorRaw = UserDefaults.standard.string(forKey: "AutoToggleBehavior") ?? "disable"
             let behavior = AutoToggleBehavior(rawValue: behaviorRaw) ?? .disable
             
             switch behavior {
             case .disable:
-                return "Disabled: No target app is frontmost"
+                if state {
+                    return "\(stateStr): Temporary manual setting"
+                }
+                return "\(stateStr): No target app is frontmost"
             case .followLast:
                 let lastState = UserDefaults.standard.bool(forKey: InputManager.lastStateKey)
-                let stateStr = lastState ? "Enabled" : "Disabled"
-                return "\(stateStr): Last manual setting (no target app frontmost)"
+                
+                if lastState == state {
+                    return "\(stateStr): Last manual setting"
+                }
+                return "\(stateStr): Manual setting"
             }
         }
     }
