@@ -148,6 +148,7 @@ struct GeneralSettingsView: View {
                                         if !autoToggleAppBundleIds.contains(bundleId) {
                                             autoToggleAppBundleIds.append(bundleId)
                                             UserDefaults.standard.set(autoToggleAppBundleIds, forKey: "AutoToggleAppBundleIds")
+                                            inputManager.refreshAutoToggleState()
                                         }
                                     }
                                 }
@@ -168,6 +169,7 @@ struct GeneralSettingsView: View {
                                         autoToggleAppBundleIds.remove(at: idx)
                                         UserDefaults.standard.set(autoToggleAppBundleIds, forKey: "AutoToggleAppBundleIds")
                                         selection = nil
+                                        inputManager.refreshAutoToggleState()
                                     }
                                 }
                             }) {
@@ -197,6 +199,7 @@ struct GeneralSettingsView: View {
                         .pickerStyle(.menu)
                         .onChange(of: autoToggleBehavior) { newValue in
                             UserDefaults.standard.set(newValue.rawValue, forKey: "AutoToggleBehavior")
+                            inputManager.refreshAutoToggleState()
                         }
                     }
                 }

@@ -86,6 +86,10 @@ class InputManager: ObservableObject {
         }
 
         startFrontmostAppMonitor()
+        
+        if !autoToggleAppBundleIds.isEmpty {
+            refreshAutoToggleState()
+        }
     }
 
     private func startFrontmostAppMonitor() {
@@ -127,6 +131,19 @@ class InputManager: ObservableObject {
             }
             isAutoToggling = false
         }
+    }
+    
+    func refreshAutoToggleState() {
+        guard let frontmostApp = NSWorkspace.shared.frontmostApplication,
+              let _ = frontmostApp.bundleIdentifier else { return }
+        
+        let notification = Notification(
+            name: NSWorkspace.didActivateApplicationNotification,
+            object: nil,
+            userInfo: [NSWorkspace.applicationUserInfoKey: frontmostApp]
+        )
+        
+        handleFrontmostAppChange(notification: notification)
     }
     
     private func getCGMouseLocation() -> CGPoint {
