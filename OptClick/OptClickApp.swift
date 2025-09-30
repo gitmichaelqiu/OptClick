@@ -74,16 +74,15 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         let menu = NSMenu()
 
         // --- Toggle OptClick ---
-        let toggleTitle = inputManager.isEnabled
-            ? NSLocalizedString("Menu.Toggle.Disable", comment: "Disable OptClick")
-            : NSLocalizedString("Menu.Toggle.Enable", comment: "Enable OptClick")
         let toggleItem = NSMenuItem(
-            title: toggleTitle,
+            title: NSLocalizedString("Menu.Toggle", comment: "Option → Right Click"),
             action: #selector(toggleOptClick),
             keyEquivalent: ""
         )
         toggleItem.target = self
+        toggleItem.state = inputManager.isEnabled ? .on : .off
         menu.addItem(toggleItem)
+
 
         // --- Status Reason (non-clickable) ---
         let statusReason = autoToggleStatusReason()
