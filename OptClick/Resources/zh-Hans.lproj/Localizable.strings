@@ -2,7 +2,7 @@
 
 "Menu.Settings" = "设置...";
 "Menu.Quit" = "退出";
-"Menu.Toggle" = "OptClick → 右键"
+"Menu.Toggle" = "OptClick → 右键";
 
 "Menu.Reason.StateStr.Enabled" = "启用";
 "Menu.Reason.StateStr.Disabled" = "禁用";

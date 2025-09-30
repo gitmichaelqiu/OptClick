@@ -2,7 +2,7 @@
 
 "Menu.Settings" = "Settings...";
 "Menu.Quit" = "Quit";
-"Menu.Toggle" = "OptClick → Right Click"
+"Menu.Toggle" = "OptClick → Right Click";
 
 "Menu.Reason.StateStr.Enabled" = "Enabled";
 "Menu.Reason.StateStr.Disabled" = "Disabled";
