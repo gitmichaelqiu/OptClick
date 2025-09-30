@@ -5,7 +5,7 @@ import AppKit
 let defaultSettingsWindowWidth = 450
 let defaultSettingsWindowHeight = 450
 
-class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
+class AppDelegate: NSObject, NSApplicationDelegate {
     var statusItem: NSStatusItem?
     var settingsWindow: NSWindow?
     
@@ -72,8 +72,29 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     
     func setupMenuItems() {
         let menu = NSMenu()
-        
-        // Settings menu item
+
+        // --- Toggle OptClick ---
+        let toggleTitle = inputManager.isEnabled
+            ? NSLocalizedString("Menu.Toggle.Disable", comment: "Disable OptClick")
+            : NSLocalizedString("Menu.Toggle.Enable", comment: "Enable OptClick")
+        let toggleItem = NSMenuItem(
+            title: toggleTitle,
+            action: #selector(toggleOptClick),
+            keyEquivalent: ""
+        )
+        toggleItem.target = self
+        menu.addItem(toggleItem)
+
+        // --- Status Reason (non-clickable) ---
+        let statusDescription = autoToggleStatusDescription()
+        let statusReasonItem = NSMenuItem(title: statusDescription, action: nil, keyEquivalent: "")
+        statusReasonItem.isEnabled = false
+        menu.addItem(statusReasonItem)
+
+        // Separator
+        menu.addItem(NSMenuItem.separator())
+
+        // Settings
         let settingsItem = NSMenuItem(
             title: NSLocalizedString("Menu.Settings", comment: "Settings"),
             action: #selector(openSettingsWindow),
@@ -81,11 +102,11 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         )
         settingsItem.target = self
         menu.addItem(settingsItem)
-        
+
         // Separator
         menu.addItem(NSMenuItem.separator())
-        
-        // Quit menu item
+
+        // Quit
         let quitItem = NSMenuItem(
             title: NSLocalizedString("Menu.Quit", comment: "Quit"),
             action: #selector(quitApp),
@@ -93,8 +114,13 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         )
         quitItem.target = self
         menu.addItem(quitItem)
-        
+
         statusItem?.menu = menu
+    }
+    
+    @objc func toggleOptClick() {
+        inputManager.isEnabled.toggle()
+        setupMenuItems()
     }
     
     func applicationDidFinishLaunching(_ notification: Notification) {
@@ -114,11 +140,18 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             object: nil
         )
         
+        NSWorkspace.shared.notificationCenter.addObserver(
+            self,
+            selector: #selector(frontmostAppDidChange),
+            name: NSWorkspace.didActivateApplicationNotification,
+            object: nil
+        )
+        
         inputManagerCancellable = inputManager.objectWillChange
             .sink { [weak self] _ in
-                // 当 InputManager 的任何 @Published 属性即将改变时，更新图标
                 DispatchQueue.main.async {
                     self?.updateStatusBarIcon()
+                    self?.setupMenuItems()
                 }
             }
         
@@ -128,6 +161,16 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     @objc private func handleHotkeyTriggered() {
         inputManager.isEnabled.toggle()
 //        updateStatusBarIcon()
+    }
+    
+    @objc private func frontmostAppDidChange() {
+        // Only update menu if AutoToggle is active
+        let autoToggleAppBundleIds = UserDefaults.standard.stringArray(forKey: "AutoToggleAppBundleIds") ?? []
+        if !autoToggleAppBundleIds.isEmpty {
+            DispatchQueue.main.async {
+                self.setupMenuItems()
+            }
+        }
     }
     
     // Menu bar icon
@@ -151,6 +194,11 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     
     deinit {
         inputManagerCancellable?.cancel()
+        NSWorkspace.shared.notificationCenter.removeObserver(
+            self,
+            name: NSWorkspace.didActivateApplicationNotification,
+            object: nil
+        )
     }
     
     private let iconSize = NSSize(width: 15, height: 15)
@@ -210,6 +258,42 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         image.draw(in: NSRect(origin: .zero, size: size), from: NSRect(origin: .zero, size: image.size), operation: .copy, fraction: 1.0)
         scaled.unlockFocus()
         return scaled
+    }
+    
+    private func autoToggleStatusDescription() -> String {
+        let inputManager = self.inputManager
+        
+        // If no auto toggle apps
+        let autoToggleAppBundleIds = UserDefaults.standard.stringArray(forKey: "AutoToggleAppBundleIds") ?? []
+        if autoToggleAppBundleIds.isEmpty {
+            let state = inputManager.isEnabled ? "Enabled" : "Disabled"
+            return "\(state): Manual setting"
+        }
+        
+        // Get frontmost
+        guard let frontmostApp = NSWorkspace.shared.frontmostApplication,
+              let bundleId = frontmostApp.bundleIdentifier else {
+            let state = inputManager.isEnabled ? "Enabled" : "Disabled"
+            return "\(state): Unknown app"
+        }
+        
+        let appName = frontmostApp.localizedName ?? bundleId
+        
+        if autoToggleAppBundleIds.contains(bundleId) {
+            return "Enabled: \(appName) is frontmost"
+        } else {
+            let behaviorRaw = UserDefaults.standard.string(forKey: "AutoToggleBehavior") ?? "disable"
+            let behavior = AutoToggleBehavior(rawValue: behaviorRaw) ?? .disable
+            
+            switch behavior {
+            case .disable:
+                return "Disabled: No target app is frontmost"
+            case .followLast:
+                let lastState = UserDefaults.standard.bool(forKey: InputManager.lastStateKey)
+                let stateStr = lastState ? "Enabled" : "Disabled"
+                return "\(stateStr): Last manual setting (no target app frontmost)"
+            }
+        }
     }
 }
 
