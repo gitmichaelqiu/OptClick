@@ -3,6 +3,15 @@
 "Menu.Settings" = "Settings...";
 "Menu.Quit" = "Quit";
 
+"Menu.Reason.StateStr.Enabled" = "Enabled";
+"Menu.Reason.StateStr.Disabled" = "Disabled";
+"Menu.Reason.Manual" = "%@: Manual setting";
+"Menu.Reason.Unknown" = "%@: Unknown app";
+"Menu.Reason.TmpManual" = "%@: Temporary manual setting";
+"Menu.Reason.IsFrontmost" = "%@: %@ is frontmost";
+"Menu.Reason.NoFrontmost" = "%@: No target app is frontmost";
+"Menu.Reason.LastManual" = "%@: Follow last setting";
+
 // Settings - General
 
 "Settings.General" = "General";

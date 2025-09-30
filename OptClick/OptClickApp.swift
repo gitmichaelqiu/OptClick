@@ -86,8 +86,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         menu.addItem(toggleItem)
 
         // --- Status Reason (non-clickable) ---
-        let statusDescription = autoToggleStatusDescription()
-        let statusReasonItem = NSMenuItem(title: statusDescription, action: nil, keyEquivalent: "")
+        let statusReason = autoToggleStatusReason()
+        let statusReasonItem = NSMenuItem(title: statusReason, action: nil, keyEquivalent: "")
         statusReasonItem.isEnabled = false
         menu.addItem(statusReasonItem)
 
@@ -260,30 +260,30 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         return scaled
     }
     
-    private func autoToggleStatusDescription() -> String {
+    private func autoToggleStatusReason() -> String {
         let inputManager = self.inputManager
         let state = inputManager.isEnabled
-        let stateStr = state ? "Enabled" : "Disabled"
+        let stateStr = state ? NSLocalizedString("Menu.Reason.StateStr.Enabled", comment: "Enabled") : NSLocalizedString("Menu.Reason.StateStr.Disabled", comment: "Disabled")
         
         // If no auto toggle apps
         let autoToggleAppBundleIds = UserDefaults.standard.stringArray(forKey: "AutoToggleAppBundleIds") ?? []
         if autoToggleAppBundleIds.isEmpty {
-            return "\(stateStr): Manual setting"
+            return String(format: NSLocalizedString("Menu.Reason.Manual", comment: "Manual setting"), stateStr)
         }
         
         // Get frontmost
         guard let frontmostApp = NSWorkspace.shared.frontmostApplication,
               let bundleId = frontmostApp.bundleIdentifier else {
-            return "\(stateStr): Unknown app"
+            return String(format: NSLocalizedString("Menu.Reason.Unknown", comment: ""), stateStr)
         }
         
         let appName = frontmostApp.localizedName ?? bundleId
         
         if autoToggleAppBundleIds.contains(bundleId) {
             if !state {
-                return "\(stateStr): Temporary manual setting"
+                return String(format: NSLocalizedString("Menu.Reason.TmpManual", comment: ""), stateStr)
             }
-            return "\(stateStr): \(appName) is frontmost"
+            return String(format: NSLocalizedString("Menu.Reason.IsFrontmost", comment: ""), stateStr, appName)
         } else {
             let behaviorRaw = UserDefaults.standard.string(forKey: "AutoToggleBehavior") ?? "disable"
             let behavior = AutoToggleBehavior(rawValue: behaviorRaw) ?? .disable
@@ -291,16 +291,16 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             switch behavior {
             case .disable:
                 if state {
-                    return "\(stateStr): Temporary manual setting"
+                    return String(format: NSLocalizedString("Menu.Reason.TmpManual", comment: ""), stateStr)
                 }
-                return "\(stateStr): No target app is frontmost"
+                return String(format: NSLocalizedString("Menu.Reason.NoFrontmost", comment: ""), stateStr)
             case .followLast:
                 let lastState = UserDefaults.standard.bool(forKey: InputManager.lastStateKey)
                 
                 if lastState == state {
-                    return "\(stateStr): Last manual setting"
+                    return String(format: NSLocalizedString("Menu.Reason.LastManual", comment: ""), stateStr)
                 }
-                return "\(stateStr): Manual setting"
+                return String(format: NSLocalizedString("Menu.Reason.Manual", comment: ""), stateStr)
             }
         }
     }

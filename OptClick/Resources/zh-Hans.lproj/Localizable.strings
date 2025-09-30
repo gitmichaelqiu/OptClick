@@ -3,6 +3,15 @@
 "Menu.Settings" = "设置...";
 "Menu.Quit" = "退出";
 
+"Menu.Reason.StateStr.Enabled" = "启用";
+"Menu.Reason.StateStr.Disabled" = "禁用";
+"Menu.Reason.Manual" = "%@: 手动设置";
+"Menu.Reason.Unknown" = "%@: 未知 App";
+"Menu.Reason.TmpManual" = "%@: 临时手动设置";
+"Menu.Reason.IsFrontmost" = "%@: %@ 在最前";
+"Menu.Reason.NoFrontmost" = "%@: 没有目标 App 在最前";
+"Menu.Reason.LastManual" = "%@: 跟随上一次设置";
+
 // Settings - General
 
 "Settings.General" = "通用";
