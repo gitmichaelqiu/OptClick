@@ -28,7 +28,7 @@ struct AboutView: View {
                 .font(.largeTitle)
                 .bold()
 
-            Text(String(format: NSLocalizedString("Settings.About.Version", comment: "Version"), appVersion))
+            Text("v\(appVersion)")
                 .font(.title3)
                 .foregroundColor(.secondary)
 
