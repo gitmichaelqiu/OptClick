@@ -68,4 +68,4 @@
 
 "Settings.About.Version" = "Version %@";
 "Settings.About.Description" = "OptClick lets you simulate right-clicks by pressing the Option (⌥) key.";
-"Settings.About.Repo" = "GitHub Repo";
+"Settings.About.Repo" = "GitHub Repository";
