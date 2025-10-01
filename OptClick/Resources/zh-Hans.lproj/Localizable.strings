@@ -68,4 +68,4 @@
 
 "Settings.About.Version" = "版本 %@";
 "Settings.About.Description" = "用 Option 键模拟鼠标右键。";
-"Settings.About.Repository" = "GitHub 仓库";
+"Settings.About.Repo" = "GitHub 仓库";
