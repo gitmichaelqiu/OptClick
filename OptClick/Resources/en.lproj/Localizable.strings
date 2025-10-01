@@ -32,6 +32,11 @@
 "Settings.General.AutoToggle.NotFrontmost" = "When not frontmost";
 "Settings.General.AutoToggle.NotFrontmost.Disable" = "Disable OptClick";
 "Settings.General.AutoToggle.NotFrontmost.FollowLast" = "Follow last setting";
+"Settings.General.AutoToggle.Process.Add.Msg" = "Add App by Process Name";
+"Settings.General.AutoToggle.Process.Add.Info" = "Enter the exact process name (case-sensitive):";
+"Settings.General.AutoToggle.Process.Add.Placeholder" = "Process";
+"Settings.General.AutoToggle.Process.Add.Add" = "Add";
+"Settings.General.AutoToggle.Process.Add.Cancel" = "Cancel";
 
 "Settings.General.Update" = "Update";
 "Settings.General.Update.AutoCheck" = "Automatically check for updates";

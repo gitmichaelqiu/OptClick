@@ -174,13 +174,13 @@ struct GeneralSettingsView: View {
                             // Add by Window Title
                             Button(action: {
                                 let alert = NSAlert()
-                                alert.messageText = "Add App by Process Name"
-                                alert.informativeText = "Enter the exact process name (case-sensitive):"
+                                alert.messageText = NSLocalizedString("Settings.General.AutoToggle.Process.Add.Msg", comment: "")
+                                alert.informativeText = NSLocalizedString("Settings.General.AutoToggle.Process.Add.Info", comment: "")
                                 let textField = NSTextField(frame: NSRect(x: 0, y: 0, width: 200, height: 24))
-                                textField.placeholderString = "Process"
+                                textField.placeholderString = NSLocalizedString("Settings.General.AutoToggle.Process.Add.Placeholder", comment: "Process")
                                 alert.accessoryView = textField
-                                alert.addButton(withTitle: "Add")
-                                alert.addButton(withTitle: "Cancel")
+                                alert.addButton(withTitle: NSLocalizedString("Settings.General.AutoToggle.Process.Add.Add", comment: ""))
+                                alert.addButton(withTitle: NSLocalizedString("Settings.General.AutoToggle.Process.Add.Cancel", comment: ""))
                                 
                                 if alert.runModal() == .alertFirstButtonReturn {
                                     let keyword = textField.stringValue.trimmingCharacters(in: .whitespacesAndNewlines)

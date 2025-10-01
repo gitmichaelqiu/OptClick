@@ -32,6 +32,11 @@
 "Settings.General.AutoToggle.NotFrontmost" = "不在最前时";
 "Settings.General.AutoToggle.NotFrontmost.Disable" = "禁用 OptClick";
 "Settings.General.AutoToggle.NotFrontmost.FollowLast" = "跟随上一次设置";
+"Settings.General.AutoToggle.Process.Add.Msg" = "通过名称添加 App";
+"Settings.General.AutoToggle.Process.Add.Info" = "输入进程名称 (注意大小写):";
+"Settings.General.AutoToggle.Process.Add.Placeholder" = "进程";
+"Settings.General.AutoToggle.Process.Add.Add" = "添加";
+"Settings.General.AutoToggle.Process.Add.Cancel" = "取消";
 
 "Settings.General.Update" = "更新";
 "Settings.General.Update.AutoCheck" = "自动检查更新";
