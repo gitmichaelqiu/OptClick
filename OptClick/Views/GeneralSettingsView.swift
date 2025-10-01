@@ -107,12 +107,20 @@ struct GeneralSettingsView: View {
                     }
                 if isAppTableExpanded {
                     VStack(alignment: .leading, spacing: 0) {
-                        let sortedApps = autoToggleAppBundleIds.compactMap { bundleId -> (String, String, NSImage?)? in
-                            guard let url = NSWorkspace.shared.urlForApplication(withBundleIdentifier: bundleId),
-                                  let bundle = Bundle(url: url) else { return nil }
-                            let name = bundle.object(forInfoDictionaryKey: "CFBundleName") as? String ?? bundleId
-                            let icon = NSWorkspace.shared.icon(forFile: url.path)
-                            return (bundleId, name, icon)
+                        let sortedApps = autoToggleAppBundleIds.map { rule -> (String, String, NSImage?) in
+                            if rule.hasPrefix("title:") {
+                                let keyword = String(rule.dropFirst(6)).trimmingCharacters(in: .whitespacesAndNewlines)
+                                return (rule, "Window Title: \(keyword)", nil)
+                            } else {
+                                if let url = NSWorkspace.shared.urlForApplication(withBundleIdentifier: rule),
+                                   let bundle = Bundle(url: url) {
+                                    let name = bundle.object(forInfoDictionaryKey: "CFBundleName") as? String ?? rule
+                                    let icon = NSWorkspace.shared.icon(forFile: url.path)
+                                    return (rule, name, icon)
+                                } else {
+                                    return (rule, "⚠️ \(rule)", nil)
+                                }
+                            }
                         }.sorted { $0.1.localizedCaseInsensitiveCompare($1.1) == .orderedAscending }
 
                         List(selection: $selection) {
