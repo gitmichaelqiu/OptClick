@@ -2,6 +2,7 @@ import Foundation
 import AppKit
 import Combine
 import ApplicationServices
+import Darwin
 
 enum AutoToggleBehavior: String, CaseIterable {
     case disable = "disable"
@@ -104,35 +105,15 @@ class InputManager: ObservableObject {
         }
     }
     
-    private func getFrontmostWindowTitle() -> String? {
+    private func getFrontmostProcessName() -> String? {
         guard let frontmost = NSWorkspace.shared.frontmostApplication else { return nil }
         let pid = frontmost.processIdentifier
         guard pid != 0 else { return nil }
 
-        // Check accessibility permission
-        let options = [kAXTrustedCheckOptionPrompt.takeUnretainedValue() as String: false]
-        guard AXIsProcessTrustedWithOptions(options as CFDictionary) else {
-            return nil
+        var nameBuf = [Int8](repeating: 0, count: Int(MAXPATHLEN))
+        if proc_name(pid, &nameBuf, UInt32(nameBuf.count)) != -1 {
+            return String(cString: nameBuf)
         }
-
-        let axApp = AXUIElementCreateApplication(pid)
-
-        // Get focused window
-        var focusedWindow: AnyObject?
-        let result = AXUIElementCopyAttributeValue(axApp, kAXFocusedWindowAttribute as CFString, &focusedWindow)
-        guard result == .success, let window = focusedWindow else {
-            return nil
-        }
-
-        // Get window title
-        var title: AnyObject?
-        let titleResult = AXUIElementCopyAttributeValue(window as! AXUIElement, kAXTitleAttribute as CFString, &title)
-        if titleResult == .success,
-           let titleStr = title as? String,
-           !titleStr.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-            return titleStr
-        }
-
         return nil
     }
 
@@ -144,23 +125,22 @@ class InputManager: ObservableObject {
 
         // 1. Bundle ID
         if let userInfo = notification.userInfo,
-           let runningApp = userInfo[NSWorkspace.applicationUserInfoKey] as? NSRunningApplication,
-           let bundleId = runningApp.bundleIdentifier,
+           let app = userInfo[NSWorkspace.applicationUserInfoKey] as? NSRunningApplication,
+           let bundleId = app.bundleIdentifier,
            rules.contains(bundleId) {
             isMatch = true
         }
 
-        // 2. Title
+        // 2. Process name (NEW, most reliable for games)
         if !isMatch {
-            if let windowTitle = getFrontmostWindowTitle() {
+            if let procName = getFrontmostProcessName() {
                 for rule in rules {
-                    // 假设以 "title:" 开头的规则是窗口标题关键词
-                    if rule.hasPrefix("title:") {
-                        let keyword = String(rule.dropFirst(6)).trimmingCharacters(in: .whitespacesAndNewlines)
-                        if windowTitle.localizedCaseInsensitiveContains(keyword) {
-                            isMatch = true
-                            break
-                        }
+                    if rule.hasPrefix("proc-exact:") {
+                        let kw = String(rule.dropFirst(11)).trimmingCharacters(in: .whitespacesAndNewlines)
+                        if procName == kw { isMatch = true; break }
+                    } else if rule.hasPrefix("proc:") {
+                        let kw = String(rule.dropFirst(5)).trimmingCharacters(in: .whitespacesAndNewlines)
+                        if procName.localizedCaseInsensitiveContains(kw) { isMatch = true; break }
                     }
                 }
             }

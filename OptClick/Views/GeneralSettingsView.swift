@@ -108,9 +108,12 @@ struct GeneralSettingsView: View {
                 if isAppTableExpanded {
                     VStack(alignment: .leading, spacing: 0) {
                         let sortedApps = autoToggleAppBundleIds.map { rule -> (String, String, NSImage?) in
-                            if rule.hasPrefix("title:") {
-                                let keyword = String(rule.dropFirst(6)).trimmingCharacters(in: .whitespacesAndNewlines)
-                                return (rule, "Window Title: \(keyword)", nil)
+                            if rule.hasPrefix("proc-exact:") {
+                                let kw = String(rule.dropFirst(11))
+                                return (rule, "Process (Exact): \(kw)", nil)
+                            } else if rule.hasPrefix("proc:") {
+                                let kw = String(rule.dropFirst(5))
+                                return (rule, "Process (Contains): \(kw)", nil)
                             } else {
                                 if let url = NSWorkspace.shared.urlForApplication(withBundleIdentifier: rule),
                                    let bundle = Bundle(url: url) {
@@ -174,19 +177,18 @@ struct GeneralSettingsView: View {
                             // Add by Window Title
                             Button(action: {
                                 let alert = NSAlert()
-                                alert.messageText = "Add App by Window Title"
-                                alert.informativeText = "Enter a keyword that appears in the app's window title (e.g., Minecraft):"
+                                alert.messageText = "Add App by Process Name"
+                                alert.informativeText = "Enter process name (e.g., minecraft, lunarclient):"
                                 let textField = NSTextField(frame: NSRect(x: 0, y: 0, width: 200, height: 24))
-                                textField.placeholderString = "Minecraft"
+                                textField.placeholderString = "minecraft"
                                 alert.accessoryView = textField
                                 alert.addButton(withTitle: "Add")
                                 alert.addButton(withTitle: "Cancel")
                                 
-                                let response = alert.runModal()
-                                if response == .alertFirstButtonReturn {
+                                if alert.runModal() == .alertFirstButtonReturn {
                                     let keyword = textField.stringValue.trimmingCharacters(in: .whitespacesAndNewlines)
                                     if !keyword.isEmpty {
-                                        let rule = "title:\(keyword)"
+                                        let rule = "proc:\(keyword)"
                                         if !autoToggleAppBundleIds.contains(rule) {
                                             autoToggleAppBundleIds.append(rule)
                                             UserDefaults.standard.set(autoToggleAppBundleIds, forKey: "AutoToggleAppBundleIds")
@@ -195,12 +197,11 @@ struct GeneralSettingsView: View {
                                     }
                                 }
                             }) {
-                                Image(systemName: "text.append")
+                                Image(systemName: "cpu")
                                     .frame(width: 24, height: 14)
-                                    .contentShape(Rectangle())
                             }
                             .buttonStyle(.borderless)
-                            .help("Add App by Window Title Keyword")
+                            .help("Add by Process Name")
 
                             Divider().frame(height: 16)
 
