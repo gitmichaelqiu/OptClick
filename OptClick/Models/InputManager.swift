@@ -1,6 +1,7 @@
 import Foundation
 import AppKit
 import Combine
+import ApplicationServices
 
 enum AutoToggleBehavior: String, CaseIterable {
     case disable = "disable"
@@ -102,28 +103,78 @@ class InputManager: ObservableObject {
             self?.handleFrontmostAppChange(notification: notification)
         }
     }
+    
+    private func getFrontmostWindowTitle() -> String? {
+        guard let frontmost = NSWorkspace.shared.frontmostApplication else { return nil }
+        let pid = frontmost.processIdentifier
+        guard pid != 0 else { return nil }
+
+        // Check accessibility permission
+        let options = [kAXTrustedCheckOptionPrompt.takeUnretainedValue() as String: false]
+        guard AXIsProcessTrustedWithOptions(options as CFDictionary) else {
+            return nil
+        }
+
+        let axApp = AXUIElementCreateApplication(pid)
+
+        // Get focused window
+        var focusedWindow: AnyObject?
+        let result = AXUIElementCopyAttributeValue(axApp, kAXFocusedWindowAttribute as CFString, &focusedWindow)
+        guard result == .success, let window = focusedWindow else {
+            return nil
+        }
+
+        // Get window title
+        var title: AnyObject?
+        let titleResult = AXUIElementCopyAttributeValue(window as! AXUIElement, kAXTitleAttribute as CFString, &title)
+        if titleResult == .success,
+           let titleStr = title as? String,
+           !titleStr.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+            return titleStr
+        }
+
+        return nil
+    }
 
     private func handleFrontmostAppChange(notification: Notification) {
-        guard !autoToggleAppBundleIds.isEmpty else { return }
-        guard let userInfo = notification.userInfo,
-              let runningApp = userInfo[NSWorkspace.applicationUserInfoKey] as? NSRunningApplication,
-              let bundleId = runningApp.bundleIdentifier else { return }
+        let rules = autoToggleAppBundleIds
+        guard !rules.isEmpty else { return }
 
-        if autoToggleAppBundleIds.contains(bundleId) {
-            // Target app is now frontmost
-            isAutoToggling = true
-            if !isEnabled {
-                isEnabled = true
+        var isMatch = false
+
+        // 1. Bundle ID
+        if let userInfo = notification.userInfo,
+           let runningApp = userInfo[NSWorkspace.applicationUserInfoKey] as? NSRunningApplication,
+           let bundleId = runningApp.bundleIdentifier,
+           rules.contains(bundleId) {
+            isMatch = true
+        }
+
+        // 2. Title
+        if !isMatch {
+            if let windowTitle = getFrontmostWindowTitle() {
+                for rule in rules {
+                    // 假设以 "title:" 开头的规则是窗口标题关键词
+                    if rule.hasPrefix("title:") {
+                        let keyword = String(rule.dropFirst(6)).trimmingCharacters(in: .whitespacesAndNewlines)
+                        if windowTitle.localizedCaseInsensitiveContains(keyword) {
+                            isMatch = true
+                            break
+                        }
+                    }
+                }
             }
+        }
+
+        if isMatch {
+            isAutoToggling = true
+            if !isEnabled { isEnabled = true }
             isAutoToggling = false
         } else {
-            // Target app is no longer frontmost
             isAutoToggling = true
             switch autoToggleBehavior {
             case .disable:
-                if isEnabled {
-                    isEnabled = false
-                }
+                if isEnabled { isEnabled = false }
             case .followLast:
                 if isEnabled != lastManualState {
                     isEnabled = lastManualState

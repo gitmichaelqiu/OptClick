@@ -137,6 +137,7 @@ struct GeneralSettingsView: View {
                                 .stroke(Color.secondary.opacity(0.15), lineWidth: 1)
                         )
                         HStack {
+                            // Add App (by bundle ID)
                             Button(action: {
                                 let panel = NSOpenPanel()
                                 panel.allowedContentTypes = [.application]
@@ -158,13 +159,46 @@ struct GeneralSettingsView: View {
                                     .contentShape(Rectangle())
                             }
                             .buttonStyle(.borderless)
-                            .help("Add App")
+                            .help("Add App by Bundle ID")
 
                             Divider().frame(height: 16)
 
+                            // Add by Window Title
+                            Button(action: {
+                                let alert = NSAlert()
+                                alert.messageText = "Add App by Window Title"
+                                alert.informativeText = "Enter a keyword that appears in the app's window title (e.g., Minecraft):"
+                                let textField = NSTextField(frame: NSRect(x: 0, y: 0, width: 200, height: 24))
+                                textField.placeholderString = "Minecraft"
+                                alert.accessoryView = textField
+                                alert.addButton(withTitle: "Add")
+                                alert.addButton(withTitle: "Cancel")
+                                
+                                let response = alert.runModal()
+                                if response == .alertFirstButtonReturn {
+                                    let keyword = textField.stringValue.trimmingCharacters(in: .whitespacesAndNewlines)
+                                    if !keyword.isEmpty {
+                                        let rule = "title:\(keyword)"
+                                        if !autoToggleAppBundleIds.contains(rule) {
+                                            autoToggleAppBundleIds.append(rule)
+                                            UserDefaults.standard.set(autoToggleAppBundleIds, forKey: "AutoToggleAppBundleIds")
+                                            inputManager.refreshAutoToggleState()
+                                        }
+                                    }
+                                }
+                            }) {
+                                Image(systemName: "text.append")
+                                    .frame(width: 24, height: 14)
+                                    .contentShape(Rectangle())
+                            }
+                            .buttonStyle(.borderless)
+                            .help("Add App by Window Title Keyword")
+
+                            Divider().frame(height: 16)
+
+                            // Remove Selected
                             Button(action: {
                                 if let selected = selection {
-                                    // Remove by bundleId from the original array
                                     if let idx = autoToggleAppBundleIds.firstIndex(of: selected) {
                                         autoToggleAppBundleIds.remove(at: idx)
                                         UserDefaults.standard.set(autoToggleAppBundleIds, forKey: "AutoToggleAppBundleIds")
