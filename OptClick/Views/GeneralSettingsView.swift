@@ -108,12 +108,9 @@ struct GeneralSettingsView: View {
                 if isAppTableExpanded {
                     VStack(alignment: .leading, spacing: 0) {
                         let sortedApps = autoToggleAppBundleIds.map { rule -> (String, String, NSImage?) in
-                            if rule.hasPrefix("proc-exact:") {
-                                let kw = String(rule.dropFirst(11))
-                                return (rule, "Process (Exact): \(kw)", nil)
-                            } else if rule.hasPrefix("proc:") {
+                            if rule.hasPrefix("proc:") {
                                 let kw = String(rule.dropFirst(5))
-                                return (rule, "Process (Contains): \(kw)", nil)
+                                return (rule, "Process: \(kw)", nil)
                             } else {
                                 if let url = NSWorkspace.shared.urlForApplication(withBundleIdentifier: rule),
                                    let bundle = Bundle(url: url) {
@@ -178,9 +175,9 @@ struct GeneralSettingsView: View {
                             Button(action: {
                                 let alert = NSAlert()
                                 alert.messageText = "Add App by Process Name"
-                                alert.informativeText = "Enter process name (e.g., minecraft, lunarclient):"
+                                alert.informativeText = "Enter the exact process name (case-sensitive):"
                                 let textField = NSTextField(frame: NSRect(x: 0, y: 0, width: 200, height: 24))
-                                textField.placeholderString = "minecraft"
+                                textField.placeholderString = "Process"
                                 alert.accessoryView = textField
                                 alert.addButton(withTitle: "Add")
                                 alert.addButton(withTitle: "Cancel")
@@ -197,11 +194,11 @@ struct GeneralSettingsView: View {
                                     }
                                 }
                             }) {
-                                Image(systemName: "cpu")
+                                Image(systemName: "character.textbox")
                                     .frame(width: 24, height: 14)
                             }
                             .buttonStyle(.borderless)
-                            .help("Add by Process Name")
+                            .help("Add by Process Name (exact, case-sensitive)")
 
                             Divider().frame(height: 16)
 

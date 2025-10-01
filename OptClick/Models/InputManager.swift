@@ -131,16 +131,16 @@ class InputManager: ObservableObject {
             isMatch = true
         }
 
-        // 2. Process name (NEW, most reliable for games)
+        // 2. Process name (exact match)
         if !isMatch {
             if let procName = getFrontmostProcessName() {
                 for rule in rules {
-                    if rule.hasPrefix("proc-exact:") {
-                        let kw = String(rule.dropFirst(11)).trimmingCharacters(in: .whitespacesAndNewlines)
-                        if procName == kw { isMatch = true; break }
-                    } else if rule.hasPrefix("proc:") {
-                        let kw = String(rule.dropFirst(5)).trimmingCharacters(in: .whitespacesAndNewlines)
-                        if procName.localizedCaseInsensitiveContains(kw) { isMatch = true; break }
+                    if rule.hasPrefix("proc:") {
+                        let expected = String(rule.dropFirst(5))
+                        if procName == expected {
+                            isMatch = true
+                            break
+                        }
                     }
                 }
             }
