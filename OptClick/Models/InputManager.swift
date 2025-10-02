@@ -105,7 +105,7 @@ class InputManager: ObservableObject {
         }
     }
     
-    private func getFrontmostProcessName() -> String? {
+    func getFrontmostProcessName() -> String? {
         guard let frontmost = NSWorkspace.shared.frontmostApplication else { return nil }
         let pid = frontmost.processIdentifier
         guard pid != 0 else { return nil }
