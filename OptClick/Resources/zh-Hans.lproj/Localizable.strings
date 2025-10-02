@@ -29,6 +29,7 @@
 
 "Settings.General.AutoToggle" = "自动切换";
 "Settings.General.AutoToggle.TargetApps" = "目标 App";
+"Settings.General.AutoToggle.Process" = "进程: %@";
 "Settings.General.AutoToggle.NotFrontmost" = "不在最前时";
 "Settings.General.AutoToggle.NotFrontmost.Disable" = "禁用 OptClick";
 "Settings.General.AutoToggle.NotFrontmost.FollowLast" = "跟随上一次设置";

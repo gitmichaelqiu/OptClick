@@ -29,6 +29,7 @@
 
 "Settings.General.AutoToggle" = "Auto Toggle";
 "Settings.General.AutoToggle.TargetApps" = "Target apps";
+"Settings.General.AutoToggle.Process" = "Process: %@";
 "Settings.General.AutoToggle.NotFrontmost" = "When not frontmost";
 "Settings.General.AutoToggle.NotFrontmost.Disable" = "Disable OptClick";
 "Settings.General.AutoToggle.NotFrontmost.FollowLast" = "Follow last setting";

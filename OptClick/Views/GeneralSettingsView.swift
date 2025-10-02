@@ -110,7 +110,8 @@ struct GeneralSettingsView: View {
                         let sortedApps = autoToggleAppBundleIds.map { rule -> (String, String, NSImage?) in
                             if rule.hasPrefix("proc:") {
                                 let kw = String(rule.dropFirst(5))
-                                return (rule, "Process: \(kw)", nil)
+                                let procStr = String(format: NSLocalizedString("Settings.General.AutoToggle.Process", comment: "Process: "), kw)
+                                return (rule, procStr, nil)
                             } else {
                                 if let url = NSWorkspace.shared.urlForApplication(withBundleIdentifier: rule),
                                    let bundle = Bundle(url: url) {
