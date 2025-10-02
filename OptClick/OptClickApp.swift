@@ -271,6 +271,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
         
         // Get frontmost
+        // bug: process frontmost detected as manual
         guard let frontmostApp = NSWorkspace.shared.frontmostApplication,
               let bundleId = frontmostApp.bundleIdentifier else {
             return String(format: NSLocalizedString("Menu.Reason.Unknown", comment: ""), stateStr)
