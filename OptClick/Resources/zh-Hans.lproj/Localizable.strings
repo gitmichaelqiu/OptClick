@@ -3,6 +3,7 @@
 "Menu.Settings" = "设置...";
 "Menu.Quit" = "退出";
 "Menu.Toggle" = "OptClick → 右键";
+"Menu.About" = "关于 OptClick";
 
 "Menu.Reason.StateStr.Enabled" = "启用";
 "Menu.Reason.StateStr.Disabled" = "禁用";

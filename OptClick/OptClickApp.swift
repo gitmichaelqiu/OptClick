@@ -343,7 +343,7 @@ struct OptClickApp: App {
         }
         .commands {
             CommandGroup(replacing: .appInfo) {
-                Button("About OptClick") {
+                Button(NSLocalizedString("Menu.About", comment: "")) {
                     // Turn to about page directly because menu bar is only available when settings are opened
                     UserDefaults.standard.set(SettingsTab.about.rawValue, forKey: "selectedSettingsTab")
                 }
