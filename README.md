@@ -51,7 +51,7 @@ You are welcome to create issues/suggestions in [GitHub Issues](https://github.c
 
 ## 🙏 Acknowlegements
 
-This app uses the following packages:
+This project uses following packages:
 
 - [HotKey by @soffes](https://github.com/soffes/HotKey)
 
