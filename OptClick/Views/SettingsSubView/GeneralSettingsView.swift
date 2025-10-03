@@ -106,7 +106,6 @@ struct GeneralSettingsView: View {
                                     .contentShape(Rectangle())
                             }
                             .buttonStyle(.borderless)
-                            .help("Add App by Bundle ID")
 
                             Divider().frame(height: 16)
 
@@ -137,7 +136,6 @@ struct GeneralSettingsView: View {
                                     .frame(width: 24, height: 14)
                             }
                             .buttonStyle(.borderless)
-                            .help("Add by Process Name (exact, case-sensitive)")
 
                             Divider().frame(height: 16)
 
@@ -158,7 +156,6 @@ struct GeneralSettingsView: View {
                             }
                             .buttonStyle(.borderless)
                             .disabled(selection == nil)
-                            .help("Remove Selected App")
                         }
                         .padding(.horizontal, 4)
                         .padding(.top, 4)
