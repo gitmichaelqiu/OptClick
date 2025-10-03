@@ -1,10 +1,10 @@
-// Menu bar
-
+// MARK: - Menu
 "Menu.Settings" = "Settings...";
 "Menu.Quit" = "Quit";
 "Menu.Toggle" = "OptClick → Right Click";
 "Menu.About" = "About OptClick";
 
+// Reason
 "Menu.Reason.StateStr.Enabled" = "Enabled";
 "Menu.Reason.StateStr.Disabled" = "Disabled";
 "Menu.Reason.Manual" = "%@: Manual setting";
@@ -14,13 +14,14 @@
 "Menu.Reason.NoFrontmost" = "%@: No target app is frontmost";
 "Menu.Reason.LastManual" = "%@: Follow last setting";
 
-// Settings - General
-
+// MARK: - Settings/General
 "Settings.General" = "General";
 
+// OptClick
 "Settings.General.OptClick" = "OptClick";
 "Settings.General.OptClick.Enable" = "Enable Option → Right Click";
 
+// Launch
 "Settings.General.Launch" = "Launch";
 "Settings.General.Launch.AtLogin" = "Launch at login";
 "Settings.General.LaunchBehavior" = "Launch behavior";
@@ -28,6 +29,7 @@
 "Settings.General.LaunchBehavior.Enabled" = "Enable OptClick";
 "Settings.General.LaunchBehavior.LastState" = "Follow last setting";
 
+// Auto Toggle
 "Settings.General.AutoToggle" = "Auto Toggle";
 "Settings.General.AutoToggle.TargetApps" = "Target apps";
 "Settings.General.AutoToggle.Process" = "Process: %@";
@@ -40,6 +42,7 @@
 "Settings.General.AutoToggle.Process.Add.Add" = "Add";
 "Settings.General.AutoToggle.Process.Add.Cancel" = "Cancel";
 
+// Update
 "Settings.General.Update" = "Update";
 "Settings.General.Update.AutoCheck" = "Automatically check for updates";
 "Settings.General.Update.ManualCheck" = "Check for updates";
@@ -55,8 +58,7 @@
 "Settings.General.Update.UpToDate.Title" = "Up to Date";
 "Settings.General.Update.UpToDate.Msg" = "You are running the latest version (%@).";
 
-// Settings - Shortcuts
-
+// MARK: - Settings/Shortcuts
 "Settings.Shortcuts" = "Shortcuts";
 
 "Settings.Shortcuts.Unassigned" = "Unassigned";
@@ -69,8 +71,7 @@
 "Settings.Shortcuts.Hotkey.Reset" = "Reset";
 "Settings.Shortcuts.Unassgined" = "Unassigned";
 
-// Settings - About
-
+// MARK: - Settings/About
 "Settings.About" = "About";
 
 "Settings.About.Version" = "Version %@";
