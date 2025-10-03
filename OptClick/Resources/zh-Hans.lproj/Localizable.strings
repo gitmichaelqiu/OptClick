@@ -46,10 +46,10 @@
 "Settings.Shortcuts.Hotkey.Reset" = "重置";
 "Settings.Shortcuts.Unassgined" = "未分配";
 
-// Settigns - About
+// Settings - About
 
 "Settings.About" = "关于";
 
 "Settings.About.Version" = "版本 %@";
-"Settings.About.Description" = "OptClick 用 Option 键模拟鼠标右键.";
+"Settings.About.Description" = "用 Option 键模拟鼠标右键。";
 "Settings.About.Repo" = "GitHub 仓库";
