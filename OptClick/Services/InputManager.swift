@@ -99,7 +99,7 @@ class InputManager: ObservableObject {
 
         startFrontmostAppMonitor()
         
-        if !autoToggleAppBundleIds.isEmpty {
+        if isAutoToggleEnabled && !autoToggleAppBundleIds.isEmpty {
             refreshAutoToggleState()
         }
     }
