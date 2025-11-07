@@ -19,8 +19,8 @@
 
 // OptClick
 "Settings.General.OptClick" = "OptClick";
-"Settings.General.OptClick.EnableOptClick" = "Enable Option → Right Click";
-"Settings.General.OptClick.EnableAutoToggle" = "Enable Auto Toggle";
+"Settings.General.OptClick.EnableOptClick" = "Enable option → right click";
+"Settings.General.OptClick.EnableAutoToggle" = "Enable auto toggle";
 
 // Launch
 "Settings.General.Launch" = "Launch";
