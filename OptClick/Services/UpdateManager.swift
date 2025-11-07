@@ -44,6 +44,9 @@ class UpdateManager {
                         if let releaseURL = URL(string: self.latestReleaseURL) {
                             NSWorkspace.shared.open(releaseURL)
                         }
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                            NSApp.terminate(nil)
+                        }
                     }
                 }
             } else if !suppressUpToDateAlert {
