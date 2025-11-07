@@ -111,9 +111,11 @@ struct GeneralSettingsView: View {
                                         if panel.runModal() == .OK, let url = panel.url {
                                             if let bundle = Bundle(url: url), let bundleId = bundle.bundleIdentifier {
                                                 if !autoToggleAppBundleIds.contains(bundleId) {
-                                                    autoToggleAppBundleIds.append(bundleId)
-                                                    UserDefaults.standard.set(autoToggleAppBundleIds, forKey: "AutoToggleAppBundleIds")
-                                                    inputManager.refreshAutoToggleState()
+                                                    withAnimation(.easeInOut(duration: 0.2)) {
+                                                        autoToggleAppBundleIds.append(bundleId)
+                                                        UserDefaults.standard.set(autoToggleAppBundleIds, forKey: "AutoToggleAppBundleIds")
+                                                        inputManager.refreshAutoToggleState()
+                                                    }
                                                 }
                                             }
                                         }
@@ -142,9 +144,11 @@ struct GeneralSettingsView: View {
                                             if !keyword.isEmpty {
                                                 let rule = "proc:\(keyword)"
                                                 if !autoToggleAppBundleIds.contains(rule) {
-                                                    autoToggleAppBundleIds.append(rule)
-                                                    UserDefaults.standard.set(autoToggleAppBundleIds, forKey: "AutoToggleAppBundleIds")
-                                                    inputManager.refreshAutoToggleState()
+                                                    withAnimation(.easeInOut(duration: 0.2)) {
+                                                        autoToggleAppBundleIds.append(rule)
+                                                        UserDefaults.standard.set(autoToggleAppBundleIds, forKey: "AutoToggleAppBundleIds")
+                                                        inputManager.refreshAutoToggleState()
+                                                    }
                                                 }
                                             }
                                         }
@@ -160,10 +164,12 @@ struct GeneralSettingsView: View {
                                     Button(action: {
                                         if let selected = selection {
                                             if let idx = autoToggleAppBundleIds.firstIndex(of: selected) {
-                                                autoToggleAppBundleIds.remove(at: idx)
-                                                UserDefaults.standard.set(autoToggleAppBundleIds, forKey: "AutoToggleAppBundleIds")
-                                                selection = nil
-                                                inputManager.refreshAutoToggleState()
+                                                withAnimation(.easeInOut(duration: 0.2)) {
+                                                    autoToggleAppBundleIds.remove(at: idx)
+                                                    UserDefaults.standard.set(autoToggleAppBundleIds, forKey: "AutoToggleAppBundleIds")
+                                                    selection = nil
+                                                    inputManager.refreshAutoToggleState()
+                                                }
                                             }
                                         }
                                     }) {
