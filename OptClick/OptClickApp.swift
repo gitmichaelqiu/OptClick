@@ -164,10 +164,24 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     @objc private func frontmostAppDidChange() {
         // Only update menu if AutoToggle is active
+//        let autoToggleAppBundleIds = UserDefaults.standard.stringArray(forKey: "AutoToggleAppBundleIds") ?? []
+//        if !autoToggleAppBundleIds.isEmpty {
+//            DispatchQueue.main.async {
+//                self.setupMenuItems()
+//            }
+//        }
+        let autoToggleEnabled = UserDefaults.standard.bool(forKey: InputManager.autoToggleEnabledKey)
         let autoToggleAppBundleIds = UserDefaults.standard.stringArray(forKey: "AutoToggleAppBundleIds") ?? []
-        if !autoToggleAppBundleIds.isEmpty {
+
+        if autoToggleEnabled && !autoToggleAppBundleIds.isEmpty {
             DispatchQueue.main.async {
                 self.setupMenuItems()
+                self.inputManager.refreshAutoToggleState()
+            }
+        } else {
+            // Optionally: if auto toggle is off, reset to manual last state
+            DispatchQueue.main.async {
+                self.inputManager.isAutoToggling = false
             }
         }
     }
