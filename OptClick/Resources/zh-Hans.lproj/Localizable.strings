@@ -2,6 +2,16 @@
 
 "Menu.Settings" = "设置...";
 "Menu.Quit" = "退出";
+"Menu.Toggle" = "OptClick → 右键";
+
+"Menu.Reason.StateStr.Enabled" = "启用";
+"Menu.Reason.StateStr.Disabled" = "禁用";
+"Menu.Reason.Manual" = "%@: 手动设置";
+"Menu.Reason.Unknown" = "%@: 未知 App";
+"Menu.Reason.TmpManual" = "%@: 临时手动设置";
+"Menu.Reason.IsFrontmost" = "%@: %@ 在最前";
+"Menu.Reason.NoFrontmost" = "%@: 没有目标 App 在最前";
+"Menu.Reason.LastManual" = "%@: 跟随上一次设置";
 
 // Settings - General
 
@@ -15,7 +25,13 @@
 "Settings.General.LaunchBehavior" = "启动行为";
 "Settings.General.LaunchBehavior.Disabled" = "禁用 OptClick";
 "Settings.General.LaunchBehavior.Enabled" = "启用 OptClick";
-"Settings.General.LaunchBehavior.LastState" = "跟随上一次";
+"Settings.General.LaunchBehavior.LastState" = "跟随上一次设置";
+
+"Settings.General.AutoToggle" = "自动切换";
+"Settings.General.AutoToggle.TargetApps" = "目标 App";
+"Settings.General.AutoToggle.NotFrontmost" = "不在最前时";
+"Settings.General.AutoToggle.NotFrontmost.Disable" = "禁用 OptClick";
+"Settings.General.AutoToggle.NotFrontmost.FollowLast" = "跟随上一次设置";
 
 "Settings.General.Update" = "更新";
 "Settings.General.Update.AutoCheck" = "自动检查更新";
@@ -46,10 +62,10 @@
 "Settings.Shortcuts.Hotkey.Reset" = "重置";
 "Settings.Shortcuts.Unassgined" = "未分配";
 
-// Settigns - About
+// Settings - About
 
 "Settings.About" = "关于";
 
 "Settings.About.Version" = "版本 %@";
-"Settings.About.Description" = "OptClick 用 Option 键模拟鼠标右键.";
+"Settings.About.Description" = "用 Option 键模拟鼠标右键。";
 "Settings.About.Repo" = "GitHub 仓库";

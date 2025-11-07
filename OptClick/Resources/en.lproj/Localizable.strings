@@ -2,6 +2,16 @@
 
 "Menu.Settings" = "Settings...";
 "Menu.Quit" = "Quit";
+"Menu.Toggle" = "OptClick → Right Click";
+
+"Menu.Reason.StateStr.Enabled" = "Enabled";
+"Menu.Reason.StateStr.Disabled" = "Disabled";
+"Menu.Reason.Manual" = "%@: Manual setting";
+"Menu.Reason.Unknown" = "%@: Unknown app";
+"Menu.Reason.TmpManual" = "%@: Temporary manual setting";
+"Menu.Reason.IsFrontmost" = "%@: %@ is frontmost";
+"Menu.Reason.NoFrontmost" = "%@: No target app is frontmost";
+"Menu.Reason.LastManual" = "%@: Follow last setting";
 
 // Settings - General
 
@@ -12,10 +22,16 @@
 
 "Settings.General.Launch" = "Launch";
 "Settings.General.Launch.AtLogin" = "Launch at login";
-"Settings.General.LaunchBehavior" = "Launch Behavior";
+"Settings.General.LaunchBehavior" = "Launch behavior";
 "Settings.General.LaunchBehavior.Disabled" = "Disable OptClick";
 "Settings.General.LaunchBehavior.Enabled" = "Enable OptClick";
-"Settings.General.LaunchBehavior.LastState" = "Follow last time";
+"Settings.General.LaunchBehavior.LastState" = "Follow last setting";
+
+"Settings.General.AutoToggle" = "Auto Toggle";
+"Settings.General.AutoToggle.TargetApps" = "Target apps";
+"Settings.General.AutoToggle.NotFrontmost" = "When not frontmost";
+"Settings.General.AutoToggle.NotFrontmost.Disable" = "Disable OptClick";
+"Settings.General.AutoToggle.NotFrontmost.FollowLast" = "Follow last setting";
 
 "Settings.General.Update" = "Update";
 "Settings.General.Update.AutoCheck" = "Automatically check for updates";
@@ -46,10 +62,10 @@
 "Settings.Shortcuts.Hotkey.Reset" = "Reset";
 "Settings.Shortcuts.Unassgined" = "Unassigned";
 
-// Settigns - About
+// Settings - About
 
 "Settings.About" = "About";
 
 "Settings.About.Version" = "Version %@";
 "Settings.About.Description" = "OptClick lets you simulate right-clicks by pressing the Option (⌥) key.";
-"Settings.About.Repo" = "GitHub Repo";
+"Settings.About.Repo" = "GitHub Repository";

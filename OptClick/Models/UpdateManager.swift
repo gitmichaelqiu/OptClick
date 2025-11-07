@@ -5,7 +5,6 @@ class UpdateManager {
     static let shared = UpdateManager()
     private init() {}
 
-    private let repo = "gitmichaelqiu/OptClick"
     private let latestReleaseURL = "https://api.github.com/repos/gitmichaelqiu/OptClick/releases/latest"
 
     // UserDefaults key for auto update check
@@ -41,8 +40,8 @@ class UpdateManager {
                     alert.addButton(withTitle: NSLocalizedString("Settings.General.Update.Available.Button.Cancel", comment: ""))
                     alert.alertStyle = .informational
                     if alert.runModal() == .alertFirstButtonReturn {
-                        if let releasesURL = URL(string: "https://github.com/gitmichaelqiu/OptClick/releases/latest") {
-                            NSWorkspace.shared.open(releasesURL)
+                        if let releaseURL = URL(string: self.latestReleaseURL) {
+                            NSWorkspace.shared.open(releaseURL)
                         }
                     }
                 }

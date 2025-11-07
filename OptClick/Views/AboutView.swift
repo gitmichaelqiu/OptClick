@@ -28,8 +28,8 @@ struct AboutView: View {
                 .font(.largeTitle)
                 .bold()
 
-            Text(String(format: NSLocalizedString("Settings.About.Version", comment: "Version"), appVersion))
-                .font(.subheadline)
+            Text("v\(appVersion)")
+                .font(.title3)
                 .foregroundColor(.secondary)
 
             Divider()
@@ -37,20 +37,21 @@ struct AboutView: View {
 
             Text(NSLocalizedString("Settings.About.Description", comment: "Description"))
                 .multilineTextAlignment(.center)
-                 .frame(maxWidth: 360, alignment: .center)
-                 .fixedSize(horizontal: false, vertical: true)
+                .frame(maxWidth: 360, alignment: .center)
+//                .fixedSize(horizontal: false, vertical: true)
+                .font(.body)
+            
+            Spacer()
             
             Link(NSLocalizedString("Settings.About.Repo", comment: "GitHub Repo"), destination: URL(string: "https://github.com/gitmichaelqiu/OptClick")!)
-                .font(.caption)
+                .font(.body)
                 .foregroundColor(.blue)
 
-            Spacer()
-
-            Text("© \(currentYear) Michael Yicheng Qiu.")
-                .font(.caption2)
+            Text("© \(currentYear) Michael Yicheng Qiu")
+                .font(.body)
                 .foregroundColor(.secondary)
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
         .padding()
+        .frame(maxWidth: .infinity, maxHeight: CGFloat(defaultSettingsWindowHeight), alignment: .topLeading)
     }
 }

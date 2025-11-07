@@ -31,7 +31,7 @@ You can modify it in Settings -> Shortcuts. Press `esc` while changing the hotke
 
 ## 📦 Installation
 
-Requires **macOS 14.0 Sonoma** or above.
+Requires **macOS 13.0 Ventura** or above.
 
 1. Download the package from [Releases](https://github.com/gitmichaelqiu/OptClick/releases/)
 2. Drag the app to the *Applications* folder
@@ -49,7 +49,14 @@ You may be required to enter the password. When you are entering, the password i
 
 You are welcome to create issues/suggestions in [GitHub Issues](https://github.com/gitmichaelqiu/OptClick/issues).
 
+## 🙏 Acknowlegements
+
+This app uses the following packages:
+
+- [HotKey by @soffes](https://github.com/soffes/HotKey)
+
+Thanks all the wonderful authors!
+
 ## ⭐ Support This Project
 
 You can simply click on the **Star** to support this project for free. Thank you for your support!
-
