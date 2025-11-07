@@ -95,8 +95,14 @@ class UpdateManager {
         alert.informativeText = message
         alert.alertStyle = .informational
         
-        if let window = window {
-            _ = await alert.beginSheetModal(for: window)
+        let targetWindow = window
+            ?? NSApp.mainWindow
+            ?? NSApp.windows.first { $0.isVisible && $0.isKeyWindow }
+            ?? NSApp.windows.first { $0.isVisible }
+            ?? NSApp.windows.first
+
+        if let targetWindow = targetWindow {
+            _ = await alert.beginSheetModal(for: targetWindow)
         } else {
             alert.runModal()
         }
