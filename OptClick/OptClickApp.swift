@@ -155,6 +155,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             }
         
         updateStatusBarIcon()
+        
+        // Auto check for updates
+        if UpdateManager.isAutoCheckEnabled {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                UpdateManager.shared.checkForUpdate(from: nil, suppressUpToDateAlert: true)
+            }
+        }
     }
     
     @objc private func handleHotkeyTriggered() {

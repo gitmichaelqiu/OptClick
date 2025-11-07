@@ -52,9 +52,9 @@
 "Settings.General.Update.Failed.Title" = "Update Check Failed";
 "Settings.General.Update.Failed.Msg" = "Could not check for updates.";
 
-"Settings.General.Update.Available.Title" = "Update Available";
-"Settings.General.Update.Available.Msg" = "Version %@ is available. Open the releases page to download and install?";
-"Settings.General.Update.Available.Button.Update" = "Update";
+"Settings.General.Update.Available.Title" = "OptClick Update Available";
+"Settings.General.Update.Available.Msg" = "v%@ is available. Open the releases page to download and install?";
+"Settings.General.Update.Available.Button.Update" = "Update & Quit";
 "Settings.General.Update.Available.Button.Cancel" = "Cancel";
 
 "Settings.General.Update.UpToDate.Title" = "Up to Date";

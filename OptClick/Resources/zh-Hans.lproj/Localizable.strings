@@ -52,9 +52,9 @@
 "Settings.General.Update.Failed.Title" = "检查更新失败";
 "Settings.General.Update.Failed.Msg" = "无法检查更新。";
 
-"Settings.General.Update.Available.Title" = "有新版本可用";
-"Settings.General.Update.Available.Msg" = "版本 %@ 已发布。是否打开发布页面下载并安装？";
-"Settings.General.Update.Available.Button.Update" = "更新";
+"Settings.General.Update.Available.Title" = "OptClick 有可用更新";
+"Settings.General.Update.Available.Msg" = "v%@ 已发布。是否打开发布页面下载并安装？";
+"Settings.General.Update.Available.Button.Update" = "更新并退出";
 "Settings.General.Update.Available.Button.Cancel" = "取消";
 
 "Settings.General.Update.UpToDate.Title" = "已是最新版";
