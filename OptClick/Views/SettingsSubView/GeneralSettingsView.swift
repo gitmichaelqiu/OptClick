@@ -22,16 +22,16 @@ struct GeneralSettingsView: View {
         ScrollView {
             VStack(alignment: .leading, spacing: 20) {
                 SettingsSection("Settings.General.OptClick") {
-                    SettingsRow("Settings.General.OptClick.Enable") {
-                        Toggle(" ", isOn: $inputManager.isEnabled)
+                    SettingsRow("Settings.General.OptClick.EnableOptClick") {
+                        Toggle("", isOn: $inputManager.isEnabled)
                             .labelsHidden()
                             .toggleStyle(.switch)
                     }
 
                     Divider()
                     
-                    SettingsRow("Settings.General.AutoToggle.Enable") {
-                        Toggle(" ", isOn: $inputManager.isAutoToggleEnabled)
+                    SettingsRow("Settings.General.OptClick.EnableAutoToggle") {
+                        Toggle("", isOn: $inputManager.isAutoToggleEnabled)
                             .labelsHidden()
                             .toggleStyle(.switch)
                             .onChange(of: inputManager.isAutoToggleEnabled) { newValue in
@@ -185,7 +185,7 @@ struct GeneralSettingsView: View {
                         Divider()
 
                         SettingsRow("Settings.General.AutoToggle.NotFrontmost") {
-                            Picker(" ", selection: $autoToggleBehavior) {
+                            Picker("", selection: $autoToggleBehavior) {
                                 ForEach(AutoToggleBehavior.allCases, id: \.self) { behavior in
                                     Text(behavior.localizedDescription).tag(behavior)
                                 }

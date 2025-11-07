@@ -19,7 +19,8 @@
 
 // OptClick
 "Settings.General.OptClick" = "OptClick";
-"Settings.General.OptClick.Enable" = "启用 Option → 右键";
+"Settings.General.OptClick.EnableOptClick" = "启用 Option → 右键";
+"Settings.General.OptClick.EnableAutoToggle" = "启用自动切换";
 
 // Launch
 "Settings.General.Launch" = "启动";
