@@ -209,19 +209,21 @@ struct GeneralSettingsView: View {
                                 LaunchManager.setEnabled(newValue)
                             }
                     }
-
-                    Divider()
-
-                    SettingsRow("Settings.General.LaunchBehavior") {
-                        Picker("", selection: $selectedLaunchBehavior) {
-                            ForEach(LaunchBehavior.allCases, id: \.self) { behavior in
-                                Text(behavior.localizedDescription).tag(behavior)
+                    
+                    if !inputManager.isAutoToggleEnabled {
+                        Divider()
+                        
+                        SettingsRow("Settings.General.LaunchBehavior") {
+                            Picker("", selection: $selectedLaunchBehavior) {
+                                ForEach(LaunchBehavior.allCases, id: \.self) { behavior in
+                                    Text(behavior.localizedDescription).tag(behavior)
+                                }
                             }
-                        }
-                        .labelsHidden()
-                        .pickerStyle(.menu)
-                        .onChange(of: selectedLaunchBehavior) { newValue in
-                            UserDefaults.standard.set(newValue.rawValue, forKey: InputManager.launchBehaviorKey)
+                            .labelsHidden()
+                            .pickerStyle(.menu)
+                            .onChange(of: selectedLaunchBehavior) { newValue in
+                                UserDefaults.standard.set(newValue.rawValue, forKey: InputManager.launchBehaviorKey)
+                            }
                         }
                     }
                 }
