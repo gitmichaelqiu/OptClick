@@ -12,7 +12,8 @@
 "Menu.Reason.TmpManual" = "%@: 临时手动设置";
 "Menu.Reason.IsFrontmost" = "%@: %@ 在最前";
 "Menu.Reason.NoFrontmost" = "%@: 没有目标 App 在最前";
-"Menu.Reason.LastManual" = "%@: 跟随上一次设置";
+"Menu.Reason.FollowLast" = "%@: 没有目标 App，跟随上一次设置";
+"Menu.Reason.Auto" = "%@: 自动设置";
 
 // MARK: - Settings/General
 "Settings.General" = "通用";
