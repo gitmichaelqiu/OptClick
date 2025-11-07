@@ -164,7 +164,7 @@ class UpdateManager {
         sendNotification(
             title: title,
             body: body,
-            actionTitle: NSLocalizedString("Open in Browser", comment: ""),
+            actionTitle: NSLocalizedString("Update & Quit", comment: ""),
             actionHandlerID: "openRelease"
         )
     }
