@@ -15,49 +15,59 @@ class UpdateManager {
         set { UserDefaults.standard.set(newValue, forKey: autoCheckKey) }
     }
 
-    func checkForUpdate(from window: NSWindow?, suppressUpToDateAlert: Bool = false) {
+    @MainActor
+    func checkForUpdate(from window: NSWindow?, suppressUpToDateAlert: Bool = false) async {
         guard let currentVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String else { return }
-        let url = URL(string: latestReleaseAPI)!
-        let task = URLSession.shared.dataTask(with: url) { data, _, error in
-            guard let data = data, error == nil,
-                  let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
+
+        let url = URL(string: latestReleaseAPI.trimmingCharacters(in: .whitespacesAndNewlines))!
+        do {
+            let (data, _) = try await URLSession.shared.data(from: url)
+            guard let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
                   let tag = json["tag_name"] as? String else {
                 if !suppressUpToDateAlert {
-                    self.showAlert(
+                    await showAlert(
                         NSLocalizedString("Settings.General.Update.Failed.Title", comment: ""),
                         NSLocalizedString("Settings.General.Update.Failed.Msg", comment: ""),
-                        window: window
+                        in: window
                     )
                 }
                 return
             }
+
             let latestVersion = tag.trimmingCharacters(in: CharacterSet(charactersIn: "v"))
-            if self.isNewerVersion(latestVersion, than: currentVersion) {
-                DispatchQueue.main.async {
-                    let alert = NSAlert()
-                    alert.messageText = NSLocalizedString("Settings.General.Update.Available.Title", comment: "")
-                    alert.informativeText = String(format: NSLocalizedString("Settings.General.Update.Available.Msg", comment: ""), latestVersion)
-                    alert.addButton(withTitle: NSLocalizedString("Settings.General.Update.Available.Button.Update", comment: ""))
-                    alert.addButton(withTitle: NSLocalizedString("Settings.General.Update.Available.Button.Cancel", comment: ""))
-                    alert.alertStyle = .informational
-                    if alert.runModal() == .alertFirstButtonReturn {
-                        if let releaseURL = URL(string: self.latestReleaseURL) {
-                            NSWorkspace.shared.open(releaseURL)
-                        }
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                            NSApp.terminate(nil)
-                        }
+            if isNewerVersion(latestVersion, than: currentVersion) {
+                let alert = NSAlert()
+                alert.messageText = NSLocalizedString("Settings.General.Update.Available.Title", comment: "")
+                alert.informativeText = String(format: NSLocalizedString("Settings.General.Update.Available.Msg", comment: ""), latestVersion)
+                alert.addButton(withTitle: NSLocalizedString("Settings.General.Update.Available.Button.Update", comment: ""))
+                alert.addButton(withTitle: NSLocalizedString("Settings.General.Update.Available.Button.Cancel", comment: ""))
+                alert.alertStyle = .informational
+
+                let response = await alert.beginSheetModal(for: window ?? NSApp.mainWindow ?? NSApp.windows.first!)
+                if response == .alertFirstButtonReturn {
+                    if let releaseURL = URL(string: latestReleaseURL.trimmingCharacters(in: .whitespacesAndNewlines)) {
+                        NSWorkspace.shared.open(releaseURL)
+                    }
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                        NSApp.terminate(nil)
                     }
                 }
             } else if !suppressUpToDateAlert {
-                self.showAlert(
+                await showAlert(
                     NSLocalizedString("Settings.General.Update.UpToDate.Title", comment: ""),
                     String(format: NSLocalizedString("Settings.General.Update.UpToDate.Msg", comment: ""), currentVersion),
-                    window: window
+                    in: window
+                )
+            }
+        } catch {
+            if !suppressUpToDateAlert {
+                await showAlert(
+                    NSLocalizedString("Settings.General.Update.Failed.Title", comment: ""),
+                    NSLocalizedString("Settings.General.Update.Failed.Msg", comment: ""),
+                    in: window
                 )
             }
         }
-        task.resume()
     }
 
     private func isNewerVersion(_ latest: String, than current: String) -> Bool {
@@ -70,17 +80,17 @@ class UpdateManager {
         return latestParts.count > currentParts.count
     }
 
-    private func showAlert(_ title: String, _ message: String, window: NSWindow?) {
-        DispatchQueue.main.async {
-            let alert = NSAlert()
-            alert.messageText = title
-            alert.informativeText = message
-            alert.alertStyle = .informational
-            if let window = window {
-                alert.beginSheetModal(for: window)
-            } else {
-                alert.runModal()
-            }
+    @MainActor
+    private func showAlert(_ title: String, _ message: String, in window: NSWindow?) async {
+        let alert = NSAlert()
+        alert.messageText = title
+        alert.informativeText = message
+        alert.alertStyle = .informational
+
+        if let window = window {
+            _ = await alert.beginSheetModal(for: window)
+        } else {
+            alert.runModal()
         }
     }
 }

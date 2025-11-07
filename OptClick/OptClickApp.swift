@@ -159,7 +159,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         // Auto check for updates
         if UpdateManager.isAutoCheckEnabled {
             DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-                UpdateManager.shared.checkForUpdate(from: nil, suppressUpToDateAlert: true)
+                Task {
+                    await UpdateManager.shared.checkForUpdate(from: nil, suppressUpToDateAlert: true)
+                }
             }
         }
     }

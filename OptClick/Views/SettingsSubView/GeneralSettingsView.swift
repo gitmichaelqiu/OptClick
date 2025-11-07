@@ -248,7 +248,9 @@ struct GeneralSettingsView: View {
 
                     SettingsRow("Settings.General.Update.ManualCheck") {
                         Button(NSLocalizedString("Settings.General.Update.ManualCheck", comment: "")) {
-                            UpdateManager.shared.checkForUpdate(from: nil)
+                            Task {
+                                await UpdateManager.shared.checkForUpdate(from: nil)
+                            }
                         }
                     }
                 }
