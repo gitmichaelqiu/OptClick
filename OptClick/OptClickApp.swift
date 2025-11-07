@@ -362,41 +362,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 return String(format: NSLocalizedString("Menu.Reason.Manual", comment: ""), stateStr)
             }
         }
-        
-//        if isMatch {
-//            if state {
-//                // App matches and OptClick is enabled - this is because of the app
-//                return String(format: NSLocalizedString("Menu.Reason.IsFrontmost", comment: ""), stateStr, appName)
-//            } else {
-//                // App matches but OptClick is disabled - this is temporary manual override
-//                return String(format: NSLocalizedString("Menu.Reason.TmpManual", comment: ""), stateStr)
-//            }
-//        } else {
-//            // App doesn't match
-//            let behaviorRaw = UserDefaults.standard.string(forKey: "AutoToggleBehavior") ?? "disable"
-//            let behavior = AutoToggleBehavior(rawValue: behaviorRaw) ?? .disable
-//            
-//            switch behavior {
-//            case .disable:
-//                if state {
-//                    // OptClick is enabled but shouldn't be for this app - temporary manual override
-//                    return String(format: NSLocalizedString("Menu.Reason.TmpManual", comment: ""), stateStr)
-//                } else {
-//                    // OptClick is disabled because app doesn't match
-//                    return String(format: NSLocalizedString("Menu.Reason.NoFrontmost", comment: ""), stateStr)
-//                }
-//            case .followLast:
-//                let lastState = UserDefaults.standard.bool(forKey: InputManager.lastStateKey)
-//                
-//                if lastState == state {
-//                    // State matches last manual state
-//                    return String(format: NSLocalizedString("Menu.Reason.LastManual", comment: ""), stateStr)
-//                } else {
-//                    // State doesn't match last manual state - manual override
-//                    return String(format: NSLocalizedString("Menu.Reason.Manual", comment: ""), stateStr)
-//                }
-//            }
-//        }
     }
 }
 
