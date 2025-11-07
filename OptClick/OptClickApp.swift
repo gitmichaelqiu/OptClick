@@ -310,40 +310,93 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             }
         }
         
-        if isMatch {
-            if state {
-                // App matches and OptClick is enabled - this is because of the app
-                return String(format: NSLocalizedString("Menu.Reason.IsFrontmost", comment: ""), stateStr, appName)
-            } else {
-                // App matches but OptClick is disabled - this is temporary manual override
-                return String(format: NSLocalizedString("Menu.Reason.TmpManual", comment: ""), stateStr)
-            }
-        } else {
-            // App doesn't match
+        if self.inputManager.isAutoToggleEnabled {
             let behaviorRaw = UserDefaults.standard.string(forKey: "AutoToggleBehavior") ?? "disable"
             let behavior = AutoToggleBehavior(rawValue: behaviorRaw) ?? .disable
+            let lastState = UserDefaults.standard.bool(forKey: InputManager.lastStateKey)
             
-            switch behavior {
-            case .disable:
+            if isMatch {
                 if state {
-                    // OptClick is enabled but shouldn't be for this app - temporary manual override
+                    // auto enable by frontmost app
+                    return String(format: NSLocalizedString("Menu.Reason.IsFrontmost", comment: ""), stateStr, appName)
+                } else {
+                    // manual disable
                     return String(format: NSLocalizedString("Menu.Reason.TmpManual", comment: ""), stateStr)
-                } else {
-                    // OptClick is disabled because app doesn't match
-                    return String(format: NSLocalizedString("Menu.Reason.NoFrontmost", comment: ""), stateStr)
                 }
-            case .followLast:
-                let lastState = UserDefaults.standard.bool(forKey: InputManager.lastStateKey)
-                
-                if lastState == state {
-                    // State matches last manual state
-                    return String(format: NSLocalizedString("Menu.Reason.LastManual", comment: ""), stateStr)
+            } else {
+                if state {
+                    // manual enable
+                    switch behavior {
+                    case .disable:
+                        // manual disable
+                        return String(format: NSLocalizedString("Menu.Reason.TmpManual", comment: ""), stateStr)
+                        
+                    case .followLast:
+                        if lastState == state {
+                            // follow last
+                            return String(format: NSLocalizedString("Menu.Reason.FollowLast", comment: ""), stateStr)
+                        } else {
+                            // manual enable
+                            return String(format: NSLocalizedString("Menu.Reason.TmpManual", comment: ""), stateStr)
+                        }
+                    }
                 } else {
-                    // State doesn't match last manual state - manual override
-                    return String(format: NSLocalizedString("Menu.Reason.Manual", comment: ""), stateStr)
+                    // auto disable
+                    switch behavior {
+                    case .disable:
+                        // auto disable
+                        return String(format: NSLocalizedString("Menu.Reason.NoFrontmost", comment: ""), stateStr)
+                    case .followLast:
+                        // follow last
+                        return String(format: NSLocalizedString("Menu.Reason.FollowLast", comment: ""), stateStr)
+                    }
                 }
             }
+        } else {
+            // manual
+            if state {
+                // manual enable
+                return String(format: NSLocalizedString("Menu.Reason.Manual", comment: ""), stateStr)
+            } else {
+                // manual disable
+                return String(format: NSLocalizedString("Menu.Reason.Manual", comment: ""), stateStr)
+            }
         }
+        
+//        if isMatch {
+//            if state {
+//                // App matches and OptClick is enabled - this is because of the app
+//                return String(format: NSLocalizedString("Menu.Reason.IsFrontmost", comment: ""), stateStr, appName)
+//            } else {
+//                // App matches but OptClick is disabled - this is temporary manual override
+//                return String(format: NSLocalizedString("Menu.Reason.TmpManual", comment: ""), stateStr)
+//            }
+//        } else {
+//            // App doesn't match
+//            let behaviorRaw = UserDefaults.standard.string(forKey: "AutoToggleBehavior") ?? "disable"
+//            let behavior = AutoToggleBehavior(rawValue: behaviorRaw) ?? .disable
+//            
+//            switch behavior {
+//            case .disable:
+//                if state {
+//                    // OptClick is enabled but shouldn't be for this app - temporary manual override
+//                    return String(format: NSLocalizedString("Menu.Reason.TmpManual", comment: ""), stateStr)
+//                } else {
+//                    // OptClick is disabled because app doesn't match
+//                    return String(format: NSLocalizedString("Menu.Reason.NoFrontmost", comment: ""), stateStr)
+//                }
+//            case .followLast:
+//                let lastState = UserDefaults.standard.bool(forKey: InputManager.lastStateKey)
+//                
+//                if lastState == state {
+//                    // State matches last manual state
+//                    return String(format: NSLocalizedString("Menu.Reason.LastManual", comment: ""), stateStr)
+//                } else {
+//                    // State doesn't match last manual state - manual override
+//                    return String(format: NSLocalizedString("Menu.Reason.Manual", comment: ""), stateStr)
+//                }
+//            }
+//        }
     }
 }
 
