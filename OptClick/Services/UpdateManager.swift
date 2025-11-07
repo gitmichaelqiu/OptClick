@@ -1,5 +1,6 @@
 import Foundation
 import AppKit
+import UserNotifications
 
 class UpdateManager {
     static let shared = UpdateManager()
@@ -36,6 +37,11 @@ class UpdateManager {
 
             let latestVersion = tag.trimmingCharacters(in: CharacterSet(charactersIn: "v"))
             if isNewerVersion(latestVersion, than: currentVersion) {
+                if suppressUpToDateAlert {
+                    self.sendUpdateNotification(latestVersion: latestVersion, currentVersion: currentVersion)
+                    return
+                }
+                
                 let alert = NSAlert()
                 alert.messageText = NSLocalizedString("Settings.General.Update.Available.Title", comment: "")
                 alert.informativeText = String(format: NSLocalizedString("Settings.General.Update.Available.Msg", comment: ""), latestVersion)
@@ -91,6 +97,43 @@ class UpdateManager {
             _ = await alert.beginSheetModal(for: window)
         } else {
             alert.runModal()
+        }
+    }
+    
+    private func sendUpdateNotification(latestVersion: String, currentVersion: String) {
+        let content = UNMutableNotificationContent()
+        content.title = NSLocalizedString("Update Available", comment: "")
+        content.body = String(
+            format: NSLocalizedString("A new version %@ is available (current: %@). Click to download.", comment: ""),
+            latestVersion,
+            currentVersion
+        )
+        content.sound = .default
+        content.categoryIdentifier = "updateAvailable"
+
+        let openAction = UNNotificationAction(
+            identifier: "openRelease",
+            title: NSLocalizedString("Open in Browser", comment: ""),
+            options: [.foreground]
+        )
+        let category = UNNotificationCategory(
+            identifier: "updateAvailable",
+            actions: [openAction],
+            intentIdentifiers: [],
+            options: []
+        )
+        UNUserNotificationCenter.current().setNotificationCategories([category])
+
+        let request = UNNotificationRequest(
+            identifier: "UpdateAvailable-\(Date().timeIntervalSince1970)",
+            content: content,
+            trigger: nil
+        )
+
+        UNUserNotificationCenter.current().requestAuthorization { granted, error in
+            if granted {
+                UNUserNotificationCenter.current().add(request)
+            }
         }
     }
 }
