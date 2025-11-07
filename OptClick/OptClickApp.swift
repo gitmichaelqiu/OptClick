@@ -380,13 +380,14 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
         didReceive response: UNNotificationResponse,
         withCompletionHandler completionHandler: @escaping () -> Void
     ) {
-        if response.notification.request.content.categoryIdentifier == "updateAvailable",
-           response.actionIdentifier == "openRelease" || response.actionIdentifier == UNNotificationDefaultActionIdentifier {
+        defer { completionHandler() }
+
+        if response.actionIdentifier == "openRelease" {
             if let url = URL(string: UpdateManager.shared.latestReleaseURL.trimmingCharacters(in: .whitespacesAndNewlines)) {
                 NSWorkspace.shared.open(url)
+                NSApp.perform(#selector(NSApp.terminate(_:)), with: nil, afterDelay: 0.5)
             }
         }
-        completionHandler()
     }
 }
 
