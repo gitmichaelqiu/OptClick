@@ -85,7 +85,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
 
         // --- Status Reason (non-clickable) ---
-        let statusReason = autoToggleStatusReason()
+        let statusReason = getStatusReason()
         let statusReasonItem = NSMenuItem(title: statusReason, action: nil, keyEquivalent: "")
         statusReasonItem.isEnabled = false
         menu.addItem(statusReasonItem)
@@ -273,7 +273,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         return scaled
     }
     
-    private func autoToggleStatusReason() -> String {
+    private func getStatusReason() -> String {
         let inputManager = self.inputManager
         let state = inputManager.isEnabled
         let stateStr = state ? NSLocalizedString("Menu.Reason.StateStr.Enabled", comment: "Enabled") : NSLocalizedString("Menu.Reason.StateStr.Disabled", comment: "Disabled")
