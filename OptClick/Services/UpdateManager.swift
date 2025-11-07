@@ -6,8 +6,8 @@ class UpdateManager {
     static let shared = UpdateManager()
     private init() {}
 
-    private let latestReleaseAPI = "https://api.github.com/repos/gitmichaelqiu/OptClick/releases/latest"
-    private let latestReleaseURL = "https://github.com/gitmichaelqiu/OptClick/releases/latest"
+    let latestReleaseAPI = "https://api.github.com/repos/gitmichaelqiu/OptClick/releases/latest"
+    let latestReleaseURL = "https://github.com/gitmichaelqiu/OptClick/releases/latest"
 
     // UserDefaults key for auto update check
     static let autoCheckKey = "AutoCheckForUpdate"

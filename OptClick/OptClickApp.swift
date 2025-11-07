@@ -1,11 +1,12 @@
 import SwiftUI
+import UserNotifications
 import Combine
 import AppKit
 
 let defaultSettingsWindowWidth = 450
 let defaultSettingsWindowHeight = 450
 
-class AppDelegate: NSObject, NSApplicationDelegate {
+class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDelegate {
     var statusItem: NSStatusItem?
     var settingsWindow: NSWindow?
     
@@ -157,6 +158,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         updateStatusBarIcon()
         
         // Auto check for updates
+        UNUserNotificationCenter.current().delegate = self
         if UpdateManager.isAutoCheckEnabled {
             DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
                 Task {
@@ -371,6 +373,20 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 return String(format: NSLocalizedString("Menu.Reason.Manual", comment: ""), stateStr)
             }
         }
+    }
+    
+    func userNotificationCenter(
+        _ center: UNUserNotificationCenter,
+        didReceive response: UNNotificationResponse,
+        withCompletionHandler completionHandler: @escaping () -> Void
+    ) {
+        if response.notification.request.content.categoryIdentifier == "updateAvailable",
+           response.actionIdentifier == "openRelease" || response.actionIdentifier == UNNotificationDefaultActionIdentifier {
+            if let url = URL(string: UpdateManager.shared.latestReleaseURL.trimmingCharacters(in: .whitespacesAndNewlines)) {
+                NSWorkspace.shared.open(url)
+            }
+        }
+        completionHandler()
     }
 }
 
