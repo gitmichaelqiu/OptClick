@@ -5,21 +5,21 @@ import UserNotifications
 class UpdateManager {
     static let shared = UpdateManager()
     private init() {}
-
+    
     let latestReleaseAPI = "https://api.github.com/repos/gitmichaelqiu/OptClick/releases/latest"
     let latestReleaseURL = "https://github.com/gitmichaelqiu/OptClick/releases/latest"
-
+    
     // UserDefaults key for auto update check
     static let autoCheckKey = "AutoCheckForUpdate"
     static var isAutoCheckEnabled: Bool {
         get { UserDefaults.standard.bool(forKey: autoCheckKey) }
         set { UserDefaults.standard.set(newValue, forKey: autoCheckKey) }
     }
-
+    
     @MainActor
     func checkForUpdate(from window: NSWindow?, suppressUpToDateAlert: Bool = false) async {
         guard let currentVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String else { return }
-
+        
         let url = URL(string: latestReleaseAPI.trimmingCharacters(in: .whitespacesAndNewlines))!
         do {
             let (data, _) = try await URLSession.shared.data(from: url)
@@ -34,11 +34,11 @@ class UpdateManager {
                 }
                 return
             }
-
+            
             let latestVersion = tag.trimmingCharacters(in: CharacterSet(charactersIn: "v"))
             if isNewerVersion(latestVersion, than: currentVersion) {
                 if suppressUpToDateAlert {
-                    self.sendUpdateNotification(latestVersion: latestVersion, currentVersion: currentVersion)
+                    self.sendUpdateAvailableNotification(latestVersion: latestVersion, currentVersion: currentVersion)
                     return
                 }
                 
@@ -48,7 +48,7 @@ class UpdateManager {
                 alert.addButton(withTitle: NSLocalizedString("Settings.General.Update.Available.Button.Update", comment: ""))
                 alert.addButton(withTitle: NSLocalizedString("Settings.General.Update.Available.Button.Cancel", comment: ""))
                 alert.alertStyle = .informational
-
+                
                 let response = await alert.beginSheetModal(for: window ?? NSApp.mainWindow ?? NSApp.windows.first!)
                 if response == .alertFirstButtonReturn {
                     if let releaseURL = URL(string: latestReleaseURL.trimmingCharacters(in: .whitespacesAndNewlines)) {
@@ -72,10 +72,12 @@ class UpdateManager {
                     NSLocalizedString("Settings.General.Update.Failed.Msg", comment: ""),
                     in: window
                 )
+            } else {
+                self.sendCheckFailedNotification()
             }
         }
     }
-
+    
     private func isNewerVersion(_ latest: String, than current: String) -> Bool {
         let latestParts = latest.split(separator: ".").compactMap { Int($0) }
         let currentParts = current.split(separator: ".").compactMap { Int($0) }
@@ -85,14 +87,14 @@ class UpdateManager {
         }
         return latestParts.count > currentParts.count
     }
-
+    
     @MainActor
     private func showAlert(_ title: String, _ message: String, in window: NSWindow?) async {
         let alert = NSAlert()
         alert.messageText = title
         alert.informativeText = message
         alert.alertStyle = .informational
-
+        
         if let window = window {
             _ = await alert.beginSheetModal(for: window)
         } else {
@@ -100,40 +102,64 @@ class UpdateManager {
         }
     }
     
-    private func sendUpdateNotification(latestVersion: String, currentVersion: String) {
+    private func sendNotification(title: String, body: String, actionTitle: String? = nil, actionHandlerID: String? = nil) {
         let content = UNMutableNotificationContent()
-        content.title = NSLocalizedString("Update Available", comment: "")
-        content.body = String(
-            format: NSLocalizedString("A new version %@ is available (current: %@). Click to download.", comment: ""),
-            latestVersion,
-            currentVersion
-        )
+        content.title = title
+        content.body = body
         content.sound = .default
-        content.categoryIdentifier = "updateAvailable"
-
-        let openAction = UNNotificationAction(
-            identifier: "openRelease",
-            title: NSLocalizedString("Open in Browser", comment: ""),
-            options: [.foreground]
-        )
-        let category = UNNotificationCategory(
-            identifier: "updateAvailable",
-            actions: [openAction],
-            intentIdentifiers: [],
-            options: []
-        )
-        UNUserNotificationCenter.current().setNotificationCategories([category])
-
+        
+        var actions: [UNNotificationAction] = []
+        var categoryID = "generic"
+        
+        if let actionTitle = actionTitle, let handlerID = actionHandlerID {
+            let action = UNNotificationAction(
+                identifier: handlerID,
+                title: actionTitle,
+                options: [.foreground]
+            )
+            actions = [action]
+            categoryID = handlerID + "-category"
+            let category = UNNotificationCategory(
+                identifier: categoryID,
+                actions: actions,
+                intentIdentifiers: [],
+                options: []
+            )
+            UNUserNotificationCenter.current().setNotificationCategories([category])
+        }
+        
+        content.categoryIdentifier = categoryID
+        
         let request = UNNotificationRequest(
-            identifier: "UpdateAvailable-\(Date().timeIntervalSince1970)",
+            identifier: "Notify-\(UUID().uuidString)",
             content: content,
             trigger: nil
         )
-
-        UNUserNotificationCenter.current().requestAuthorization { granted, error in
+        
+        UNUserNotificationCenter.current().requestAuthorization { granted, _ in
             if granted {
                 UNUserNotificationCenter.current().add(request)
             }
         }
+    }
+    
+    private func sendCheckFailedNotification() {
+        let title = NSLocalizedString("Update Check Failed", comment: "")
+        let body = NSLocalizedString("Could not connect to the update server. Please check your network.", comment: "")
+        sendNotification(title: title, body: body)
+    }
+    
+    private func sendUpdateAvailableNotification(latestVersion: String, currentVersion: String) {
+        let title = NSLocalizedString("Update Available", comment: "")
+        let body = String(
+            format: NSLocalizedString("Version %@ is ready (you have %@). Click to download.", comment: ""),
+            latestVersion, currentVersion
+        )
+        sendNotification(
+            title: title,
+            body: body,
+            actionTitle: NSLocalizedString("Open in Browser", comment: ""),
+            actionHandlerID: "openRelease"
+        )
     }
 }
