@@ -150,21 +150,21 @@ class UpdateManager {
     }
     
     private func sendCheckFailedNotification() {
-        let title = NSLocalizedString("Update Check Failed", comment: "")
-        let body = NSLocalizedString("Could not connect to the update server. Please check your network.", comment: "")
+        let title = NSLocalizedString("Settings.General.Update.Failed.Title", comment: "")
+        let body = NSLocalizedString("Settings.General.Update.Failed.Msg", comment: "")
         sendNotification(title: title, body: body)
     }
     
     private func sendUpdateAvailableNotification(latestVersion: String, currentVersion: String) {
-        let title = NSLocalizedString("Update Available", comment: "")
+        let title = NSLocalizedString("Settings.General.Update.Available.Title", comment: "")
         let body = String(
-            format: NSLocalizedString("Version %@ is ready (you have %@). Click to download.", comment: ""),
-            latestVersion, currentVersion
+            format: NSLocalizedString("Settings.General.Update.Available.Notif.Msg", comment: ""),
+            currentVersion, latestVersion
         )
         sendNotification(
             title: title,
             body: body,
-            actionTitle: NSLocalizedString("Update & Quit", comment: ""),
+            actionTitle: NSLocalizedString("Settings.General.Update.Available.Button.Update", comment: ""),
             actionHandlerID: "openRelease"
         )
     }

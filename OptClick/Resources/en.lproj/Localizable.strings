@@ -50,10 +50,11 @@
 "Settings.General.Update.ManualCheck" = "Check for updates";
 
 "Settings.General.Update.Failed.Title" = "Update Check Failed";
-"Settings.General.Update.Failed.Msg" = "Could not check for updates.";
+"Settings.General.Update.Failed.Msg" = "OptClick could not connect to the update server. Please check your network.";
 
 "Settings.General.Update.Available.Title" = "OptClick Update Available";
 "Settings.General.Update.Available.Msg" = "v%@ is available. Open the releases page to download and install?";
+"Settings.General.Update.Available.Notif.Msg" = "v%@ -> v%@ is available. Click to open the release page.";
 "Settings.General.Update.Available.Button.Update" = "Update & Quit";
 "Settings.General.Update.Available.Button.Cancel" = "Cancel";
 
