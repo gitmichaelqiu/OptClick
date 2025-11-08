@@ -312,7 +312,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
             if let procName = inputManager.getFrontmostProcessName() {
                 for rule in autoToggleAppBundleIds {
                     if rule.hasPrefix("proc:"), let expected = rule.split(separator: ":").last {
-                        if procName == String(expected) {
+                        if procName.lowercased() == String(expected).lowercased() {
                             isMatch = true
                             break
                         }

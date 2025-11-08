@@ -143,13 +143,13 @@ class InputManager: ObservableObject {
             isMatch = true
         }
 
-        // 2. Process name (exact match)
+        // 2. Process name
         if !isMatch {
             if let procName = getFrontmostProcessName() {
                 for rule in rules {
                     if rule.hasPrefix("proc:") {
                         let expected = String(rule.dropFirst(5))
-                        if procName == expected {
+                        if procName.lowercased() == expected.lowercased() {
                             isMatch = true
                             break
                         }
