@@ -10,6 +10,17 @@ struct AutoToggleView: View {
     @State private var selection: String? = nil
     @State var isExpandedLocal: Bool = false
     
+    init(
+        rules: Binding<[String]>,
+        isExpanded: Binding<Bool>,
+        onRuleChange: @escaping () -> Void
+    ) {
+        self._rules = rules
+        self._isExpanded = isExpanded
+        self.onRuleChange = onRuleChange
+        self._isExpandedLocal = State(initialValue: isExpanded.wrappedValue)
+    }
+    
     var body: some View {
         SettingsRow("Settings.General.AutoToggle.TargetApps") {
             HStack(spacing: 8) {
