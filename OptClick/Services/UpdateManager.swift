@@ -2,6 +2,23 @@ import Foundation
 import AppKit
 import UserNotifications
 
+extension NSApplication {
+    // Return main window for sheet
+    var suitableSheetWindow: NSWindow? {
+        suitableSheetWindow(nil)
+    }
+
+    func suitableSheetWindow(_ preferred: NSWindow?) -> NSWindow? {
+        if let w = preferred, w.isVisible { return w }
+
+        return keyWindow
+            ?? mainWindow
+            ?? windows.first { $0.isVisible && $0.isKeyWindow }
+            ?? windows.first { $0.isVisible }
+            ?? windows.first
+    }
+}
+
 class UpdateManager {
     static let shared = UpdateManager()
     private init() {}
@@ -49,7 +66,9 @@ class UpdateManager {
                 alert.addButton(withTitle: NSLocalizedString("Settings.General.Update.Available.Button.Cancel", comment: ""))
                 alert.alertStyle = .informational
                 
-                let response = await alert.beginSheetModal(for: window ?? NSApp.mainWindow ?? NSApp.windows.first!)
+                let response = await alert.beginSheetModal(
+                    for: NSApp.suitableSheetWindow(window)!
+                )
                 if response == .alertFirstButtonReturn {
                     if let releaseURL = URL(string: latestReleaseURL.trimmingCharacters(in: .whitespacesAndNewlines)) {
                         NSWorkspace.shared.open(releaseURL)
@@ -94,14 +113,8 @@ class UpdateManager {
         alert.messageText = title
         alert.informativeText = message
         alert.alertStyle = .informational
-        
-        let targetWindow = window
-            ?? NSApp.mainWindow
-            ?? NSApp.windows.first { $0.isVisible && $0.isKeyWindow }
-            ?? NSApp.windows.first { $0.isVisible }
-            ?? NSApp.windows.first
 
-        if let targetWindow = targetWindow {
+        if let targetWindow = NSApp.suitableSheetWindow(window) {
             _ = await alert.beginSheetModal(for: targetWindow)
         } else {
             alert.runModal()
