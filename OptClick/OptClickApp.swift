@@ -63,13 +63,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
     }
     
     @objc func settingsWindowWillClose(_ notification: Notification) {
-//        let otherVisibleWindows = NSApp.windows.filter {
-//            $0.isVisible && $0 != settingsWindow
-//        }
-//        if otherVisibleWindows.isEmpty {
-//            print("HI")
         NSApp.setActivationPolicy(.accessory)
-//        }
     }
     
     func setupMenuItems() {
