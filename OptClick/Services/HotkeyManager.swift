@@ -271,7 +271,7 @@ struct Shortcut: Equatable, Codable {
         case Key.downArrow: return "↓"
         case Key.upArrow: return "↑"
         case Key.escape: return "Escape"
-        case Key.space: return " "
+        case Key.space: return "␣"
         case Key.delete: return "⌫"
         case Key.forwardDelete: return "⌦"
         case Key.return: return "⏎"
