@@ -59,7 +59,7 @@
 "Settings.General.Update.Available.Msg" = "v%@ → v%@ 已就绪。\n是否打开发布页面下载并安装？";
 
 "Settings.General.Update.Available.Notif.Title" = "OptClick 有可用更新";
-"Settings.General.Update.Available.Notif.Msg" = "v%@ → v%@ 已就绪。点击以打开发布页面";
+"Settings.General.Update.Available.Notif.Msg" = "v%@ → v%@ 已就绪。点击以打开发布页面。";
 
 "Settings.General.Update.Available.Button.Update" = "更新并退出";
 "Settings.General.Update.Available.Button.Cancel" = "取消";
