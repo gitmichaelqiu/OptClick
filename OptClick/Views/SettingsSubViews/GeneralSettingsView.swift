@@ -18,7 +18,6 @@ struct GeneralSettingsView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 20) {
-                // OptClick Section
                 SettingsSection("Settings.General.OptClick") {
                     SettingsRow("Settings.General.OptClick.EnableOptClick") {
                         Toggle("", isOn: $inputManager.isEnabled)
@@ -60,7 +59,6 @@ struct GeneralSettingsView: View {
                     }
                 }
 
-                // Launch Section
                 SettingsSection("Settings.General.Launch") {
                     SettingsRow("Settings.General.Launch.AtLogin") {
                         Toggle("", isOn: $launchAtLogin)
@@ -87,7 +85,6 @@ struct GeneralSettingsView: View {
                     }
                 }
 
-                // Update Section
                 SettingsSection("Settings.General.Update") {
                     SettingsRow("Settings.General.Update.AutoCheck") {
                         Toggle("", isOn: $autoCheckForUpdates)
