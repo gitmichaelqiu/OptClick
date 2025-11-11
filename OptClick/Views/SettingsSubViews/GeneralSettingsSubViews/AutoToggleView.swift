@@ -8,7 +8,7 @@ struct AutoToggleView: View {
 
     @State private var selection: String? = nil
     @State private var isExpanded = false
-
+    
     var body: some View {
         SettingsRow("Settings.General.AutoToggle.TargetApps") {
             HStack(spacing: 8) {
@@ -117,18 +117,27 @@ struct AutoToggleView: View {
         panel.allowsMultipleSelection = false
         panel.canChooseDirectories = false
         panel.title = "Choose Application"
-        if panel.runModal() == .OK, let url = panel.url {
-            if let bundle = Bundle(url: url), let bundleId = bundle.bundleIdentifier {
-                if !rules.contains(bundleId) {
-                    withAnimation(.easeInOut(duration: 0.2)) {
-                        rules.append(bundleId)
-                        onRuleChange()
-                    }
-                }
+        
+        let hostWindow = NSApp.suitableSheetWindow(nil)!
+
+        panel.beginSheetModal(for: hostWindow) { response in
+            if response == .OK, let url = panel.url {
+                self.handleSelectedApp(url)
             }
         }
     }
 
+    private func handleSelectedApp(_ url: URL) {
+        if let bundle = Bundle(url: url), let bundleId = bundle.bundleIdentifier {
+            if !rules.contains(bundleId) {
+                withAnimation(.easeInOut(duration: 0.2)) {
+                    rules.append(bundleId)
+                    onRuleChange()
+                }
+            }
+        }
+    }
+    
     private func addAppByProcessName() {
         let alert = NSAlert()
         alert.messageText = NSLocalizedString("Settings.General.AutoToggle.Process.Add.Msg", comment: "")
@@ -139,15 +148,23 @@ struct AutoToggleView: View {
         alert.addButton(withTitle: NSLocalizedString("Settings.General.AutoToggle.Process.Add.Add", comment: ""))
         alert.addButton(withTitle: NSLocalizedString("Settings.General.AutoToggle.Process.Add.Cancel", comment: ""))
 
-        if alert.runModal() == .alertFirstButtonReturn {
-            let keyword = textField.stringValue.trimmingCharacters(in: .whitespacesAndNewlines)
-            if !keyword.isEmpty {
-                let rule = "proc:\(keyword)"
-                if !rules.contains(rule) {
-                    withAnimation(.easeInOut(duration: 0.2)) {
-                        rules.append(rule)
-                        onRuleChange()
-                    }
+        let hostWindow = NSApp.suitableSheetWindow(nil)!
+
+        alert.beginSheetModal(for: hostWindow) { response in
+            if response == .alertFirstButtonReturn {
+                self.processKeyword(textField.stringValue)
+            }
+        }
+    }
+    
+    private func processKeyword(_ raw: String) {
+        let keyword = raw.trimmingCharacters(in: .whitespacesAndNewlines)
+        if !keyword.isEmpty {
+            let rule = "proc:\(keyword)"
+            if !rules.contains(rule) {
+                withAnimation(.easeInOut(duration: 0.2)) {
+                    rules.append(rule)
+                    onRuleChange()
                 }
             }
         }
