@@ -7,11 +7,11 @@
 <table align="center" border="0" cellpadding="0" cellspacing="0">
   <tr>
     <td align="center">
-      <img src="/OptClick/Resources/Demo/OptClick_v1-2-1_Settings_General.png" width="300" /><br>
+      <img src="./OptClick/Resources/Demo/OptClick_v1-2-1_Settings_General.png" width="300" /><br>
       <i>Useful settings items</i>
     </td>
     <td align="center">
-      <img src="/OptClick/Resources/Demo/OptClick_v1-2-1_Settings_Shortcuts.png" width="300" /><br>
+      <img src="./OptClick/Resources/Demo/OptClick_v1-2-1_Settings_Shortcuts.png" width="300" /><br>
       <i>Customize gobal hotkeys</i>
     </td>
   </tr>
@@ -37,13 +37,11 @@ Requires **macOS 13.0 Ventura** or above.
 2. Drag the app to the *Applications* folder
 3. All set!
 
-Because I do **NOT** have an Apple developer account for the app releases ~~(Apple charges an annual fee for this)~~, you may receive alerts such as "App is broken". To resolve this, you need to go to the *terminal* and run the following command:
+Because I do **NOT** have an Apple developer account for the app releases ~~(Apple charges an annual fee for this)~~, you may receive alerts such as "App is broken".
 
-```bash
-sudo xattr -r -d com.apple.quarantine /Applications/OptClick.app
-```
+To resolve this, go to System Settings → the bottom of Privacy & Security → Open OptClick.
 
-You may be required to enter the password. When you are entering, the password is not displayed. Apple requires this. The app will **NOT** steal your password or personal information.
+In order to simulate right clicks, OptClick will ask for Accessibility right. If you accidentally deny giving the right, go to System Settings → Privacy * Security → Accessibility → + at the bottom and select OptClick.app.
 
 ## ⚠️ Issues/Suggestions
 
@@ -60,3 +58,5 @@ Thanks all the wonderful authors!
 ## ⭐ Support This Project
 
 You can simply click on the **Star** to support this project for free. Thank you for your support!
+
+[![Star History Chart](https://api.star-history.com/svg?repos=gitmichaelqiu/OptClick&type=date&legend=top-left)](https://www.star-history.com/#gitmichaelqiu/OptClick&type=date&legend=top-left)
