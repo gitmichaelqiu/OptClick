@@ -61,7 +61,7 @@ class UpdateManager {
                 
                 let alert = NSAlert()
                 alert.messageText = NSLocalizedString("Settings.General.Update.Available.Title", comment: "")
-                alert.informativeText = String(format: NSLocalizedString("Settings.General.Update.Available.Msg", comment: ""), latestVersion)
+                alert.informativeText = String(format: NSLocalizedString("Settings.General.Update.Available.Msg", comment: ""), latestVersion, currentVersion)
                 alert.addButton(withTitle: NSLocalizedString("Settings.General.Update.Available.Button.Update", comment: ""))
                 alert.addButton(withTitle: NSLocalizedString("Settings.General.Update.Available.Button.Cancel", comment: ""))
                 alert.alertStyle = .informational

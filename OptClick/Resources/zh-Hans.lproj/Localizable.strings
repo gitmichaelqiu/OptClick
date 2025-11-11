@@ -56,10 +56,10 @@
 "Settings.General.Update.Failed.Notif.Msg" = "无法连接至更新服务器，请检查网络连接。";
 
 "Settings.General.Update.Available.Title" = "更新可用";
-"Settings.General.Update.Available.Msg" = "v%@ 已就绪。是否打开发布页面下载并安装？";
+"Settings.General.Update.Available.Msg" = "v%@ → v%@ 已就绪。\n是否打开发布页面下载并安装？";
 
 "Settings.General.Update.Available.Notif.Title" = "OptClick 有可用更新";
-"Settings.General.Update.Available.Notif.Msg" = "v%@ → v%@ 准备就绪。点击以打开发布页面";
+"Settings.General.Update.Available.Notif.Msg" = "v%@ → v%@ 已就绪。点击以打开发布页面";
 
 "Settings.General.Update.Available.Button.Update" = "更新并退出";
 "Settings.General.Update.Available.Button.Cancel" = "取消";

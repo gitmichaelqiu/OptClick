@@ -56,7 +56,7 @@
 "Settings.General.Update.Failed.Notif.Msg" = "Could not connect to the update server. Please check your network.";
 
 "Settings.General.Update.Available.Title" = "Update Available";
-"Settings.General.Update.Available.Msg" = "v%@ is available. Open the release page to download and install.";
+"Settings.General.Update.Available.Msg" = " v%@ → v%@ is available.\nOpen the release page to download and install?";
 
 "Settings.General.Update.Available.Notif.Title" = "OptClick Update Available";
 "Settings.General.Update.Available.Notif.Msg" = "v%@ → v%@ is available. Click to open the release page.";
