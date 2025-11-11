@@ -155,6 +155,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             }
         
         updateStatusBarIcon()
+        UpdateManager.shared.checkForUpdate(from: nil, suppressUpToDateAlert: true)
     }
     
     @objc private func handleHotkeyTriggered() {
