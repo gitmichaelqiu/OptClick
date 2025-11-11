@@ -4,7 +4,7 @@ import Combine
 import AppKit
 
 let defaultSettingsWindowWidth = 450
-let defaultSettingsWindowHeight = 450
+let defaultSettingsWindowHeight = 500
 
 class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDelegate {
     var statusItem: NSStatusItem?
