@@ -163,13 +163,13 @@ class UpdateManager {
     }
     
     private func sendCheckFailedNotification() {
-        let title = NSLocalizedString("Settings.General.Update.Failed.Title", comment: "")
-        let body = NSLocalizedString("Settings.General.Update.Failed.Msg", comment: "")
+        let title = NSLocalizedString("Settings.General.Update.Failed.Notif.Title", comment: "")
+        let body = NSLocalizedString("Settings.General.Update.Failed.Notif.Msg", comment: "")
         sendNotification(title: title, body: body)
     }
     
     private func sendUpdateAvailableNotification(latestVersion: String, currentVersion: String) {
-        let title = NSLocalizedString("Settings.General.Update.Available.Title", comment: "")
+        let title = NSLocalizedString("Settings.General.Update.Available.Notif.Title", comment: "")
         let body = String(
             format: NSLocalizedString("Settings.General.Update.Available.Notif.Msg", comment: ""),
             currentVersion, latestVersion
