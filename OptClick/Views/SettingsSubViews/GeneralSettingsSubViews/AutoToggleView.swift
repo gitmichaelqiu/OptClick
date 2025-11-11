@@ -4,10 +4,10 @@ import UniformTypeIdentifiers
 
 struct AutoToggleView: View {
     @Binding var rules: [String]
+    @Binding var isExpanded: Bool
     let onRuleChange: () -> Void
 
     @State private var selection: String? = nil
-    @AppStorage("AutoToggleView.isExpanded") private var isExpanded = false
     
     var body: some View {
         SettingsRow("Settings.General.AutoToggle.TargetApps") {

@@ -1,6 +1,8 @@
 import SwiftUI
 
 struct GeneralSettingsView: View {
+    @AppStorage("AutoToggle.isExpanded") private var isAutoToggleExpanded = false
+    
     @ObservedObject var inputManager: InputManager
     
     @State private var autoCheckForUpdates = UpdateManager.isAutoCheckEnabled
@@ -40,7 +42,7 @@ struct GeneralSettingsView: View {
                 if inputManager.isAutoToggleEnabled {
                     SettingsSection("Settings.General.AutoToggle") {
                         AutoToggleView(
-                            rules: $autoToggleRules,
+                            rules: $autoToggleRules, isExpanded: $isAutoToggleExpanded,
                             onRuleChange: saveAndRefresh
                         )
                         Divider()
