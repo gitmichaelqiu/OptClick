@@ -7,7 +7,7 @@ struct AutoToggleView: View {
     let onRuleChange: () -> Void
 
     @State private var selection: String? = nil
-    @State private var isExpanded = false
+    @AppStorage("AutoToggleView.isExpanded") private var isExpanded = false
     
     var body: some View {
         SettingsRow("Settings.General.AutoToggle.TargetApps") {
