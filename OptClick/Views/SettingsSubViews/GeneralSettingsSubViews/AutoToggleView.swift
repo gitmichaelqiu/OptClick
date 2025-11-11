@@ -181,16 +181,3 @@ struct AutoToggleView: View {
         }
     }
 }
-
-// Preview
-struct AutoToggleView_Previews: PreviewProvider {
-    @State static var rules = ["com.apple.Safari", "proc:Terminal"]
-    static var previews: some View {
-        AutoToggleView(
-            rules: $rules,
-            onRuleChange: {}
-        )
-        .previewLayout(.sizeThatFits)
-        .padding()
-    }
-}
