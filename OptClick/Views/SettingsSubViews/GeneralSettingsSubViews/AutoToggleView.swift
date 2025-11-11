@@ -25,7 +25,7 @@ struct AutoToggleView: View {
         SettingsRow("Settings.General.AutoToggle.TargetApps") {
             HStack(spacing: 8) {
                 Button(action: {
-                    withAnimation(.easeInOut(duration: 0.2)) {
+                    withAnimation(.easeInOut(duration: 0.16)) {
                         isExpandedLocal.toggle()
                         isExpanded = isExpandedLocal
                     }
