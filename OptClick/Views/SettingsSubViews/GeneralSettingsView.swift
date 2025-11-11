@@ -1,4 +1,3 @@
-// OptClick/Views/SettingsSubView/GeneralSettingsView.swift
 import SwiftUI
 
 struct GeneralSettingsView: View {
@@ -39,7 +38,6 @@ struct GeneralSettingsView: View {
                     }
                 }
 
-                // AutoToggle Section (抽离后仅 7 行！)
                 if inputManager.isAutoToggleEnabled {
                     SettingsSection("Settings.General.AutoToggle") {
                         AutoToggleView(
