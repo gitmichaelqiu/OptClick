@@ -9,6 +9,7 @@ let defaultSettingsWindowHeight = 500
 class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDelegate {
     var statusItem: NSStatusItem?
     var settingsWindow: NSWindow?
+    var statusBarManager: StatusBarManager?
     
     private var inputManagerCancellable: AnyCancellable?
     
@@ -124,40 +125,27 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
     }
     
     func applicationDidFinishLaunching(_ notification: Notification) {
-        statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
-        
-        if let button = statusItem?.button {
-            button.image = NSImage(systemSymbolName: "cursorarrow.click.2", accessibilityDescription: "OptClick")
+        // Initialize status bar
+        statusBarManager = StatusBarManager(inputManager: inputManager) {
+            self.inputManager.isEnabled.toggle()
         }
-        
-        setupMenuItems()
-        
-        // Setup hotkey observer
+        statusBarManager?.install()
+
+        // Observe hotkey & app change
         NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(handleHotkeyTriggered),
-            name: .hotkeyTriggered,
-            object: nil
+            self, selector: #selector(handleHotkeyTriggered),
+            name: .hotkeyTriggered, object: nil
         )
-        
+        NotificationCenter.default.addObserver(
+            self, selector: #selector(openSettingsWindow),
+            name: .openSettingsWindow, object: nil
+        )
         NSWorkspace.shared.notificationCenter.addObserver(
-            self,
-            selector: #selector(frontmostAppDidChange),
-            name: NSWorkspace.didActivateApplicationNotification,
-            object: nil
+            self, selector: #selector(frontmostAppDidChange),
+            name: NSWorkspace.didActivateApplicationNotification, object: nil
         )
-        
-        inputManagerCancellable = inputManager.objectWillChange
-            .sink { [weak self] _ in
-                DispatchQueue.main.async {
-                    self?.updateStatusBarIcon()
-                    self?.setupMenuItems()
-                }
-            }
-        
-        updateStatusBarIcon()
-        
-        // Auto check for updates
+
+        // Auto-check update
         UNUserNotificationCenter.current().delegate = self
         if UpdateManager.isAutoCheckEnabled {
             DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
@@ -170,29 +158,14 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
     
     @objc private func handleHotkeyTriggered() {
         inputManager.isEnabled.toggle()
-//        updateStatusBarIcon()
     }
     
     @objc private func frontmostAppDidChange() {
-        // Only update menu if AutoToggle is active
-//        let autoToggleAppBundleIds = UserDefaults.standard.stringArray(forKey: "AutoToggleAppBundleIds") ?? []
-//        if !autoToggleAppBundleIds.isEmpty {
-//            DispatchQueue.main.async {
-//                self.setupMenuItems()
-//            }
-//        }
         let autoToggleEnabled = UserDefaults.standard.bool(forKey: InputManager.autoToggleEnabledKey)
-        let autoToggleAppBundleIds = UserDefaults.standard.stringArray(forKey: "AutoToggleAppBundleIds") ?? []
-
-        if autoToggleEnabled && !autoToggleAppBundleIds.isEmpty {
+        let rules = UserDefaults.standard.stringArray(forKey: "AutoToggleAppBundleIds") ?? []
+        if autoToggleEnabled && !rules.isEmpty {
             DispatchQueue.main.async {
-                self.setupMenuItems()
                 self.inputManager.refreshAutoToggleState()
-            }
-        } else {
-            // Optionally: if auto toggle is off, reset to manual last state
-            DispatchQueue.main.async {
-                self.inputManager.isAutoToggling = false
             }
         }
     }
@@ -217,7 +190,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
     }
     
     deinit {
-        inputManagerCancellable?.cancel()
+        statusBarManager?.uninstall()
         NSWorkspace.shared.notificationCenter.removeObserver(
             self,
             name: NSWorkspace.didActivateApplicationNotification,
@@ -381,12 +354,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
         withCompletionHandler completionHandler: @escaping () -> Void
     ) {
         defer { completionHandler() }
-
-        if response.actionIdentifier == "openRelease" {
-            if let url = URL(string: UpdateManager.shared.latestReleaseURL.trimmingCharacters(in: .whitespacesAndNewlines)) {
-                NSWorkspace.shared.open(url)
-                NSApp.perform(#selector(NSApp.terminate(_:)), with: nil, afterDelay: 0.5)
-            }
+        if response.actionIdentifier == "openRelease",
+           let url = URL(string: UpdateManager.shared.latestReleaseURL.trimmingCharacters(in: .whitespacesAndNewlines)) {
+            NSWorkspace.shared.open(url)
+            NSApp.perform(#selector(NSApp.terminate), with: nil, afterDelay: 0.5)
         }
     }
 }
