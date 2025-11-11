@@ -7,11 +7,11 @@
 <table align="center" border="0" cellpadding="0" cellspacing="0">
   <tr>
     <td align="center">
-      <img src="/OptClick/Resources/Demo/OptClick_v1-0-0_Settings_General.png" width="300" /><br>
+      <img src="/OptClick/Resources/Demo/OptClick_v1-2-1_Settings_General.png" width="300" /><br>
       <i>Useful settings items</i>
     </td>
     <td align="center">
-      <img src="/OptClick/Resources/Demo/OptClick_v1-0-0_Settings_Shortcuts.png" width="300" /><br>
+      <img src="/OptClick/Resources/Demo/OptClick_v1-2-1_Settings_Shortcuts.png" width="300" /><br>
       <i>Customize gobal hotkeys</i>
     </td>
   </tr>
