@@ -8,13 +8,15 @@ struct AutoToggleView: View {
     let onRuleChange: () -> Void
 
     @State private var selection: String? = nil
+    @State var isExpandedLocal: Bool = false
     
     var body: some View {
         SettingsRow("Settings.General.AutoToggle.TargetApps") {
             HStack(spacing: 8) {
                 Button(action: {
                     withAnimation(.easeInOut(duration: 0.2)) {
-                        isExpanded.toggle()
+                        isExpandedLocal.toggle()
+                        isExpanded = isExpandedLocal
                     }
                 }) {
                     Image(systemName: isExpanded ? "chevron.down" : "chevron.right")
@@ -22,8 +24,14 @@ struct AutoToggleView: View {
                 }
             }
         }
+        .onChange(of: isExpanded) { newExternalValue in
+            guard newExternalValue != isExpandedLocal else { return }
+            withAnimation(.easeInOut(duration: 0.2)) {
+                isExpandedLocal = newExternalValue
+            }
+        }
 
-        if isExpanded {
+        if isExpandedLocal {
             VStack(alignment: .leading, spacing: 0) {
                 let sortedApps = rules.map { rule -> (id: String, name: String, icon: NSImage?) in
                     if rule.hasPrefix("proc:") {
