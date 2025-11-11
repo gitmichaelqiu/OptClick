@@ -25,11 +25,25 @@ It will be quite helpful in **gaming with a touchpad**, as it allows you to perf
 
 ## 🖱️ Usage
 
+### General
+
 When OptClick is enabled, press `option` to simulate a right-click, hold `option` to perform a right-click hold (e.g., for aiming).
 
 The default global hotkey for toggling OptClick is `control + R`.
 
-You can modify it in Settings -> Shortcuts. Press `esc` while changing the hotkey to disable it.
+You can modify it in Settings → Shortcuts. Press `esc` while changing the hotkey to disable it.
+
+### Auto Toggle
+
+After enabling Auto Toggle, you can choose target apps that when they are in front, OptClick will automatically be turned on. You can add your games.
+
+If you cannot find the app of your game, or the game is not packed as `.app`, like *Minecraft*, you can add process name. When the frontmost app has the same title as the process name designated, OptClick will be turned on.
+
+> Tip: To add *Minecraft* into target apps, add `java` into target apps as a process.
+
+You can still turn OptClick on when no target apps are frontmost. If you select `"Disable OptClick"` in Auto Toggle, your manual setting is temporary and will be ineffective after switching apps; if you select `"Follow last setting"`, your manual setting is persistent for all not-target apps.
+
+You are not able to modify *launch behavior* when Auto Toggle is on, for when app launches, it will check the frontmost app to determine whether turn OptClick on.
 
 ## 📦 Installation
 
