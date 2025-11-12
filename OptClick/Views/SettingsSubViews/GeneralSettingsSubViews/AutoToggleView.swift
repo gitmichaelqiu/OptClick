@@ -107,6 +107,18 @@ struct AutoToggleView: View {
                         action: removeSelectedRule,
                         disabled: selection == nil
                     )
+                    
+                    Divider().frame(height: 16)
+                    
+                    // Menu
+                    Menu {
+                        Menu("Add Games") {
+                            Button("Steam") {  }
+                            Button("Minecraft") {}
+                        }
+                    } label: {
+                    }
+                    .buttonStyle(.borderless)
                 }
                 .padding(.horizontal, 4)
                 .padding(.top, 4)
