@@ -86,10 +86,10 @@ struct AutoToggleView: View {
 
                 HStack {
 //                     Add App (by bundle ID)
-//                    addButton( // Cannot convert value of type '@Sendable (URL?) -> ()' to expected argument type '() -> Void'
-//                        systemImage: "plus",
-//                        action: addAppByBundleID
-//                    )
+                    addButton( // Cannot convert value of type '@Sendable (URL?) -> ()' to expected argument type '() -> Void'
+                        systemImage: "plus",
+                        action: { addAppByBundleID() }
+                    )
 
                     Divider().frame(height: 16)
 
@@ -113,7 +113,7 @@ struct AutoToggleView: View {
                     // Menu
                     Menu {
                         Button("Steam") { addSteamApp() }
-                        Button("Minecraft (Java)") { addMinecraftJavaApp() }
+                        Button("Minecraft (Process: java)") { addMinecraftJavaApp() }
                     } label: {
                         Image(systemName: "gamecontroller")
                             .frame(width: 24, height: 14)
@@ -144,9 +144,21 @@ struct AutoToggleView: View {
     }
     
     private func addSteamApp() {
-        let steamPath = URL(fileURLWithPath: "~/Library/Application Support/Steam/steamapps/common")
-        print(steamPath)
-        addAppByBundleID(path: steamPath)
+        guard let appSupportURL = FileManager.default.urls(
+            for: .applicationSupportDirectory,
+            in: .userDomainMask
+        ).first else {
+            print("Failed to get Application Support directory")
+            return
+        }
+
+        let steamCommonPath = appSupportURL
+            .appendingPathComponent("Steam")
+            .appendingPathComponent("steamapps")
+            .appendingPathComponent("common")
+
+        print("Steam common path: \(steamCommonPath)")
+        addAppByBundleID(path: steamCommonPath)
     }
     
     private func addMinecraftJavaApp() {
