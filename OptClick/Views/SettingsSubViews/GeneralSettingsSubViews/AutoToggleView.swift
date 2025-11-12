@@ -85,11 +85,11 @@ struct AutoToggleView: View {
                 )
 
                 HStack {
-                    // Add App (by bundle ID)
-                    addButton(
-                        systemImage: "plus",
-                        action: addAppByBundleID
-                    )
+//                     Add App (by bundle ID)
+//                    addButton( // Cannot convert value of type '@Sendable (URL?) -> ()' to expected argument type '() -> Void'
+//                        systemImage: "plus",
+//                        action: addAppByBundleID
+//                    )
 
                     Divider().frame(height: 16)
 
@@ -112,11 +112,11 @@ struct AutoToggleView: View {
                     
                     // Menu
                     Menu {
-                        Menu("Add Games") {
-                            Button("Steam") {  }
-                            Button("Minecraft") {}
-                        }
+                        Button("Steam") { addSteamApp() }
+                        Button("Minecraft (Java)") { addMinecraftJavaApp() }
                     } label: {
+                        Image(systemName: "gamecontroller")
+                            .frame(width: 24, height: 14)
                     }
                     .buttonStyle(.borderless)
                 }
@@ -142,16 +142,44 @@ struct AutoToggleView: View {
         .buttonStyle(.borderless)
         .disabled(disabled)
     }
+    
+    private func addSteamApp() {
+        let steamPath = URL(fileURLWithPath: "~/Library/Application Support/Steam/steamapps/common")
+        print(steamPath)
+        addAppByBundleID(path: steamPath)
+    }
+    
+    private func addMinecraftJavaApp() {
+        let rule = "proc:java"
+        if !rules.contains(rule) {
+            withAnimation(.easeInOut(duration: 0.2)) {
+                rules.append(rule)
+                onRuleChange()
+            }
+        }
+    }
 
-    private func addAppByBundleID() {
+    private func addAppByBundleID(path: URL? = nil) {
         let panel = NSOpenPanel()
         panel.allowedContentTypes = [.application]
         panel.allowsMultipleSelection = false
         panel.canChooseDirectories = false
         panel.title = "Choose Application"
         
-        let hostWindow = NSApp.suitableSheetWindow(nil)!
+        var targetURL = path
+        if let path = path, !path.hasDirectoryPath {
+            targetURL = nil
+        }
+        if let url = targetURL, !FileManager.default.fileExists(atPath: url.path) {
+            targetURL = nil
+        }
 
+        if let url = targetURL, url.startAccessingSecurityScopedResource() {
+            defer { url.stopAccessingSecurityScopedResource() }
+            panel.directoryURL = url
+        }
+        
+        let hostWindow = NSApp.suitableSheetWindow(nil)!
         panel.beginSheetModal(for: hostWindow) { response in
             if response == .OK, let url = panel.url {
                 self.handleSelectedApp(url)
