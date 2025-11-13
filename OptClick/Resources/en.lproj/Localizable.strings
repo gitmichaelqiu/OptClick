@@ -47,6 +47,8 @@
 "Settings.General.AutoToggle.Add.App.Failed.Info" = "OptClick cannot find %@ app folder";
 "Settings.General.AutoToggle.RemoveAll.Msg" = "Remove All Target Apps";
 "Settings.General.AutoToggle.RemoveAll.Info" = "Are you sure to remove all target apps?";
+"Settings.General.AutoToggle.Add.Duplicated.Msg" = "Duplicated Process";
+"Settings.General.AutoToggle.Add.Duplicated.Info" = "%@ already exists";
 
 // Update
 "Settings.General.Update" = "Update";

@@ -256,4 +256,12 @@ class InputManager: ObservableObject {
                             mouseButton: .right)
         event?.post(tap: .cghidEventTap)
     }
+    
+    static func isRuleDuplicated(newRule: String) -> Bool {
+        let rules = UserDefaults.standard.stringArray(forKey: "AutoToggleAppBundleIds") ?? []
+        let isDuplicate = rules.contains { rule in
+            rule.hasPrefix("proc:") && rule.lowercased() == newRule.lowercased()
+        }
+        return isDuplicate
+    }
 }

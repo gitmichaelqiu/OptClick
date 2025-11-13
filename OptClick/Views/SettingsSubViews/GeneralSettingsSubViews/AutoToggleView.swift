@@ -97,7 +97,7 @@ struct AutoToggleView: View {
                         Button("Steam") { addSteamApp() }
                         Button("CrossOver") { addCrossOverApp() }
                         Button("Minecraft (Process: java)") { addMinecraftJavaApp() }
-                            .disabled(rules.contains("proc:java"))
+                            .disabled(InputManager.isRuleDuplicated(newRule: "proc:java"))
                     } label: {
                     }
                     .frame(width: 8, height: 14)
@@ -218,7 +218,7 @@ struct AutoToggleView: View {
     
     private func addMinecraftJavaApp() {
         let rule = "proc:java"
-        if !rules.contains(rule) {
+        if !InputManager.isRuleDuplicated(newRule: rule) {
             withAnimation(.easeInOut(duration: 0.2)) {
                 rules.append(rule)
                 onRuleChange()
@@ -288,10 +288,24 @@ struct AutoToggleView: View {
         let keyword = raw.trimmingCharacters(in: .whitespacesAndNewlines)
         if !keyword.isEmpty {
             let rule = "proc:\(keyword)"
-            if !rules.contains(rule) {
+            if !InputManager.isRuleDuplicated(newRule: rule) {
                 withAnimation(.easeInOut(duration: 0.2)) {
                     rules.append(rule)
                     onRuleChange()
+                }
+            } else {
+                let alert = NSAlert()
+                alert.messageText = NSLocalizedString("Settings.General.AutoToggle.Add.Duplicated.Msg", comment: "")
+                alert.informativeText = String(format: NSLocalizedString("Settings.General.AutoToggle.Add.Duplicated.Info", comment: ""), "Process \(rule.dropFirst(5))")
+                alert.addButton(withTitle: NSLocalizedString("Common.Button.OK", comment: ""))
+                alert.alertStyle = .informational
+                
+                Task {
+                    if let targetWindow = NSApp.suitableSheetWindow(nil) {
+                        _ = await alert.beginSheetModal(for: targetWindow)
+                    } else {
+                        alert.runModal()
+                    }
                 }
             }
         }
