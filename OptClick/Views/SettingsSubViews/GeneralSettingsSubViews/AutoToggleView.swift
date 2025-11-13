@@ -97,6 +97,7 @@ struct AutoToggleView: View {
                         Button("Steam") { addSteamApp() }
                         Button("CrossOver") { addCrossOverApp() }
                         Button("Minecraft (Process: java)") { addMinecraftJavaApp() }
+                            .disabled(rules.contains("proc:java"))
                     } label: {
                     }
                     .frame(width: 8, height: 14)
@@ -117,6 +118,15 @@ struct AutoToggleView: View {
                         systemImage: "minus",
                         action: removeSelectedRule,
                         disabled: selection == nil
+                    )
+                    
+                    Divider().frame(height: 16)
+                    
+                    // Remove All
+                    addButton(
+                        systemImage: "trash",
+                        action: removeAllRules,
+                        disabled: rules.isEmpty
                     )
                     
                     Divider().frame(height: 16)
@@ -294,6 +304,27 @@ struct AutoToggleView: View {
                 rules.remove(at: idx)
                 selection = nil
                 onRuleChange()
+            }
+        }
+    }
+    
+    private func removeAllRules() {
+        let alert = NSAlert()
+        alert.messageText = NSLocalizedString("Settings.General.AutoToggle.RemoveAll.Msg", comment: "")
+        alert.informativeText =  NSLocalizedString("Settings.General.AutoToggle.RemoveAll.Info", comment: "")
+        alert.addButton(withTitle: NSLocalizedString("Common.Button.OK", comment: ""))
+        alert.addButton(withTitle: NSLocalizedString("Common.Button.Cancel", comment: ""))
+        alert.alertStyle = .informational
+        
+        Task {
+            if let targetWindow = NSApp.suitableSheetWindow(nil) {
+                let response = await alert.beginSheetModal(for: targetWindow)
+                if response == .alertFirstButtonReturn {
+                    withAnimation(.easeInOut(duration: 0.2)) {
+                        rules.removeAll()
+                        onRuleChange()
+                    }
+                }
             }
         }
     }
