@@ -48,7 +48,7 @@
 "Settings.General.AutoToggle.RemoveAll.Msg" = "Remove All Target Apps";
 "Settings.General.AutoToggle.RemoveAll.Info" = "Are you sure to remove all target apps?";
 "Settings.General.AutoToggle.Add.Duplicated.Msg" = "Duplicated Process";
-"Settings.General.AutoToggle.Add.Duplicated.Info" = "%@ already exists";
+"Settings.General.AutoToggle.Add.Duplicated.Info" = "Process %@ already exists";
 
 // Update
 "Settings.General.Update" = "Update";
@@ -93,6 +93,6 @@
 "Settings.About.Description" = "OptClick lets you simulate right-clicks by pressing the Option (⌥) key.";
 "Settings.About.Repo" = "GitHub Repository";
 
-// MARKS: - Common
+// MARK: - Common
 "Common.Button.OK" = "OK";
 "Common.Button.Cancel" = "Cancel";

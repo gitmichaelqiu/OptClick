@@ -296,7 +296,7 @@ struct AutoToggleView: View {
             } else {
                 let alert = NSAlert()
                 alert.messageText = NSLocalizedString("Settings.General.AutoToggle.Add.Duplicated.Msg", comment: "")
-                alert.informativeText = String(format: NSLocalizedString("Settings.General.AutoToggle.Add.Duplicated.Info", comment: ""), "Process \(rule.dropFirst(5))")
+                alert.informativeText = String(format: NSLocalizedString("Settings.General.AutoToggle.Add.Duplicated.Info", comment: ""), "\(rule.dropFirst(5))")
                 alert.addButton(withTitle: NSLocalizedString("Common.Button.OK", comment: ""))
                 alert.alertStyle = .informational
                 
