@@ -336,6 +336,7 @@ struct AutoToggleView: View {
                 if response == .alertFirstButtonReturn {
                     withAnimation(.easeInOut(duration: 0.2)) {
                         rules.removeAll()
+                        selection = nil
                         onRuleChange()
                     }
                 }
