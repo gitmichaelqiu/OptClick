@@ -99,7 +99,7 @@ struct AutoToggleView: View {
                         Button("Minecraft (Process: java)") { addMinecraftJavaApp() }
                     } label: {
                     }
-                    .frame(width: 12, height: 14)
+                    .frame(width: 8, height: 14)
                     .buttonStyle(.borderless)
 
                     Divider().frame(height: 16)
