@@ -113,6 +113,7 @@ struct AutoToggleView: View {
                     // Menu
                     Menu {
                         Button("Steam") { addSteamApp() }
+                        Button("CrossOver") { addCrossOverApp() }
                         Button("Minecraft (Process: java)") { addMinecraftJavaApp() }
                     } label: {
                         Image(systemName: "gamecontroller")
@@ -158,6 +159,9 @@ struct AutoToggleView: View {
             .appendingPathComponent("common")
 
         addAppByBundleID(path: steamCommonPath)
+    }
+    
+    private func addCrossOverApp() {
     }
     
     private func addMinecraftJavaApp() {
