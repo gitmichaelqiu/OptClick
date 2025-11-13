@@ -113,7 +113,7 @@ struct AutoToggleView: View {
                     // Menu
                     Menu {
                         Button("Steam") { addSteamApp() }
-                        Button("CrossOver") { addCrossOverApp(from: nil) }
+                        Button("CrossOver") { addCrossOverApp() }
                         Button("Minecraft (Process: java)") { addMinecraftJavaApp() }
                     } label: {
                         Image(systemName: "gamecontroller")
@@ -157,11 +157,28 @@ struct AutoToggleView: View {
             .appendingPathComponent("Steam")
             .appendingPathComponent("steamapps")
             .appendingPathComponent("common")
+        
+        if !FileManager.default.fileExists(atPath: steamCommonPath.path) {
+            let alert = NSAlert()
+            alert.messageText = NSLocalizedString("Settings.General.AutoToggle.Add.App.Failed.Msg", comment: "")
+            alert.informativeText =  String(format: NSLocalizedString("Settings.General.AutoToggle.Add.App.Failed.Info", comment: ""), "Steam")
+            alert.alertStyle = .warning
+            
+            Task {
+                if let targetWindow = NSApp.suitableSheetWindow(nil) {
+                    _ = await alert.beginSheetModal(for: targetWindow)
+                } else {
+                    alert.runModal()
+                }
+            }
+            
+            return
+        }
 
         addAppByBundleID(path: steamCommonPath)
     }
     
-    private func addCrossOverApp(from window: NSWindow?) {
+    private func addCrossOverApp() {
         let userHomeURL = FileManager.default.homeDirectoryForCurrentUser
         
         let crossOverPath = userHomeURL
@@ -170,12 +187,12 @@ struct AutoToggleView: View {
         
         if !FileManager.default.fileExists(atPath: crossOverPath.path) {
             let alert = NSAlert()
-            alert.messageText = NSLocalizedString("Settings.General.AutoToggle.Add.CrossOver.Failed.Msg", comment: "")
-            alert.informativeText =  NSLocalizedString("Settings.General.AutoToggle.Add.CrossOver.Failed.Info", comment: "")
+            alert.messageText = NSLocalizedString("Settings.General.AutoToggle.Add.App.Failed.Msg", comment: "")
+            alert.informativeText =  String(format: NSLocalizedString("Settings.General.AutoToggle.Add.App.Failed.Info", comment: ""), "CrossOver")
             alert.alertStyle = .warning
             
             Task {
-                if let targetWindow = NSApp.suitableSheetWindow(window) {
+                if let targetWindow = NSApp.suitableSheetWindow(nil) {
                     _ = await alert.beginSheetModal(for: targetWindow)
                 } else {
                     alert.runModal()

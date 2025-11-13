@@ -43,8 +43,8 @@
 "Settings.General.AutoToggle.Process.Add.Placeholder" = "Process";
 "Settings.General.AutoToggle.Process.Add.Add" = "Add";
 "Settings.General.AutoToggle.Process.Add.Cancel" = "Cancel";
-"Settings.General.AutoToggle.Add.CrossOver.Failed.Msg" = "Folder Not Found";
-"Settings.General.AutoToggle.Add.CrossOver.Failed.Info" = "OptClick cannot find CrossOver app folder";
+"Settings.General.AutoToggle.Add.App.Failed.Msg" = "Folder Not Found";
+"Settings.General.AutoToggle.Add.App.Failed.Info" = "OptClick cannot find %@ app folder";
 
 // Update
 "Settings.General.Update" = "Update";
