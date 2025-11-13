@@ -157,7 +157,6 @@ struct AutoToggleView: View {
             .appendingPathComponent("steamapps")
             .appendingPathComponent("common")
 
-        print("Steam common path: \(steamCommonPath)")
         addAppByBundleID(path: steamCommonPath)
     }
     
