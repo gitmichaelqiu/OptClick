@@ -96,7 +96,9 @@ struct AutoToggleView: View {
                     Menu {
                         Button("Steam") { addSteamApp() }
                         Button("CrossOver") { addCrossOverApp() }
-                        Button("Minecraft (Process: java)") { addMinecraftJavaApp() }
+                        Button(
+                            String(format: "Minecraft (%@)", String(format: NSLocalizedString("Settings.General.AutoToggle.Process", comment: ""), "java"))
+                        ) { addMinecraftJavaApp() }
                             .disabled(InputManager.isRuleDuplicated(newRule: "proc:java"))
                     } label: {
                     }
