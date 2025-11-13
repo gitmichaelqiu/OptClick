@@ -113,7 +113,7 @@ struct AutoToggleView: View {
                     // Menu
                     Menu {
                         Button("Steam") { addSteamApp() }
-                        Button("CrossOver") { addCrossOverApp() }
+                        Button("CrossOver") { addCrossOverApp(from: nil) }
                         Button("Minecraft (Process: java)") { addMinecraftJavaApp() }
                     } label: {
                         Image(systemName: "gamecontroller")
@@ -161,7 +161,31 @@ struct AutoToggleView: View {
         addAppByBundleID(path: steamCommonPath)
     }
     
-    private func addCrossOverApp() {
+    private func addCrossOverApp(from window: NSWindow?) {
+        let userHomeURL = FileManager.default.homeDirectoryForCurrentUser
+        
+        let crossOverPath = userHomeURL
+            .appendingPathComponent("Applications")
+            .appendingPathComponent("CrossOver")
+        
+        if !FileManager.default.fileExists(atPath: crossOverPath.path) {
+            let alert = NSAlert()
+            alert.messageText = NSLocalizedString("Settings.General.AutoToggle.Add.CrossOver.Failed.Msg", comment: "")
+            alert.informativeText =  NSLocalizedString("Settings.General.AutoToggle.Add.CrossOver.Failed.Info", comment: "")
+            alert.alertStyle = .warning
+            
+            Task {
+                if let targetWindow = NSApp.suitableSheetWindow(window) {
+                    _ = await alert.beginSheetModal(for: targetWindow)
+                } else {
+                    alert.runModal()
+                }
+            }
+            
+            return
+        }
+        
+        addAppByBundleID(path: crossOverPath)
     }
     
     private func addMinecraftJavaApp() {
