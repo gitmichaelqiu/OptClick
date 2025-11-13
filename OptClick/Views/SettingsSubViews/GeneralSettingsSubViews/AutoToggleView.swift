@@ -85,11 +85,22 @@ struct AutoToggleView: View {
                 )
 
                 HStack {
-//                     Add App (by bundle ID)
+                    // Add App (by bundle ID)
                     addButton( // Cannot convert value of type '@Sendable (URL?) -> ()' to expected argument type '() -> Void'
                         systemImage: "plus",
-                        action: { addAppByBundleID() }
+                        action: { addAppByBundleID() },
+                        frameWidth: 12
                     )
+                    
+                    // Extra add
+                    Menu {
+                        Button("Steam") { addSteamApp() }
+                        Button("CrossOver") { addCrossOverApp() }
+                        Button("Minecraft (Process: java)") { addMinecraftJavaApp() }
+                    } label: {
+                    }
+                    .frame(width: 12, height: 14)
+                    .buttonStyle(.borderless)
 
                     Divider().frame(height: 16)
 
@@ -109,17 +120,6 @@ struct AutoToggleView: View {
                     )
                     
                     Divider().frame(height: 16)
-                    
-                    // Menu
-                    Menu {
-                        Button("Steam") { addSteamApp() }
-                        Button("CrossOver") { addCrossOverApp() }
-                        Button("Minecraft (Process: java)") { addMinecraftJavaApp() }
-                    } label: {
-                        Image(systemName: "gamecontroller")
-                            .frame(width: 24, height: 14)
-                    }
-                    .buttonStyle(.borderless)
                 }
                 .padding(.horizontal, 4)
                 .padding(.top, 4)
@@ -133,14 +133,15 @@ struct AutoToggleView: View {
     private func addButton(
         systemImage: String,
         action: @escaping () -> Void,
-        disabled: Bool = false
+        disabled: Bool = false,
+        frameWidth: CGFloat = 24
     ) -> some View {
         Button(action: action) {
             Image(systemName: systemImage)
-                .frame(width: 24, height: 14)
+                .frame(width: frameWidth, height: 14)
                 .contentShape(Rectangle())
         }
-        .buttonStyle(.borderless)
+        .buttonStyle(.plain)
         .disabled(disabled)
     }
     
