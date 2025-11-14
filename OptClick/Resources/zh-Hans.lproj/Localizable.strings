@@ -1,9 +1,10 @@
-// Menu bar
-
+// MARK: - Menu
 "Menu.Settings" = "设置...";
 "Menu.Quit" = "退出";
 "Menu.Toggle" = "OptClick → 右键";
+"Menu.About" = "关于 OptClick";
 
+// Reason
 "Menu.Reason.StateStr.Enabled" = "启用";
 "Menu.Reason.StateStr.Disabled" = "禁用";
 "Menu.Reason.Manual" = "%@: 手动设置";
@@ -13,13 +14,14 @@
 "Menu.Reason.NoFrontmost" = "%@: 没有目标 App 在最前";
 "Menu.Reason.LastManual" = "%@: 跟随上一次设置";
 
-// Settings - General
-
+// MARK: - Settings/General
 "Settings.General" = "通用";
 
+// OptClick
 "Settings.General.OptClick" = "OptClick";
 "Settings.General.OptClick.Enable" = "启用 Option → 右键";
 
+// Launch
 "Settings.General.Launch" = "启动";
 "Settings.General.Launch.AtLogin" = "登录时启动";
 "Settings.General.LaunchBehavior" = "启动行为";
@@ -27,12 +29,20 @@
 "Settings.General.LaunchBehavior.Enabled" = "启用 OptClick";
 "Settings.General.LaunchBehavior.LastState" = "跟随上一次设置";
 
+// Auto Toggle
 "Settings.General.AutoToggle" = "自动切换";
 "Settings.General.AutoToggle.TargetApps" = "目标 App";
+"Settings.General.AutoToggle.Process" = "进程: %@";
 "Settings.General.AutoToggle.NotFrontmost" = "不在最前时";
 "Settings.General.AutoToggle.NotFrontmost.Disable" = "禁用 OptClick";
 "Settings.General.AutoToggle.NotFrontmost.FollowLast" = "跟随上一次设置";
+"Settings.General.AutoToggle.Process.Add.Msg" = "通过名称添加 App";
+"Settings.General.AutoToggle.Process.Add.Info" = "输入进程名称 (注意大小写):";
+"Settings.General.AutoToggle.Process.Add.Placeholder" = "进程";
+"Settings.General.AutoToggle.Process.Add.Add" = "添加";
+"Settings.General.AutoToggle.Process.Add.Cancel" = "取消";
 
+// Update
 "Settings.General.Update" = "更新";
 "Settings.General.Update.AutoCheck" = "自动检查更新";
 "Settings.General.Update.ManualCheck" = "检查更新";
@@ -48,8 +58,7 @@
 "Settings.General.Update.UpToDate.Title" = "已是最新版";
 "Settings.General.Update.UpToDate.Msg" = "您正在使用最新版本 (%@)。";
 
-// Settings - Shortcuts
-
+// MARK: - Settings/Shortcuts
 "Settings.Shortcuts" = "捷径";
 
 "Settings.Shortcuts.Unassigned" = "未分配";
@@ -62,8 +71,7 @@
 "Settings.Shortcuts.Hotkey.Reset" = "重置";
 "Settings.Shortcuts.Unassgined" = "未分配";
 
-// Settings - About
-
+// MARK: - Settings/About
 "Settings.About" = "关于";
 
 "Settings.About.Version" = "版本 %@";

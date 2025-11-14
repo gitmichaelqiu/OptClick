@@ -1,6 +1,8 @@
 import Foundation
 import AppKit
 import Combine
+import ApplicationServices
+import Darwin
 
 enum AutoToggleBehavior: String, CaseIterable {
     case disable = "disable"
@@ -102,28 +104,57 @@ class InputManager: ObservableObject {
             self?.handleFrontmostAppChange(notification: notification)
         }
     }
+    
+    func getFrontmostProcessName() -> String? {
+        guard let frontmost = NSWorkspace.shared.frontmostApplication else { return nil }
+        let pid = frontmost.processIdentifier
+        guard pid != 0 else { return nil }
+
+        var nameBuf = [Int8](repeating: 0, count: Int(MAXPATHLEN))
+        if proc_name(pid, &nameBuf, UInt32(nameBuf.count)) != -1 {
+            return String(cString: nameBuf)
+        }
+        return nil
+    }
 
     private func handleFrontmostAppChange(notification: Notification) {
-        guard !autoToggleAppBundleIds.isEmpty else { return }
-        guard let userInfo = notification.userInfo,
-              let runningApp = userInfo[NSWorkspace.applicationUserInfoKey] as? NSRunningApplication,
-              let bundleId = runningApp.bundleIdentifier else { return }
+        let rules = autoToggleAppBundleIds
+        guard !rules.isEmpty else { return }
 
-        if autoToggleAppBundleIds.contains(bundleId) {
-            // Target app is now frontmost
-            isAutoToggling = true
-            if !isEnabled {
-                isEnabled = true
+        var isMatch = false
+
+        // 1. Bundle ID
+        if let userInfo = notification.userInfo,
+           let app = userInfo[NSWorkspace.applicationUserInfoKey] as? NSRunningApplication,
+           let bundleId = app.bundleIdentifier,
+           rules.contains(bundleId) {
+            isMatch = true
+        }
+
+        // 2. Process name (exact match)
+        if !isMatch {
+            if let procName = getFrontmostProcessName() {
+                for rule in rules {
+                    if rule.hasPrefix("proc:") {
+                        let expected = String(rule.dropFirst(5))
+                        if procName == expected {
+                            isMatch = true
+                            break
+                        }
+                    }
+                }
             }
+        }
+
+        if isMatch {
+            isAutoToggling = true
+            if !isEnabled { isEnabled = true }
             isAutoToggling = false
         } else {
-            // Target app is no longer frontmost
             isAutoToggling = true
             switch autoToggleBehavior {
             case .disable:
-                if isEnabled {
-                    isEnabled = false
-                }
+                if isEnabled { isEnabled = false }
             case .followLast:
                 if isEnabled != lastManualState {
                     isEnabled = lastManualState

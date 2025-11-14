@@ -155,6 +155,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             }
         
         updateStatusBarIcon()
+        UpdateManager.shared.checkForUpdate(from: nil, suppressUpToDateAlert: true)
     }
     
     @objc private func handleHotkeyTriggered() {
@@ -270,7 +271,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             return String(format: NSLocalizedString("Menu.Reason.Manual", comment: "Manual setting"), stateStr)
         }
         
-        // Get frontmost
+        // Get frontmost app
         guard let frontmostApp = NSWorkspace.shared.frontmostApplication,
               let bundleId = frontmostApp.bundleIdentifier else {
             return String(format: NSLocalizedString("Menu.Reason.Unknown", comment: ""), stateStr)
@@ -278,28 +279,56 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
         let appName = frontmostApp.localizedName ?? bundleId
         
+        // Check if frontmost app matches any auto-toggle rule
+        var isMatch = false
         if autoToggleAppBundleIds.contains(bundleId) {
-            if !state {
+            isMatch = true
+        } else {
+            // Check process name rules
+            if let procName = inputManager.getFrontmostProcessName() {
+                for rule in autoToggleAppBundleIds {
+                    if rule.hasPrefix("proc:"), let expected = rule.split(separator: ":").last {
+                        if procName == String(expected) {
+                            isMatch = true
+                            break
+                        }
+                    }
+                }
+            }
+        }
+        
+        if isMatch {
+            if state {
+                // App matches and OptClick is enabled - this is because of the app
+                return String(format: NSLocalizedString("Menu.Reason.IsFrontmost", comment: ""), stateStr, appName)
+            } else {
+                // App matches but OptClick is disabled - this is temporary manual override
                 return String(format: NSLocalizedString("Menu.Reason.TmpManual", comment: ""), stateStr)
             }
-            return String(format: NSLocalizedString("Menu.Reason.IsFrontmost", comment: ""), stateStr, appName)
         } else {
+            // App doesn't match
             let behaviorRaw = UserDefaults.standard.string(forKey: "AutoToggleBehavior") ?? "disable"
             let behavior = AutoToggleBehavior(rawValue: behaviorRaw) ?? .disable
             
             switch behavior {
             case .disable:
                 if state {
+                    // OptClick is enabled but shouldn't be for this app - temporary manual override
                     return String(format: NSLocalizedString("Menu.Reason.TmpManual", comment: ""), stateStr)
+                } else {
+                    // OptClick is disabled because app doesn't match
+                    return String(format: NSLocalizedString("Menu.Reason.NoFrontmost", comment: ""), stateStr)
                 }
-                return String(format: NSLocalizedString("Menu.Reason.NoFrontmost", comment: ""), stateStr)
             case .followLast:
                 let lastState = UserDefaults.standard.bool(forKey: InputManager.lastStateKey)
                 
                 if lastState == state {
+                    // State matches last manual state
                     return String(format: NSLocalizedString("Menu.Reason.LastManual", comment: ""), stateStr)
+                } else {
+                    // State doesn't match last manual state - manual override
+                    return String(format: NSLocalizedString("Menu.Reason.Manual", comment: ""), stateStr)
                 }
-                return String(format: NSLocalizedString("Menu.Reason.Manual", comment: ""), stateStr)
             }
         }
     }
@@ -315,7 +344,7 @@ struct OptClickApp: App {
         }
         .commands {
             CommandGroup(replacing: .appInfo) {
-                Button("About OptClick") {
+                Button(NSLocalizedString("Menu.About", comment: "")) {
                     // Turn to about page directly because menu bar is only available when settings are opened
                     UserDefaults.standard.set(SettingsTab.about.rawValue, forKey: "selectedSettingsTab")
                 }

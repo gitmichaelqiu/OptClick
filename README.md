@@ -1,3 +1,5 @@
+<!-- v1.2.1 -->
+
 <h1 align="center">
   <img src="/OptClick/Resources/OptClickIcon_Default.png" width="25%" alt=""/>  
   <p></p>
@@ -7,11 +9,11 @@
 <table align="center" border="0" cellpadding="0" cellspacing="0">
   <tr>
     <td align="center">
-      <img src="/OptClick/Resources/Demo/OptClick_v1-0-0_Settings_General.png" width="300" /><br>
+      <img src="./OptClick/Resources/Demo/OptClick_v1-2-1_Settings_General.png" width="300" /><br>
       <i>Useful settings items</i>
     </td>
     <td align="center">
-      <img src="/OptClick/Resources/Demo/OptClick_v1-0-0_Settings_Shortcuts.png" width="300" /><br>
+      <img src="./OptClick/Resources/Demo/OptClick_v1-2-1_Settings_Shortcuts.png" width="300" /><br>
       <i>Customize gobal hotkeys</i>
     </td>
   </tr>
@@ -23,11 +25,25 @@ It will be quite helpful in **gaming with a touchpad**, as it allows you to perf
 
 ## 🖱️ Usage
 
+### General
+
 When OptClick is enabled, press `option` to simulate a right-click, hold `option` to perform a right-click hold (e.g., for aiming).
 
 The default global hotkey for toggling OptClick is `control + R`.
 
-You can modify it in Settings -> Shortcuts. Press `esc` while changing the hotkey to disable it.
+You can modify it in Settings → Shortcuts. Press `esc` while changing the hotkey to disable it.
+
+### Auto Toggle
+
+After enabling Auto Toggle, you can choose target apps that when they are in front, OptClick will automatically be turned on. You can add your games.
+
+If you cannot find the app of your game, or the game is not packed as `.app`, like *Minecraft*, you can add process name. When the frontmost app has the same title as the process name designated, OptClick will be turned on.
+
+> Tip: To add *Minecraft* into target apps, add `java` into target apps as a process.
+
+You can still turn OptClick on when no target apps are frontmost. If you select `"Disable OptClick"` in Auto Toggle, your manual setting is temporary and will be ineffective after switching apps; if you select `"Follow last setting"`, your manual setting is persistent for all not-target apps.
+
+You are not able to modify *launch behavior* when Auto Toggle is on, for when app launches, it will check the frontmost app to determine whether turn OptClick on.
 
 ## 📦 Installation
 
@@ -37,13 +53,11 @@ Requires **macOS 13.0 Ventura** or above.
 2. Drag the app to the *Applications* folder
 3. All set!
 
-Because I do **NOT** have an Apple developer account for the app releases ~~(Apple charges an annual fee for this)~~, you may receive alerts such as "App is broken". To resolve this, you need to go to the *terminal* and run the following command:
+Because I do **NOT** have an Apple developer account for the app releases ~~(Apple charges an annual fee for this)~~, you may receive alerts such as "App is broken".
 
-```bash
-sudo xattr -r -d com.apple.quarantine /Applications/OptClick.app
-```
+To resolve this, go to System Settings → the bottom of Privacy & Security → Open OptClick.
 
-You may be required to enter the password. When you are entering, the password is not displayed. Apple requires this. The app will **NOT** steal your password or personal information.
+In order to simulate right clicks, OptClick will ask for Accessibility right. If you accidentally deny giving the right, go to System Settings → Privacy * Security → Accessibility → + at the bottom and select OptClick.app.
 
 ## ⚠️ Issues/Suggestions
 
@@ -60,3 +74,5 @@ Thanks all the wonderful authors!
 ## ⭐ Support This Project
 
 You can simply click on the **Star** to support this project for free. Thank you for your support!
+
+[![Star History Chart](https://api.star-history.com/svg?repos=gitmichaelqiu/OptClick&type=date&legend=top-left)](https://www.star-history.com/#gitmichaelqiu/OptClick&type=date&legend=top-left)

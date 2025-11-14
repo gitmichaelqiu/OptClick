@@ -2,68 +2,6 @@ import AppKit
 import SwiftUI
 import UniformTypeIdentifiers
 
-struct SettingsRow<Content: View>: View {
-    let title: LocalizedStringKey
-    let content: Content
-
-    init(_ title: LocalizedStringKey, @ViewBuilder content: () -> Content) {
-        self.title = title
-        self.content = content()
-    }
-
-    var body: some View {
-        HStack {
-            Text(title)
-                .frame(maxWidth: .infinity, alignment: .leading)
-            content
-                .frame(alignment: .trailing)
-        }
-        .padding(.vertical, 6)
-        .padding(.horizontal, 10)
-    }
-}
-
-struct SettingsSection<Content: View>: View {
-    let title: LocalizedStringKey
-    let content: Content
-
-    init(_ title: LocalizedStringKey, @ViewBuilder content: () -> Content) {
-        self.title = title
-        self.content = content()
-    }
-
-    var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
-            Text(title)
-                .font(.headline)
-                .padding(.leading, 4)
-
-            VStack(spacing: 0) {
-                content
-            }
-            .background(
-                RoundedRectangle(cornerRadius: 12, style: .continuous)
-                    .fill(backgroundColor.opacity(0.6))
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 12, style: .continuous)
-                            .fill(.regularMaterial) // blur overlay
-                    )
-            )
-        }
-    }
-
-    private var backgroundColor: Color {
-        let nsColor = NSColor(name: nil) { appearance in
-            if appearance.bestMatch(from: [.darkAqua, .aqua]) == .darkAqua {
-                return NSColor(calibratedWhite: 0.20, alpha: 1.0)
-            } else {
-                return NSColor(calibratedWhite: 1.00, alpha: 1.0)
-            }
-        }
-        return Color(nsColor: nsColor)
-    }
-}
-
 struct GeneralSettingsView: View {
     @ObservedObject var inputManager: InputManager
     @State private var autoCheckForUpdates = UpdateManager.isAutoCheckEnabled
@@ -107,12 +45,21 @@ struct GeneralSettingsView: View {
                     }
                 if isAppTableExpanded {
                     VStack(alignment: .leading, spacing: 0) {
-                        let sortedApps = autoToggleAppBundleIds.compactMap { bundleId -> (String, String, NSImage?)? in
-                            guard let url = NSWorkspace.shared.urlForApplication(withBundleIdentifier: bundleId),
-                                  let bundle = Bundle(url: url) else { return nil }
-                            let name = bundle.object(forInfoDictionaryKey: "CFBundleName") as? String ?? bundleId
-                            let icon = NSWorkspace.shared.icon(forFile: url.path)
-                            return (bundleId, name, icon)
+                        let sortedApps = autoToggleAppBundleIds.map { rule -> (String, String, NSImage?) in
+                            if rule.hasPrefix("proc:") {
+                                let kw = String(rule.dropFirst(5))
+                                let procStr = String(format: NSLocalizedString("Settings.General.AutoToggle.Process", comment: "Process: "), kw)
+                                return (rule, procStr, nil)
+                            } else {
+                                if let url = NSWorkspace.shared.urlForApplication(withBundleIdentifier: rule),
+                                   let bundle = Bundle(url: url) {
+                                    let name = bundle.object(forInfoDictionaryKey: "CFBundleName") as? String ?? rule
+                                    let icon = NSWorkspace.shared.icon(forFile: url.path)
+                                    return (rule, name, icon)
+                                } else {
+                                    return (rule, "⚠️ \(rule)", nil)
+                                }
+                            }
                         }.sorted { $0.1.localizedCaseInsensitiveCompare($1.1) == .orderedAscending }
 
                         List(selection: $selection) {
@@ -137,6 +84,7 @@ struct GeneralSettingsView: View {
                                 .stroke(Color.secondary.opacity(0.15), lineWidth: 1)
                         )
                         HStack {
+                            // Add App (by bundle ID)
                             Button(action: {
                                 let panel = NSOpenPanel()
                                 panel.allowedContentTypes = [.application]
@@ -158,13 +106,42 @@ struct GeneralSettingsView: View {
                                     .contentShape(Rectangle())
                             }
                             .buttonStyle(.borderless)
-                            .help("Add App")
 
                             Divider().frame(height: 16)
 
+                            // Add by Window Title
+                            Button(action: {
+                                let alert = NSAlert()
+                                alert.messageText = NSLocalizedString("Settings.General.AutoToggle.Process.Add.Msg", comment: "")
+                                alert.informativeText = NSLocalizedString("Settings.General.AutoToggle.Process.Add.Info", comment: "")
+                                let textField = NSTextField(frame: NSRect(x: 0, y: 0, width: 200, height: 24))
+                                textField.placeholderString = NSLocalizedString("Settings.General.AutoToggle.Process.Add.Placeholder", comment: "Process")
+                                alert.accessoryView = textField
+                                alert.addButton(withTitle: NSLocalizedString("Settings.General.AutoToggle.Process.Add.Add", comment: ""))
+                                alert.addButton(withTitle: NSLocalizedString("Settings.General.AutoToggle.Process.Add.Cancel", comment: ""))
+                                
+                                if alert.runModal() == .alertFirstButtonReturn {
+                                    let keyword = textField.stringValue.trimmingCharacters(in: .whitespacesAndNewlines)
+                                    if !keyword.isEmpty {
+                                        let rule = "proc:\(keyword)"
+                                        if !autoToggleAppBundleIds.contains(rule) {
+                                            autoToggleAppBundleIds.append(rule)
+                                            UserDefaults.standard.set(autoToggleAppBundleIds, forKey: "AutoToggleAppBundleIds")
+                                            inputManager.refreshAutoToggleState()
+                                        }
+                                    }
+                                }
+                            }) {
+                                Image(systemName: "character.textbox")
+                                    .frame(width: 24, height: 14)
+                            }
+                            .buttonStyle(.borderless)
+
+                            Divider().frame(height: 16)
+
+                            // Remove Selected
                             Button(action: {
                                 if let selected = selection {
-                                    // Remove by bundleId from the original array
                                     if let idx = autoToggleAppBundleIds.firstIndex(of: selected) {
                                         autoToggleAppBundleIds.remove(at: idx)
                                         UserDefaults.standard.set(autoToggleAppBundleIds, forKey: "AutoToggleAppBundleIds")
@@ -179,7 +156,6 @@ struct GeneralSettingsView: View {
                             }
                             .buttonStyle(.borderless)
                             .disabled(selection == nil)
-                            .help("Remove Selected App")
                         }
                         .padding(.horizontal, 4)
                         .padding(.top, 4)
