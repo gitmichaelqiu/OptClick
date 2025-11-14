@@ -220,10 +220,11 @@ class StatusBarManager: ObservableObject {
                     ? String(format: NSLocalizedString("Menu.Reason.IsFrontmost", comment: ""), stateStr, appName)
                     : String(format: NSLocalizedString("Menu.Reason.TmpManual", comment: ""), stateStr)
             } else {
-                let isManual = (state && behavior == .disable) || (state != lastState)
-                return isManual
-                    ? String(format: NSLocalizedString("Menu.Reason.TmpManual", comment: ""), stateStr)
-                    : String(format: NSLocalizedString("Menu.Reason.FollowLast", comment: ""), stateStr)
+                if state {
+                    return state != lastState ? String(format: NSLocalizedString("Menu.Reason.TmpManual", comment: ""), stateStr) : String(format: NSLocalizedString("Menu.Reason.NoFrontmost", comment: ""), stateStr)
+                } else {
+                    return behavior == .followLast ? String(format: NSLocalizedString("Menu.Reason.FollowLast", comment: ""), stateStr) : String(format: NSLocalizedString("Menu.Reason.NoFrontmost", comment: ""), stateStr)
+                }
             }
         } else {
             return String(format: NSLocalizedString("Menu.Reason.Manual", comment: ""), stateStr)
