@@ -95,6 +95,7 @@ struct AutoToggleView: View {
                     // Extra add
                     Menu {
                         Button("Steam") { addSteamApp() }
+                        Button("Chrome") { addChromeApp() }
                         Button("CrossOver") { addCrossOverApp() }
                         Button(
                             String(format: "Minecraft (%@)", String(format: NSLocalizedString("Settings.General.AutoToggle.Process", comment: ""), "java"))
@@ -191,14 +192,41 @@ struct AutoToggleView: View {
         addAppByBundleID(path: steamCommonPath)
     }
     
+    private func addChromeApp() {
+        let userHomeURL = FileManager.default.homeDirectoryForCurrentUser
+        
+        let appFolderPath = userHomeURL
+            .appendingPathComponent("Applications")
+            .appendingPathComponent("Chrome Apps.localized")
+        
+        if !FileManager.default.fileExists(atPath: appFolderPath.path) {
+            let alert = NSAlert()
+            alert.messageText = NSLocalizedString("Settings.General.AutoToggle.Add.App.Failed.Msg", comment: "")
+            alert.informativeText =  String(format: NSLocalizedString("Settings.General.AutoToggle.Add.App.Failed.Info", comment: ""), "Chrome Apps")
+            alert.alertStyle = .warning
+            
+            Task {
+                if let targetWindow = NSApp.suitableSheetWindow(nil) {
+                    _ = await alert.beginSheetModal(for: targetWindow)
+                } else {
+                    alert.runModal()
+                }
+            }
+            
+            return
+        }
+        
+        addAppByBundleID(path: appFolderPath)
+    }
+    
     private func addCrossOverApp() {
         let userHomeURL = FileManager.default.homeDirectoryForCurrentUser
         
-        let crossOverPath = userHomeURL
+        let appFolderPath = userHomeURL
             .appendingPathComponent("Applications")
             .appendingPathComponent("CrossOver")
         
-        if !FileManager.default.fileExists(atPath: crossOverPath.path) {
+        if !FileManager.default.fileExists(atPath: appFolderPath.path) {
             let alert = NSAlert()
             alert.messageText = NSLocalizedString("Settings.General.AutoToggle.Add.App.Failed.Msg", comment: "")
             alert.informativeText =  String(format: NSLocalizedString("Settings.General.AutoToggle.Add.App.Failed.Info", comment: ""), "CrossOver")
@@ -215,7 +243,7 @@ struct AutoToggleView: View {
             return
         }
         
-        addAppByBundleID(path: crossOverPath)
+        addAppByBundleID(path: appFolderPath)
     }
     
     private func addMinecraftJavaApp() {
