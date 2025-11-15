@@ -17,7 +17,6 @@
 "Menu.Reason.Process" = "Process %@";
 
 // Frontmost Proc
-
 "Menu.Proc" = "Frontmost Process: %@";
 
 // MARK: - Settings/General

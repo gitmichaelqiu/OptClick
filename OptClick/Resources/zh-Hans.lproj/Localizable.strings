@@ -17,7 +17,6 @@
 "Menu.Reason.Process" = "进程 %@";
 
 // Frontmost Proc
-
 "Menu.Proc" = "当前进程: %@";
 
 // MARK: - Settings/General
