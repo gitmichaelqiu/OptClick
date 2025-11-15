@@ -237,7 +237,7 @@ class StatusBarManager: ObservableObject {
             
             if isMatch {
                 let displayName = matchedProcName.map {
-                        String(format: NSLocalizedString("Settings.General.AutoToggle.Process", comment: ""), $0)
+                        String(format: NSLocalizedString("Menu.Reason.Process", comment: ""), $0)
                     } ?? appName
                 
                 if state {

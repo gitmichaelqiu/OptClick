@@ -14,6 +14,7 @@
 "Menu.Reason.NoFrontmost" = "%@: 没有目标 App 在最前";
 "Menu.Reason.FollowLast" = "%@: 没有目标 App，跟随上一次设置";
 "Menu.Reason.Auto" = "%@: 自动设置";
+"Menu.Reason.Process" = "进程 %@";
 
 // Frontmost Proc
 
