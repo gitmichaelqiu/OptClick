@@ -132,8 +132,6 @@ struct AutoToggleView: View {
                         action: removeAllRules,
                         disabled: rules.isEmpty
                     )
-                    
-                    Divider().frame(height: 16)
                 }
                 .padding(.horizontal, 4)
                 .padding(.top, 4)
