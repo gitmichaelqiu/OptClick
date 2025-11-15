@@ -87,6 +87,19 @@ class StatusBarManager: ObservableObject {
             item.isEnabled = false
             menu.addItem(item)
         }
+        
+        let showProc = UserDefaults.standard.bool(forKey: InputManager.showFrontmostProcKey)
+        if showProc {
+            if let procName = inputManager.getFrontmostProcessName() {
+                let title = String(
+                    format: NSLocalizedString("Menu.ProcessName", comment: "Frontmost process: %@"),
+                    procName
+                )
+                let item = NSMenuItem(title: title, action: nil, keyEquivalent: "")
+                item.isEnabled = false
+                menu.addItem(item)
+            }
+        }
 
         menu.addItem(.separator())
 

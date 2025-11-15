@@ -18,6 +18,7 @@ struct GeneralSettingsView: View {
         return AutoToggleBehavior(rawValue: raw) ?? .disable
     }()
     @State private var showStatusReason = UserDefaults.standard.bool(forKey: InputManager.showStatusReasonKey)
+    @State private var showFrontmostProc = UserDefaults.standard.bool(forKey: InputManager.showFrontmostProcKey)
 
     var body: some View {
         ScrollView {
@@ -96,6 +97,18 @@ struct GeneralSettingsView: View {
                             .toggleStyle(.switch)
                             .onChange(of: showStatusReason) { newValue in
                                 UserDefaults.standard.set(newValue, forKey: InputManager.showStatusReasonKey)
+                                inputManager.objectWillChange.send()
+                            }
+                    }
+                    
+                    Divider()
+                    
+                    SettingsRow("Settings.General.Menubar.ShowFrontmostProc") {
+                        Toggle("", isOn: $showFrontmostProc)
+                            .labelsHidden()
+                            .toggleStyle(.switch)
+                            .onChange(of: showFrontmostProc) { newValue in
+                                UserDefaults.standard.set(newValue, forKey: InputManager.showFrontmostProcKey)
                                 inputManager.objectWillChange.send()
                             }
                     }
