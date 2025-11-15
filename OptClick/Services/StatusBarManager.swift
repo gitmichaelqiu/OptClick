@@ -82,10 +82,11 @@ class StatusBarManager: ObservableObject {
         menu.addItem(toggleItem)
 
         // Status reason (non-clickable)
-        let statusReason = getStatusReason()
-        let statusReasonItem = NSMenuItem(title: statusReason, action: nil, keyEquivalent: "")
-        statusReasonItem.isEnabled = false
-        menu.addItem(statusReasonItem)
+        if let statusReason = getStatusReason() {
+            let item = NSMenuItem(title: statusReason, action: nil, keyEquivalent: "")
+            item.isEnabled = false
+            menu.addItem(item)
+        }
 
         menu.addItem(.separator())
 
@@ -177,7 +178,10 @@ class StatusBarManager: ObservableObject {
         return scaled
     }
     
-    private func getStatusReason() -> String {
+    private func getStatusReason() -> String? {
+        let show = UserDefaults.standard.bool(forKey: InputManager.showStatusReasonKey)
+        guard show else { return nil }
+        
         let state = inputManager.isEnabled
         let stateStr = state
             ? NSLocalizedString("Menu.Reason.StateStr.Enabled", comment: "Enabled")

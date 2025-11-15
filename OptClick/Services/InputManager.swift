@@ -38,6 +38,7 @@ enum LaunchBehavior: String, CaseIterable {
 class InputManager: ObservableObject {
     // Auto toggle properties
     static let autoToggleEnabledKey = "isAutoToggleEnabled"
+    static let showStatusReasonKey = "ShowStatusReason"
     @Published var isAutoToggleEnabled: Bool {
         didSet {
             UserDefaults.standard.set(isAutoToggleEnabled, forKey: Self.autoToggleEnabledKey)

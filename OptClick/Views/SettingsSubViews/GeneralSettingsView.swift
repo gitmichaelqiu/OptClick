@@ -1,4 +1,5 @@
 import SwiftUI
+import Combine
 
 struct GeneralSettingsView: View {
     @AppStorage("AutoToggle.isExpanded") private var isAutoToggleExpanded = false
@@ -16,6 +17,7 @@ struct GeneralSettingsView: View {
         let raw = UserDefaults.standard.string(forKey: "AutoToggleBehavior") ?? AutoToggleBehavior.disable.rawValue
         return AutoToggleBehavior(rawValue: raw) ?? .disable
     }()
+    @State private var showStatusReason = UserDefaults.standard.bool(forKey: InputManager.showStatusReasonKey)
 
     var body: some View {
         ScrollView {
@@ -84,6 +86,18 @@ struct GeneralSettingsView: View {
                                 UserDefaults.standard.set(selectedLaunchBehavior.rawValue, forKey: InputManager.launchBehaviorKey)
                             }
                         }
+                    }
+                }
+                
+                SettingsSection("Settings.General.Menubar") {
+                    SettingsRow("Settings.General.Menubar.ShowReason") {
+                        Toggle("", isOn: $showStatusReason)
+                            .labelsHidden()
+                            .toggleStyle(.switch)
+                            .onChange(of: showStatusReason) { newValue in
+                                UserDefaults.standard.set(newValue, forKey: InputManager.showStatusReasonKey)
+                                inputManager.objectWillChange.send()
+                            }
                     }
                 }
 
