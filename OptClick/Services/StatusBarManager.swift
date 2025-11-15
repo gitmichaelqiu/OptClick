@@ -92,7 +92,7 @@ class StatusBarManager: ObservableObject {
         if showProc {
             if let procName = inputManager.getFrontmostProcessName() {
                 let title = String(
-                    format: NSLocalizedString("Menu.ProcessName", comment: "Frontmost process: %@"),
+                    format: NSLocalizedString("Menu.Proc", comment: ""),
                     procName
                 )
                 let item = NSMenuItem(title: title, action: nil, keyEquivalent: "")

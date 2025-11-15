@@ -15,6 +15,10 @@
 "Menu.Reason.FollowLast" = "%@: 没有目标 App，跟随上一次设置";
 "Menu.Reason.Auto" = "%@: 自动设置";
 
+// Frontmost Proc
+
+"Menu.Proc" = "当前进程: %@";
+
 // MARK: - Settings/General
 "Settings.General" = "通用";
 

@@ -15,6 +15,10 @@
 "Menu.Reason.FollowLast" = "%@: No target apps, follow last setting";
 "Menu.Reason.Auto" = "%@: Auto setting";
 
+// Frontmost Proc
+
+"Menu.Proc" = "Frontmost Process: %@";
+
 // MARK: - Settings/General
 "Settings.General" = "General";
 
