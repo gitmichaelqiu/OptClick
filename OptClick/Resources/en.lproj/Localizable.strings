@@ -54,6 +54,7 @@
 
 "Settings.General.Menubar" = "Menubar";
 "Settings.General.Menubar.ShowReason" = "Show OptClick status reason";
+"Settings.General.Menubar.ShowFrontmostProc" = "Show frontmost process name";
 
 // Update
 "Settings.General.Update" = "Update";

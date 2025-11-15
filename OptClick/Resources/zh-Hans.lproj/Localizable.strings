@@ -54,6 +54,7 @@
 
 "Settings.General.Menubar" = "菜单栏";
 "Settings.General.Menubar.ShowReason" = "显示 OptClick 状态说明";
+"Settings.General.Menubar.ShowFrontmostProc" = "显示当前进程名";
 
 // Update
 "Settings.General.Update" = "更新";
