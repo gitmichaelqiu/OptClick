@@ -79,6 +79,9 @@ class InputManager: ObservableObject {
     static let launchBehaviorKey = "LaunchBehavior"
     static let lastStateKey = "LastState"
     
+    private var lastNonSelfProcessName: String? = nil
+    private let selfBundleID = Bundle.main.bundleIdentifier ?? "michaelqiu.OptClick"
+    
     init() {
         let behaviorString = UserDefaults.standard.string(forKey: Self.launchBehaviorKey) ?? LaunchBehavior.lastState.rawValue
         let launchBehavior = LaunchBehavior(rawValue: behaviorString) ?? .lastState
@@ -128,9 +131,32 @@ class InputManager: ObservableObject {
         }
         return nil
     }
+    
+    func getFrontmostProcessNameExcludingSelf() -> String? {
+        guard let frontmost = NSWorkspace.shared.frontmostApplication else { return lastNonSelfProcessName }
+        
+        if frontmost.bundleIdentifier == selfBundleID {
+            return lastNonSelfProcessName
+        }
+
+        if let proc = getFrontmostProcessName() {
+            lastNonSelfProcessName = proc
+            return proc
+        }
+        return lastNonSelfProcessName
+    }
 
     private func handleFrontmostAppChange(notification: Notification) {
-        guard self.isAutoToggleEnabled else { return }
+        guard self.isAutoToggleEnabled else {
+            objectWillChange.send()
+            return
+        }
+        
+        guard let app = notification.userInfo?[NSWorkspace.applicationUserInfoKey] as? NSRunningApplication else { return }
+        
+        if app.bundleIdentifier == selfBundleID {
+            return
+        }
         
         let rules = autoToggleAppBundleIds
         guard !rules.isEmpty else { return }
@@ -175,6 +201,10 @@ class InputManager: ObservableObject {
                 }
             }
             isAutoToggling = false
+        }
+        
+        if let procName = getFrontmostProcessName(), app.bundleIdentifier != selfBundleID {
+            lastNonSelfProcessName = procName
         }
         
         objectWillChange.send()

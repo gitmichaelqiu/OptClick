@@ -90,7 +90,7 @@ class StatusBarManager: ObservableObject {
         
         let showProc = UserDefaults.standard.bool(forKey: InputManager.showFrontmostProcKey)
         if showProc {
-            if let procName = inputManager.getFrontmostProcessName() {
+            if let procName = inputManager.getFrontmostProcessNameExcludingSelf() {
                 let title = String(
                     format: NSLocalizedString("Menu.Proc", comment: ""),
                     procName
@@ -100,7 +100,7 @@ class StatusBarManager: ObservableObject {
                 menu.addItem(item)
             }
         }
-
+        
         menu.addItem(.separator())
 
         // Settings
