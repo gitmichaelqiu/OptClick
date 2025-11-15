@@ -218,8 +218,6 @@ class StatusBarManager: ObservableObject {
             ) ?? .disable
             let lastState = UserDefaults.standard.bool(forKey: InputManager.lastStateKey)
             
-            print("GET REASON")
-            
             if isMatch {
                 let displayName = matchedProcName.map {
                         String(format: NSLocalizedString("Settings.General.AutoToggle.Process", comment: ""), $0)
