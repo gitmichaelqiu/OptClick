@@ -75,6 +75,7 @@ struct GeneralSettingsView: View {
                     }
                     if !inputManager.isAutoToggleEnabled {
                         Divider()
+                        
                         SettingsRow("Settings.General.LaunchBehavior") {
                             Picker("", selection: $selectedLaunchBehavior) {
                                 ForEach(LaunchBehavior.allCases, id: \.self) { behavior in
