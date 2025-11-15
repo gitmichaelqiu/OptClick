@@ -215,6 +215,8 @@ class StatusBarManager: ObservableObject {
             ) ?? .disable
             let lastState = UserDefaults.standard.bool(forKey: InputManager.lastStateKey)
             
+            print("GET REASON")
+            
             if isMatch {
                 if state {
                     return String(format: NSLocalizedString("Menu.Reason.IsFrontmost", comment: ""), stateStr, appName)
