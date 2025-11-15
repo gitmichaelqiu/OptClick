@@ -23,14 +23,6 @@
 "Settings.General.OptClick.EnableOptClick" = "启用 Option → 右键";
 "Settings.General.OptClick.EnableAutoToggle" = "启用自动开关";
 
-// Launch
-"Settings.General.Launch" = "启动";
-"Settings.General.Launch.AtLogin" = "登录时启动";
-"Settings.General.LaunchBehavior" = "启动行为";
-"Settings.General.LaunchBehavior.Disabled" = "禁用 OptClick";
-"Settings.General.LaunchBehavior.Enabled" = "启用 OptClick";
-"Settings.General.LaunchBehavior.LastState" = "跟随上一次设置";
-
 // Auto Toggle
 "Settings.General.AutoToggle" = "自动开关";
 "Settings.General.AutoToggle.TargetApps" = "目标 App";
@@ -49,6 +41,14 @@
 "Settings.General.AutoToggle.RemoveAll.Info" = "确认移除所有目标 App?";
 "Settings.General.AutoToggle.Add.Duplicated.Msg" = "重复进程";
 "Settings.General.AutoToggle.Add.Duplicated.Info" = "进程 %@ 已存在";
+
+// Launch
+"Settings.General.Launch" = "启动";
+"Settings.General.Launch.AtLogin" = "登录时启动";
+"Settings.General.LaunchBehavior" = "启动行为";
+"Settings.General.LaunchBehavior.Disabled" = "禁用 OptClick";
+"Settings.General.LaunchBehavior.Enabled" = "启用 OptClick";
+"Settings.General.LaunchBehavior.LastState" = "跟随上一次设置";
 
 // Update
 "Settings.General.Update" = "更新";
