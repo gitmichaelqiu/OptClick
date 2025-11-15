@@ -22,6 +22,14 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
             inputManager: inputManager,
             hotkeyManager: hotkeyManager
         )
+        
+        NSApp.activate(ignoringOtherApps: true)
+        NSApp.setActivationPolicy(.regular)
+    }
+    
+    func applicationShouldHandleReopen(_ sender: NSApplication, hasVisibleWindows flag: Bool) -> Bool {
+        openSettingsWindow()
+        return true
     }
 
     func applicationDidFinishLaunching(_ notification: Notification) {
