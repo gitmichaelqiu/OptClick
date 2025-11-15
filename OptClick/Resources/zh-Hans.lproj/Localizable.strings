@@ -52,6 +52,7 @@
 
 // Menubar
 
+"Settings.General.Menubar" = "菜单栏";
 "Settings.General.Menubar.ShowReason" = "显示 OptClick 状态说明";
 
 // Update

@@ -52,6 +52,7 @@
 
 // Menubar
 
+"Settings.General.Menubar" = "Menubar";
 "Settings.General.Menubar.ShowReason" = "Show OptClick status reason";
 
 // Update
