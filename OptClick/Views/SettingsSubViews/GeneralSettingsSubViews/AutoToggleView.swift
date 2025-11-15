@@ -112,8 +112,17 @@ struct AutoToggleView: View {
                     // Add by Process Name
                     addButton(
                         systemImage: "character.textbox",
-                        action: addAppByProcessName
+                        action: addAppByProcessName,
+                        frameWidth: 20
                     )
+                    
+                    // Partial process
+                    Menu {
+                        Button("Add partial matched process") {  }
+                    } label: {
+                    }
+                    .frame(width: 8, height: 14)
+                    .buttonStyle(.borderless)
 
                     Divider().frame(height: 16)
 
