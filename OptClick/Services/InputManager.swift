@@ -174,6 +174,8 @@ class InputManager: ObservableObject {
             }
             isAutoToggling = false
         }
+        
+        objectWillChange.send()
     }
     
     func refreshAutoToggleState() {
