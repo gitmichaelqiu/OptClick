@@ -12,7 +12,7 @@
 "Menu.Reason.TmpManual" = "%@: Temporary manual setting";
 "Menu.Reason.IsFrontmost" = "%@: %@ is frontmost";
 "Menu.Reason.NoFrontmost" = "%@: No target app is frontmost";
-"Menu.Reason.FollowLast" = "%@: No target app, follow last setting";
+"Menu.Reason.FollowLast" = "%@: No target apps, follow last setting";
 "Menu.Reason.Auto" = "%@: Auto setting";
 
 // MARK: - Settings/General
