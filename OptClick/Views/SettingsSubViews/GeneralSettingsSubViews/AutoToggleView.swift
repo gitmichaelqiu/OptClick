@@ -94,9 +94,10 @@ struct AutoToggleView: View {
                     
                     // Extra add
                     Menu {
-                        Button("Steam") { addSteamApp() }
-                        Button("Chrome") { addChromeApp() }
-                        Button("CrossOver") { addCrossOverApp() }
+                        Button("Steam games") { addSteamApp() }
+                        Button("Chrome apps") { addChromeApp() }
+                        Button("CrossOver apps") { addCrossOverApp() }
+                        Button("Safari apps")  { addSafariApp() }
                         Button(
                             String(format: "Minecraft (%@)", String(format: NSLocalizedString("Settings.General.AutoToggle.Process", comment: ""), "java"))
                         ) { addMinecraftJavaApp() }
@@ -230,6 +231,32 @@ struct AutoToggleView: View {
             let alert = NSAlert()
             alert.messageText = NSLocalizedString("Settings.General.AutoToggle.Add.App.Failed.Msg", comment: "")
             alert.informativeText =  String(format: NSLocalizedString("Settings.General.AutoToggle.Add.App.Failed.Info", comment: ""), "CrossOver")
+            alert.alertStyle = .warning
+            
+            Task {
+                if let targetWindow = NSApp.suitableSheetWindow(nil) {
+                    _ = await alert.beginSheetModal(for: targetWindow)
+                } else {
+                    alert.runModal()
+                }
+            }
+            
+            return
+        }
+        
+        addAppByBundleID(path: appFolderPath)
+    }
+    
+    private func addSafariApp() {
+        let userHomeURL = FileManager.default.homeDirectoryForCurrentUser
+        
+        let appFolderPath = userHomeURL
+            .appendingPathComponent("Applications")
+        
+        if !FileManager.default.fileExists(atPath: appFolderPath.path) {
+            let alert = NSAlert()
+            alert.messageText = NSLocalizedString("Settings.General.AutoToggle.Add.App.Failed.Msg", comment: "")
+            alert.informativeText =  String(format: NSLocalizedString("Settings.General.AutoToggle.Add.App.Failed.Info", comment: ""), "Safari Apps")
             alert.alertStyle = .warning
             
             Task {
