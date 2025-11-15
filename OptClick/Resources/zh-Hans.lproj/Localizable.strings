@@ -106,3 +106,5 @@
 // MARK: - Common
 "Common.Button.OK" = "确认";
 "Common.Button.Cancel" = "取消";
+"Common.Translation.Game" = "游戏";
+"Common.Translation.App" = "应用";

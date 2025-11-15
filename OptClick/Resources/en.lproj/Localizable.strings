@@ -106,3 +106,5 @@
 // MARK: - Common
 "Common.Button.OK" = "OK";
 "Common.Button.Cancel" = "Cancel";
+"Common.Translation.Game" = "Games";
+"Common.Translation.App" = "Apps";
