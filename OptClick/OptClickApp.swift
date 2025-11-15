@@ -44,12 +44,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
             name: .openSettingsWindow,
             object: nil
         )
-        NSWorkspace.shared.notificationCenter.addObserver(
-            self,
-            selector: #selector(frontmostAppDidChange),
-            name: NSWorkspace.didActivateApplicationNotification,
-            object: nil
-        )
 
         // Auto update
         UNUserNotificationCenter.current().delegate = self
