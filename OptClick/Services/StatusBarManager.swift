@@ -216,19 +216,37 @@ class StatusBarManager: ObservableObject {
             let lastState = UserDefaults.standard.bool(forKey: InputManager.lastStateKey)
             
             if isMatch {
-                return state
-                    ? String(format: NSLocalizedString("Menu.Reason.IsFrontmost", comment: ""), stateStr, appName)
-                    : String(format: NSLocalizedString("Menu.Reason.TmpManual", comment: ""), stateStr)
+                if state {
+                    return String(format: NSLocalizedString("Menu.Reason.IsFrontmost", comment: ""), stateStr, appName)
+                } else {
+                    return String(format: NSLocalizedString("Menu.Reason.TmpManual", comment: ""), stateStr)
+                }
             } else {
                 if state {
-                    return state != lastState ? String(format: NSLocalizedString("Menu.Reason.TmpManual", comment: ""), stateStr) : String(format: NSLocalizedString("Menu.Reason.NoFrontmost", comment: ""), stateStr)
+                    if behavior == .followLast {
+                        if state == lastState {
+                            return String(format: NSLocalizedString("Menu.Reason.FollowLast", comment: ""), stateStr)
+                        } else {
+                            return String(format: NSLocalizedString("Menu.Reason.TmpManual", comment: ""), stateStr)
+                        }
+                    } else if behavior == .disable {
+                        return String(format: NSLocalizedString("Menu.Reason.TmpManual", comment: ""), stateStr)
+                    }
                 } else {
-                    return behavior == .followLast ? String(format: NSLocalizedString("Menu.Reason.FollowLast", comment: ""), stateStr) : String(format: NSLocalizedString("Menu.Reason.NoFrontmost", comment: ""), stateStr)
+                    if behavior == .followLast {
+                        if state == lastState {
+                            return String(format: NSLocalizedString("Menu.Reason.FollowLast", comment: ""), stateStr)
+                        } else {
+                            return String(format: NSLocalizedString("Menu.Reason.TmpManual", comment: ""), stateStr)
+                        }
+                    } else if behavior == .disable {
+                        return String(format: NSLocalizedString("Menu.Reason.NoFrontmost", comment: ""), stateStr)
+                    }
                 }
             }
-        } else {
-            return String(format: NSLocalizedString("Menu.Reason.Manual", comment: ""), stateStr)
         }
+        
+        return String(format: NSLocalizedString("Menu.Reason.Manual", comment: ""), stateStr)
     }
 }
 
