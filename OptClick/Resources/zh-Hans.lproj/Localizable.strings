@@ -50,6 +50,10 @@
 "Settings.General.LaunchBehavior.Enabled" = "启用 OptClick";
 "Settings.General.LaunchBehavior.LastState" = "跟随上一次设置";
 
+// Menubar
+
+"Settings.General.Menubar.ShowReason" = "显示 OptClick 状态说明";
+
 // Update
 "Settings.General.Update" = "更新";
 "Settings.General.Update.AutoCheck" = "自动检查更新";

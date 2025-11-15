@@ -50,6 +50,10 @@
 "Settings.General.LaunchBehavior.Enabled" = "Enable OptClick";
 "Settings.General.LaunchBehavior.LastState" = "Follow last setting";
 
+// Menubar
+
+"Settings.General.Menubar.ShowReason" = "Show OptClick status reason";
+
 // Update
 "Settings.General.Update" = "Update";
 "Settings.General.Update.AutoCheck" = "Automatically check for updates";
