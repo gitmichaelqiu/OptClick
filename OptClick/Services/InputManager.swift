@@ -107,6 +107,13 @@ class InputManager: ObservableObject {
         if isAutoToggleEnabled && !autoToggleAppBundleIds.isEmpty {
             refreshAutoToggleState()
         }
+        
+        // Pre-fill lastNonSelfProcessName at launch
+        if let frontmost = NSWorkspace.shared.frontmostApplication,
+           frontmost.bundleIdentifier != selfBundleID,
+           let proc = getFrontmostProcessName() {
+            lastNonSelfProcessName = proc
+        }
     }
 
     private func startFrontmostAppMonitor() {
