@@ -110,13 +110,26 @@ class InputManager: ObservableObject {
     }
 
     private func startFrontmostAppMonitor() {
-        // Use NSWorkspace notification for frontmost app change
+        // Auto-toggle
         NSWorkspace.shared.notificationCenter.addObserver(
             forName: NSWorkspace.didActivateApplicationNotification,
             object: nil,
             queue: .main
         ) { [weak self] notification in
             self?.handleFrontmostAppChange(notification: notification)
+        }
+
+        // Frontmost proc
+        NSWorkspace.shared.notificationCenter.addObserver(
+            forName: NSWorkspace.didActivateApplicationNotification,
+            object: nil,
+            queue: .main
+        ) { [weak self] notification in
+            guard let app = notification.userInfo?[NSWorkspace.applicationUserInfoKey] as? NSRunningApplication else { return }
+            if app.bundleIdentifier != self?.selfBundleID,
+               let procName = self?.getFrontmostProcessName() {
+                self?.lastNonSelfProcessName = procName
+            }
         }
     }
     
