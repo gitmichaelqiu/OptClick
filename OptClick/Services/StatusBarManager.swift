@@ -82,11 +82,25 @@ class StatusBarManager: ObservableObject {
         menu.addItem(toggleItem)
 
         // Status reason (non-clickable)
-        let statusReason = getStatusReason()
-        let statusReasonItem = NSMenuItem(title: statusReason, action: nil, keyEquivalent: "")
-        statusReasonItem.isEnabled = false
-        menu.addItem(statusReasonItem)
-
+        if let statusReason = getStatusReason() {
+            let item = NSMenuItem(title: statusReason, action: nil, keyEquivalent: "")
+            item.isEnabled = false
+            menu.addItem(item)
+        }
+        
+        let showProc = UserDefaults.standard.bool(forKey: InputManager.showFrontmostProcKey)
+        if showProc {
+            if let procName = inputManager.getFrontmostProcessNameExcludingSelf() {
+                let title = String(
+                    format: NSLocalizedString("Menu.Proc", comment: ""),
+                    procName
+                )
+                let item = NSMenuItem(title: title, action: nil, keyEquivalent: "")
+                item.isEnabled = false
+                menu.addItem(item)
+            }
+        }
+        
         menu.addItem(.separator())
 
         // Settings
@@ -177,7 +191,10 @@ class StatusBarManager: ObservableObject {
         return scaled
     }
     
-    private func getStatusReason() -> String {
+    private func getStatusReason() -> String? {
+        let show = UserDefaults.standard.bool(forKey: InputManager.showStatusReasonKey)
+        guard show else { return nil }
+        
         let state = inputManager.isEnabled
         let stateStr = state
             ? NSLocalizedString("Menu.Reason.StateStr.Enabled", comment: "Enabled")
@@ -220,7 +237,7 @@ class StatusBarManager: ObservableObject {
             
             if isMatch {
                 let displayName = matchedProcName.map {
-                        String(format: NSLocalizedString("Settings.General.AutoToggle.Process", comment: ""), $0)
+                        String(format: NSLocalizedString("Menu.Reason.Process", comment: ""), $0)
                     } ?? appName
                 
                 if state {

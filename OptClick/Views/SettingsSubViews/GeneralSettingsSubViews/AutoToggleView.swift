@@ -86,7 +86,7 @@ struct AutoToggleView: View {
 
                 HStack {
                     // Add App (by bundle ID)
-                    addButton( // Cannot convert value of type '@Sendable (URL?) -> ()' to expected argument type '() -> Void'
+                    addButton(
                         systemImage: "plus",
                         action: { addAppByBundleID() },
                         frameWidth: 12
@@ -94,10 +94,10 @@ struct AutoToggleView: View {
                     
                     // Extra add
                     Menu {
-                        Button("Steam games") { addSteamApp() }
-                        Button("Chrome apps") { addChromeApp() }
-                        Button("CrossOver apps") { addCrossOverApp() }
-                        Button("Safari apps")  { addSafariApp() }
+                        Button("Steam \(NSLocalizedString("Common.Translation.Game", comment: ""))") { addSteamApp() }
+                        Button("Chrome \(NSLocalizedString("Common.Translation.App", comment: ""))") { addChromeApp() }
+                        Button("CrossOver \(NSLocalizedString("Common.Translation.App", comment: ""))") { addCrossOverApp() }
+                        Button("Safari \(NSLocalizedString("Common.Translation.App", comment: ""))")  { addSafariApp() }
                         Button(
                             String(format: "Minecraft (%@)", String(format: NSLocalizedString("Settings.General.AutoToggle.Process", comment: ""), "java"))
                         ) { addMinecraftJavaApp() }

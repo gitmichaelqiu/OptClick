@@ -14,6 +14,10 @@
 "Menu.Reason.NoFrontmost" = "%@: No target app is frontmost";
 "Menu.Reason.FollowLast" = "%@: No target apps, follow last setting";
 "Menu.Reason.Auto" = "%@: Auto setting";
+"Menu.Reason.Process" = "Process %@";
+
+// Frontmost Proc
+"Menu.Proc" = "Frontmost Process: %@";
 
 // MARK: - Settings/General
 "Settings.General" = "General";
@@ -22,14 +26,6 @@
 "Settings.General.OptClick" = "OptClick";
 "Settings.General.OptClick.EnableOptClick" = "Enable option → right click";
 "Settings.General.OptClick.EnableAutoToggle" = "Enable auto toggle";
-
-// Launch
-"Settings.General.Launch" = "Launch";
-"Settings.General.Launch.AtLogin" = "Launch at login";
-"Settings.General.LaunchBehavior" = "Launch behavior";
-"Settings.General.LaunchBehavior.Disabled" = "Disable OptClick";
-"Settings.General.LaunchBehavior.Enabled" = "Enable OptClick";
-"Settings.General.LaunchBehavior.LastState" = "Follow last setting";
 
 // Auto Toggle
 "Settings.General.AutoToggle" = "Auto Toggle";
@@ -49,6 +45,20 @@
 "Settings.General.AutoToggle.RemoveAll.Info" = "Are you sure to remove all target apps?";
 "Settings.General.AutoToggle.Add.Duplicated.Msg" = "Duplicated Process";
 "Settings.General.AutoToggle.Add.Duplicated.Info" = "Process %@ already exists";
+
+// Launch
+"Settings.General.Launch" = "Launch";
+"Settings.General.Launch.AtLogin" = "Launch at login";
+"Settings.General.LaunchBehavior" = "Launch behavior";
+"Settings.General.LaunchBehavior.Disabled" = "Disable OptClick";
+"Settings.General.LaunchBehavior.Enabled" = "Enable OptClick";
+"Settings.General.LaunchBehavior.LastState" = "Follow last setting";
+
+// Menubar
+
+"Settings.General.Menubar" = "Menubar";
+"Settings.General.Menubar.ShowReason" = "Show OptClick status reason";
+"Settings.General.Menubar.ShowFrontmostProc" = "Show frontmost process name";
 
 // Update
 "Settings.General.Update" = "Update";
@@ -96,3 +106,5 @@
 // MARK: - Common
 "Common.Button.OK" = "OK";
 "Common.Button.Cancel" = "Cancel";
+"Common.Translation.Game" = "Games";
+"Common.Translation.App" = "Apps";

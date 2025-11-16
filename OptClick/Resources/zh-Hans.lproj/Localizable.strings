@@ -14,6 +14,10 @@
 "Menu.Reason.NoFrontmost" = "%@: 没有目标 App 在最前";
 "Menu.Reason.FollowLast" = "%@: 没有目标 App，跟随上一次设置";
 "Menu.Reason.Auto" = "%@: 自动设置";
+"Menu.Reason.Process" = "进程 %@";
+
+// Frontmost Proc
+"Menu.Proc" = "当前进程: %@";
 
 // MARK: - Settings/General
 "Settings.General" = "通用";
@@ -22,14 +26,6 @@
 "Settings.General.OptClick" = "OptClick";
 "Settings.General.OptClick.EnableOptClick" = "启用 Option → 右键";
 "Settings.General.OptClick.EnableAutoToggle" = "启用自动开关";
-
-// Launch
-"Settings.General.Launch" = "启动";
-"Settings.General.Launch.AtLogin" = "登录时启动";
-"Settings.General.LaunchBehavior" = "启动行为";
-"Settings.General.LaunchBehavior.Disabled" = "禁用 OptClick";
-"Settings.General.LaunchBehavior.Enabled" = "启用 OptClick";
-"Settings.General.LaunchBehavior.LastState" = "跟随上一次设置";
 
 // Auto Toggle
 "Settings.General.AutoToggle" = "自动开关";
@@ -49,6 +45,20 @@
 "Settings.General.AutoToggle.RemoveAll.Info" = "确认移除所有目标 App?";
 "Settings.General.AutoToggle.Add.Duplicated.Msg" = "重复进程";
 "Settings.General.AutoToggle.Add.Duplicated.Info" = "进程 %@ 已存在";
+
+// Launch
+"Settings.General.Launch" = "启动";
+"Settings.General.Launch.AtLogin" = "登录时启动";
+"Settings.General.LaunchBehavior" = "启动行为";
+"Settings.General.LaunchBehavior.Disabled" = "禁用 OptClick";
+"Settings.General.LaunchBehavior.Enabled" = "启用 OptClick";
+"Settings.General.LaunchBehavior.LastState" = "跟随上一次设置";
+
+// Menubar
+
+"Settings.General.Menubar" = "菜单栏";
+"Settings.General.Menubar.ShowReason" = "显示 OptClick 状态说明";
+"Settings.General.Menubar.ShowFrontmostProc" = "显示当前进程名";
 
 // Update
 "Settings.General.Update" = "更新";
@@ -96,3 +106,5 @@
 // MARK: - Common
 "Common.Button.OK" = "确认";
 "Common.Button.Cancel" = "取消";
+"Common.Translation.Game" = "游戏";
+"Common.Translation.App" = "应用";
