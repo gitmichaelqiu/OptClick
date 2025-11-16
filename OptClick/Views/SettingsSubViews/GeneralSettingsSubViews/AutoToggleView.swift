@@ -45,26 +45,42 @@ struct AutoToggleView: View {
 
         if isExpandedLocal {
             VStack(alignment: .leading, spacing: 0) {
-                let sortedApps = rules.map { rule -> (id: String, name: String, icon: NSImage?) in
-                    if rule.hasPrefix("proc:") {
-                        let kw = String(rule.dropFirst(5))
-                        let procStr = String(format: NSLocalizedString("Settings.General.AutoToggle.Process", comment: "Process: "), kw)
-                        return (rule, procStr, nil)
-                    } else if rule.hasPrefix("proc~") {
-                        let kw = String(rule.dropFirst(5))
-                        let procStr = String(format: NSLocalizedString("Settings.General.AutoToggle.Process.Partial.Proc", comment: "Process (Partial): "), kw)
-                        return (rule, procStr, nil)
-                    } else {
-                        if let url = NSWorkspace.shared.urlForApplication(withBundleIdentifier: rule),
-                           let bundle = Bundle(url: url) {
-                            let name = bundle.object(forInfoDictionaryKey: "CFBundleName") as? String ?? rule
-                            let icon = NSWorkspace.shared.icon(forFile: url.path)
-                            return (rule, name, icon)
+                let sortedApps: [(id: String, name: String, icon: NSImage?)] = {
+                    let categorized = rules.compactMap { rule -> (id: String, name: String, icon: NSImage?, typeOrder: Int)? in
+                        if rule.hasPrefix("proc:") {
+                            // Exact proc
+                            let kw = String(rule.dropFirst(5)).trimmingCharacters(in: .whitespacesAndNewlines)
+                            guard !kw.isEmpty else { return nil }
+                            let displayName = String(format: NSLocalizedString("Settings.General.AutoToggle.Process", comment: ""), kw)
+                            return (rule, displayName, nil, 0)
+                        } else if rule.hasPrefix("proc~") {
+                            // Partial proc
+                            let kw = String(rule.dropFirst(5)).trimmingCharacters(in: .whitespacesAndNewlines)
+                            guard !kw.isEmpty else { return nil }
+                            let displayName = String(format: NSLocalizedString("Settings.General.AutoToggle.Process.Partial", comment: ""), kw)
+                            return (rule, displayName, nil, 1)
                         } else {
-                            return (rule, rule, nil)
+                            // Bundle ID fallback
+                            if let url = NSWorkspace.shared.urlForApplication(withBundleIdentifier: rule),
+                               let bundle = Bundle(url: url) {
+                                let name = bundle.object(forInfoDictionaryKey: "CFBundleName") as? String ?? rule
+                                let icon = NSWorkspace.shared.icon(forFile: url.path)
+                                return (rule, name, icon, 2)
+                            } else {
+                                return (rule, rule, nil, 2)
+                            }
                         }
                     }
-                }.sorted { $0.name.localizedCaseInsensitiveCompare($1.name) == .orderedAscending }
+                    
+                    let sorted = categorized.sorted { lhs, rhs in
+                        if lhs.typeOrder != rhs.typeOrder {
+                            return lhs.typeOrder < rhs.typeOrder
+                        }
+                        return lhs.name.localizedCaseInsensitiveCompare(rhs.name) == .orderedAscending
+                    }
+
+                    return sorted.map { ($0.id, $0.name, $0.icon) }
+                }()
 
                 List(selection: $selection) {
                     ForEach(sortedApps, id: \.id) { item in
