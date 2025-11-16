@@ -50,6 +50,10 @@ struct AutoToggleView: View {
                         let kw = String(rule.dropFirst(5))
                         let procStr = String(format: NSLocalizedString("Settings.General.AutoToggle.Process", comment: "Process: "), kw)
                         return (rule, procStr, nil)
+                    } else if rule.hasPrefix("proc~") {
+                        let kw = String(rule.dropFirst(5))
+                        let procStr = String(format: NSLocalizedString("Settings.General.AutoToggle.Process.Partial", comment: "Process (Partial): "), kw)
+                        return (rule, procStr, nil)
                     } else {
                         if let url = NSWorkspace.shared.urlForApplication(withBundleIdentifier: rule),
                            let bundle = Bundle(url: url) {
@@ -118,7 +122,7 @@ struct AutoToggleView: View {
                     
                     // Partial process
                     Menu {
-                        Button("Add partial matched process") {  }
+                        Button("Add partial matched process") { addPartialMatchProcess() }
                     } label: {
                     }
                     .frame(width: 8, height: 14)
@@ -362,6 +366,51 @@ struct AutoToggleView: View {
                 alert.messageText = NSLocalizedString("Settings.General.AutoToggle.Add.Duplicated.Msg", comment: "")
                 alert.informativeText = String(format: NSLocalizedString("Settings.General.AutoToggle.Add.Duplicated.Info", comment: ""), "\(rule.dropFirst(5))")
                 alert.addButton(withTitle: NSLocalizedString("Common.Button.OK", comment: ""))
+                alert.alertStyle = .informational
+                
+                Task {
+                    if let targetWindow = NSApp.suitableSheetWindow(nil) {
+                        _ = await alert.beginSheetModal(for: targetWindow)
+                    } else {
+                        alert.runModal()
+                    }
+                }
+            }
+        }
+    }
+    
+    private func addPartialMatchProcess() {
+        let alert = NSAlert()
+        alert.messageText = NSLocalizedString("Settings.General.AutoToggle.Process.Partial.Add.Msg", comment: "Add partial process match")
+        alert.informativeText = NSLocalizedString("Settings.General.AutoToggle.Process.Partial.Add.Info", comment: "Enter a substring to match in process names")
+        let textField = NSTextField(frame: NSRect(x: 0, y: 0, width: 200, height: 24))
+        textField.placeholderString = NSLocalizedString("Settings.General.AutoToggle.Process.Add.Placeholder", comment: "Process substring")
+        alert.accessoryView = textField
+        alert.addButton(withTitle: NSLocalizedString("Settings.General.AutoToggle.Process.Add.Add", comment: "Add"))
+        alert.addButton(withTitle: NSLocalizedString("Settings.General.AutoToggle.Process.Add.Cancel", comment: "Cancel"))
+
+        let hostWindow = NSApp.suitableSheetWindow(nil)!
+        alert.beginSheetModal(for: hostWindow) { response in
+            if response == .alertFirstButtonReturn {
+                self.processPartialKeyword(textField.stringValue)
+            }
+        }
+    }
+
+    private func processPartialKeyword(_ raw: String) {
+        let keyword = raw.trimmingCharacters(in: .whitespacesAndNewlines)
+        if !keyword.isEmpty {
+            let rule = "proc~\(keyword)"
+            if !InputManager.isRuleDuplicated(newRule: rule) {
+                withAnimation(.easeInOut(duration: 0.2)) {
+                    rules.append(rule)
+                    onRuleChange()
+                }
+            } else {
+                let alert = NSAlert()
+                alert.messageText = NSLocalizedString("Settings.General.AutoToggle.Add.Duplicated.Msg", comment: "Duplicate rule")
+                alert.informativeText = String(format: NSLocalizedString("Settings.General.AutoToggle.Add.Duplicated.Info", comment: ""), keyword)
+                alert.addButton(withTitle: NSLocalizedString("Common.Button.OK", comment: "OK"))
                 alert.alertStyle = .informational
                 
                 Task {
