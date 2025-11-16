@@ -52,7 +52,7 @@ struct AutoToggleView: View {
                         return (rule, procStr, nil)
                     } else if rule.hasPrefix("proc~") {
                         let kw = String(rule.dropFirst(5))
-                        let procStr = String(format: NSLocalizedString("Settings.General.AutoToggle.Process.Partial", comment: "Process (Partial): "), kw)
+                        let procStr = String(format: NSLocalizedString("Settings.General.AutoToggle.Process.Partial.Proc", comment: "Process (Partial): "), kw)
                         return (rule, procStr, nil)
                     } else {
                         if let url = NSWorkspace.shared.urlForApplication(withBundleIdentifier: rule),
@@ -120,9 +120,9 @@ struct AutoToggleView: View {
                         frameWidth: 20
                     )
                     
-                    // Partial process
+                    // Partial match
                     Menu {
-                        Button("Add partial matched process") { addPartialMatchProcess() }
+                        Button(NSLocalizedString("Settings.General.AutoToggle.Process.Partial", comment: "")) { addPartialMatchProcess() }
                     } label: {
                     }
                     .frame(width: 8, height: 14)

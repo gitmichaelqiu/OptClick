@@ -39,7 +39,8 @@
 "Settings.General.AutoToggle.Process.Add.Placeholder" = "进程";
 "Settings.General.AutoToggle.Process.Add.Add" = "添加";
 "Settings.General.AutoToggle.Process.Add.Cancel" = "取消";
-"Settings.General.AutoToggle.Process.Partial" = "进程（部分匹配）：%@";
+"Settings.General.AutoToggle.Process.Partial" = "部分匹配";
+"Settings.General.AutoToggle.Process.Partial.Proc" = "进程（部分匹配）：%@";
 "Settings.General.AutoToggle.Process.Partial.Add.Msg" = "添加部分匹配进程";
 "Settings.General.AutoToggle.Process.Partial.Add.Info" = "输入匹配名。若最前进程名中包含该字符串，则视为匹配。";
 "Settings.General.AutoToggle.Add.App.Failed.Msg" = "文件夹未找到";
