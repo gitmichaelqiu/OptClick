@@ -199,7 +199,7 @@ class InputManager: ObservableObject {
 
         var isMatch = false
 
-        // 1. Bundle ID
+        // Bundle ID
         if let userInfo = notification.userInfo,
            let app = userInfo[NSWorkspace.applicationUserInfoKey] as? NSRunningApplication,
            let bundleId = app.bundleIdentifier,
@@ -207,12 +207,18 @@ class InputManager: ObservableObject {
             isMatch = true
         }
 
-        // 2. Process name
+        // Process name
         if !isMatch, let procName = getFrontmostProcessName() {
             for rule in rules {
                 if rule.hasPrefix("proc:") {
                     let expected = String(rule.dropFirst(5))
                     if procName.lowercased() == expected.lowercased() {
+                        isMatch = true
+                        break
+                    }
+                } else if rule.hasPrefix("proc~") {
+                    let substring = String(rule.dropFirst(5))
+                    if !substring.isEmpty && procName.lowercased().contains(substring.lowercased()) {
                         isMatch = true
                         break
                     }
