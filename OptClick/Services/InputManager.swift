@@ -210,62 +210,19 @@ class InputManager: ObservableObject {
            let proc = getFrontmostProcessName() {
             lastNonSelfProcessName = proc
         }
-        
-        guard self.isAutoToggleEnabled else {
-            objectWillChange.send()
-            return
-        }
-        
-        guard let app = notification.userInfo?[NSWorkspace.applicationUserInfoKey] as? NSRunningApplication else { return }
-        
-        if app.bundleIdentifier == selfBundleID {
-            return
-        }
-        
-        let rules = autoToggleAppBundleIds
-        guard !rules.isEmpty,
-              let app = notification.userInfo?[NSWorkspace.applicationUserInfoKey] as? NSRunningApplication,
-              app.bundleIdentifier != selfBundleID
-        else {
-            objectWillChange.send()
-            return
-        }
 
-        var isMatch = false
+        objectWillChange.send()
 
-        // Bundle ID
-        if let userInfo = notification.userInfo,
-           let app = userInfo[NSWorkspace.applicationUserInfoKey] as? NSRunningApplication,
-           let bundleId = app.bundleIdentifier,
-           rules.contains(bundleId) {
-            isMatch = true
-        }
+        guard isAutoToggleEnabled else { return }
 
-        // Process name
-        if !isMatch, let procName = getFrontmostProcessName() {
-            for rule in rules {
-                if rule.hasPrefix("proc:") {
-                    let expected = String(rule.dropFirst(5))
-                    if procName.lowercased() == expected.lowercased() {
-                        isMatch = true
-                        break
-                    }
-                } else if rule.hasPrefix("proc~") {
-                    let substring = String(rule.dropFirst(5))
-                    if !substring.isEmpty && procName.lowercased().contains(substring.lowercased()) {
-                        isMatch = true
-                        break
-                    }
-                }
-            }
-        }
+        let isMatch = getIsMatch()
+
+        isAutoToggling = true
+        defer { isAutoToggling = false }
 
         if isMatch {
-            isAutoToggling = true
             if !isEnabled { isEnabled = true }
-            isAutoToggling = false
         } else {
-            isAutoToggling = true
             switch autoToggleBehavior {
             case .disable:
                 if isEnabled { isEnabled = false }
@@ -274,14 +231,7 @@ class InputManager: ObservableObject {
                     isEnabled = lastManualState
                 }
             }
-            isAutoToggling = false
         }
-        
-        if let procName = getFrontmostProcessName(), app.bundleIdentifier != selfBundleID {
-            lastNonSelfProcessName = procName
-        }
-        
-        objectWillChange.send()
     }
     
     func refreshAutoToggleState() {
