@@ -69,6 +69,9 @@ class StatusBarManager: ObservableObject {
     }
     
     private func buildMenu() -> NSMenu {
+        print("🔄 buildMenu() called")
+        print("⚙️ showProc =", UserDefaults.standard.bool(forKey: InputManager.showFrontmostProcKey))
+        print("mPid =", inputManager.getFrontmostProcessNameExcludingSelf() ?? "nil")
         let menu = NSMenu()
         
         // Toggle item

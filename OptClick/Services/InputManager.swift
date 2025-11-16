@@ -167,6 +167,12 @@ class InputManager: ObservableObject {
     }
 
     private func handleFrontmostAppChange(notification: Notification) {
+        if let app = notification.userInfo?[NSWorkspace.applicationUserInfoKey] as? NSRunningApplication,
+           app.bundleIdentifier != selfBundleID,
+           let proc = getFrontmostProcessName() {
+            lastNonSelfProcessName = proc
+        }
+        
         guard self.isAutoToggleEnabled else {
             objectWillChange.send()
             return
@@ -179,7 +185,13 @@ class InputManager: ObservableObject {
         }
         
         let rules = autoToggleAppBundleIds
-        guard !rules.isEmpty else { return }
+        guard !rules.isEmpty,
+              let app = notification.userInfo?[NSWorkspace.applicationUserInfoKey] as? NSRunningApplication,
+              app.bundleIdentifier != selfBundleID
+        else {
+            objectWillChange.send()
+            return
+        }
 
         var isMatch = false
 
