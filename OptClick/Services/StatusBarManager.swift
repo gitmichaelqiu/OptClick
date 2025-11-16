@@ -219,7 +219,11 @@ class StatusBarManager: ObservableObject {
                 if rule.hasPrefix("proc:") || rule.hasPrefix("proc~") {
                     let kw = String(rule.dropFirst(5))
                     if !kw.isEmpty && procName.lowercased().contains(kw.lowercased()) {
-                        return kw
+                        var ret = kw
+                        if rule.hasPrefix("proc~") {
+                            ret = procName + " (\(kw))"
+                        }
+                        return ret
                     }
                 }
             }
