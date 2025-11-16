@@ -169,6 +169,40 @@ class InputManager: ObservableObject {
         }
         return lastNonSelfProcessName
     }
+    
+    func getIsMatch() -> Bool {
+        guard let app = NSWorkspace.shared.frontmostApplication else { return false }
+        
+        // Skip self
+        if app.bundleIdentifier == selfBundleID { return false }
+        
+        let rules = autoToggleAppBundleIds
+        guard !rules.isEmpty else { return false }
+        
+        // 1. Bundle ID match
+        if let bundleId = app.bundleIdentifier, rules.contains(bundleId) {
+            return true
+        }
+        
+        // 2. Process name match (exact & partial)
+        guard let procName = getFrontmostProcessName() else { return false }
+        
+        for rule in rules {
+            if rule.hasPrefix("proc:") {
+                let expected = String(rule.dropFirst(5))
+                if !expected.isEmpty && procName.lowercased() == expected.lowercased() {
+                    return true
+                }
+            } else if rule.hasPrefix("proc~") {
+                let substring = String(rule.dropFirst(5))
+                if !substring.isEmpty && procName.lowercased().contains(substring.lowercased()) {
+                    return true
+                }
+            }
+        }
+        
+        return false
+    }
 
     private func handleFrontmostAppChange(notification: Notification) {
         if let app = notification.userInfo?[NSWorkspace.applicationUserInfoKey] as? NSRunningApplication,
