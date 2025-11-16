@@ -114,6 +114,10 @@ class InputManager: ObservableObject {
            let proc = getFrontmostProcessName() {
             lastNonSelfProcessName = proc
         }
+        
+        DispatchQueue.main.async {
+            self.objectWillChange.send()
+        }
     }
 
     private func startFrontmostAppMonitor() {
