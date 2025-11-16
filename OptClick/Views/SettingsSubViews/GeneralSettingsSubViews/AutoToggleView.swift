@@ -57,7 +57,7 @@ struct AutoToggleView: View {
                             // Partial proc
                             let kw = String(rule.dropFirst(5)).trimmingCharacters(in: .whitespacesAndNewlines)
                             guard !kw.isEmpty else { return nil }
-                            let displayName = String(format: NSLocalizedString("Settings.General.AutoToggle.Process.Partial", comment: ""), kw)
+                            let displayName = String(format: NSLocalizedString("Settings.General.AutoToggle.Process.Partial.Proc", comment: ""), kw)
                             return (rule, displayName, nil, 1)
                         } else {
                             // Bundle ID fallback
