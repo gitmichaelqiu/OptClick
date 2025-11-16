@@ -39,6 +39,9 @@
 "Settings.General.AutoToggle.Process.Add.Placeholder" = "Process";
 "Settings.General.AutoToggle.Process.Add.Add" = "Add";
 "Settings.General.AutoToggle.Process.Add.Cancel" = "Cancel";
+"Settings.General.AutoToggle.Process.Partial" = "Process (Partial): %@";
+"Settings.General.AutoToggle.Process.Partial.Add.Msg" = "Add Partial Process Match";
+"Settings.General.AutoToggle.Process.Partial.Add.Info" = "Enter a pattern. If the frontmost process name contains it, the rule will match.";
 "Settings.General.AutoToggle.Add.App.Failed.Msg" = "Folder Not Found";
 "Settings.General.AutoToggle.Add.App.Failed.Info" = "OptClick cannot find %@ app folder";
 "Settings.General.AutoToggle.RemoveAll.Msg" = "Remove All Target Apps";
