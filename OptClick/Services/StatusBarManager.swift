@@ -211,22 +211,20 @@ class StatusBarManager: ObservableObject {
         }
         
         let appName = frontmostApp.localizedName ?? bundleId
-        var matchedProcName: String? = nil
         
-        var isMatch = false
-        if autoToggleAppBundleIds.contains(bundleId) {
-            isMatch = true
-        } else if let procName = inputManager.getFrontmostProcessName() {
+        let isMatch = inputManager.getIsMatch()
+        let matchedProcName: String? = {
+            guard let procName = inputManager.getFrontmostProcessName() else { return nil }
             for rule in autoToggleAppBundleIds {
-                if rule.hasPrefix("proc:"), let expected = rule.split(separator: ":").last {
-                    if procName.lowercased() == String(expected).lowercased() {
-                        isMatch = true
-                        matchedProcName = String(expected)
-                        break
+                if rule.hasPrefix("proc:") || rule.hasPrefix("proc~") {
+                    let kw = String(rule.dropFirst(5))
+                    if !kw.isEmpty && procName.lowercased().contains(kw.lowercased()) {
+                        return kw
                     }
                 }
             }
-        }
+            return nil
+        }()
         
         let autoToggleEnabled = inputManager.isAutoToggleEnabled
         if autoToggleEnabled {

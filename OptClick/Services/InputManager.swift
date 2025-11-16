@@ -179,12 +179,12 @@ class InputManager: ObservableObject {
         let rules = autoToggleAppBundleIds
         guard !rules.isEmpty else { return false }
         
-        // 1. Bundle ID match
+        // Bundle ID match
         if let bundleId = app.bundleIdentifier, rules.contains(bundleId) {
             return true
         }
         
-        // 2. Process name match (exact & partial)
+        // Process name match (exact & partial)
         guard let procName = getFrontmostProcessName() else { return false }
         
         for rule in rules {
