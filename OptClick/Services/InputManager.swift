@@ -329,8 +329,16 @@ class InputManager: ObservableObject {
     
     static func isRuleDuplicated(newRule: String) -> Bool {
         let rules = UserDefaults.standard.stringArray(forKey: "AutoToggleAppBundleIds") ?? []
+        
+        let newKey = newRule.hasPrefix("proc:") || newRule.hasPrefix("proc~")
+            ? String(newRule.dropFirst(5)).lowercased()
+            : newRule.lowercased()
+        
         let isDuplicate = rules.contains { rule in
-            rule.hasPrefix("proc:") && rule.lowercased() == newRule.lowercased()
+            let existingKey = rule.hasPrefix("proc:") || rule.hasPrefix("proc~")
+                ? String(rule.dropFirst(5)).lowercased()
+                : rule.lowercased()
+            return existingKey == newKey
         }
         return isDuplicate
     }
