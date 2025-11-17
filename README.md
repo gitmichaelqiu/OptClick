@@ -1,4 +1,4 @@
-<!-- v1.2.1 -->
+<!-- v1.3.0 -->
 
 <h1 align="center">
   <img src="/OptClick/Resources/OptClickIcon_Default.png" width="25%" alt=""/>  
@@ -35,11 +35,11 @@ You can modify it in Settings → Shortcuts. Press `esc` while changing the hotk
 
 ### Auto Toggle
 
-After enabling Auto Toggle, you can choose target apps that when they are in front, OptClick will automatically be turned on. You can add your games.
+After enabling Auto Toggle, you can choose target apps that when they are in front, OptClick will automatically be turned on. You can add your games, for instance.
 
-If you cannot find the app of your game, or the game is not packed as `.app`, like *Minecraft*, you can add process name. When the frontmost app has the same title as the process name designated, OptClick will be turned on.
+Shortcuts are available at the right of the + button, you can conveniently add Steam games, Chrome apps, CrossOver apps, Safari apps and Minecraft (it will add the process Java).
 
-> Tip: To add *Minecraft* into target apps, add `java` into target apps as a process.
+If the app is not packed as an `.app`, you can add process name. When the frontmost app has the same title as the process name designated, OptClick will be turned on.
 
 You can still turn OptClick on when no target apps are frontmost. If you select `"Disable OptClick"` in Auto Toggle, your manual setting is temporary and will be ineffective after switching apps; if you select `"Follow last setting"`, your manual setting is persistent for all not-target apps.
 
