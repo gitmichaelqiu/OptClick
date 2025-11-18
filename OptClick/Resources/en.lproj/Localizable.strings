@@ -42,7 +42,7 @@
 "Settings.General.AutoToggle.Process.Partial" = "Partial match";
 "Settings.General.AutoToggle.Process.Partial.Proc" = "Process (Partial): %@";
 "Settings.General.AutoToggle.Process.Partial.Add.Msg" = "Add Partial Process Match";
-"Settings.General.AutoToggle.Process.Partial.Add.Info" = "Enter a pattern (case-insensitive). If the frontmost process name contains it, the rule will match.";
+"Settings.General.AutoToggle.Process.Partial.Add.Info" = "Enter a pattern (case-insensitive).";
 "Settings.General.AutoToggle.Add.App.Failed.Msg" = "Folder Not Found";
 "Settings.General.AutoToggle.Add.App.Failed.Info" = "OptClick cannot find %@ app folder";
 "Settings.General.AutoToggle.RemoveAll.Msg" = "Remove All Target Apps";
