@@ -42,7 +42,7 @@
 "Settings.General.AutoToggle.Process.Partial" = "部分匹配";
 "Settings.General.AutoToggle.Process.Partial.Proc" = "进程（部分匹配）：%@";
 "Settings.General.AutoToggle.Process.Partial.Add.Msg" = "添加部分匹配进程";
-"Settings.General.AutoToggle.Process.Partial.Add.Info" = "输入匹配名。若最前进程名中包含该字符串，则视为匹配。";
+"Settings.General.AutoToggle.Process.Partial.Add.Info" = "输入匹配名（忽略大小写）。若最前进程名中包含该字符串，则视为匹配。";
 "Settings.General.AutoToggle.Add.App.Failed.Msg" = "文件夹未找到";
 "Settings.General.AutoToggle.Add.App.Failed.Info" = "OptClick 无法找到 %@ App 文件夹";
 "Settings.General.AutoToggle.RemoveAll.Msg" = "移除所有目标 App";
