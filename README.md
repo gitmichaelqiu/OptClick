@@ -69,7 +69,7 @@ This app uses the following packages:
 
 - [HotKey by @soffes](https://github.com/soffes/HotKey)
 
-Thanks all the wonderful authors!
+Thanks all these wonderful authors!
 
 ## ⭐ Support This Project
 
