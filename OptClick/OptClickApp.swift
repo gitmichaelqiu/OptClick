@@ -23,6 +23,11 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
             hotkeyManager: hotkeyManager
         )
     }
+    
+    func applicationShouldHandleReopen(_ sender: NSApplication, hasVisibleWindows flag: Bool) -> Bool {
+        openSettingsWindow()
+        return true
+    }
 
     func applicationDidFinishLaunching(_ notification: Notification) {
         // Status bar
