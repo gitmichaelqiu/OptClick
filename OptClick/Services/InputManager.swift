@@ -80,7 +80,7 @@ class InputManager: ObservableObject {
     static let lastStateKey = "LastState"
     
     private var lastNonSelfProcessName: String? = nil
-    private let selfBundleID = Bundle.main.bundleIdentifier ?? "michaelqiu.OptClick"
+    private let selfBundleID = Bundle.main.bundleIdentifier ?? "michaelqiu.OptClicker"
     
     init() {
         let behaviorString = UserDefaults.standard.string(forKey: Self.launchBehaviorKey) ?? LaunchBehavior.lastState.rawValue

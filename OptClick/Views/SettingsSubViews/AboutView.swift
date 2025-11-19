@@ -2,7 +2,7 @@ import SwiftUI
 
 struct AboutView: View {
     var appName: String {
-        Bundle.main.infoDictionary?["CFBundleName"] as? String ?? "OptClick"
+        Bundle.main.infoDictionary?["CFBundleName"] as? String ?? "OptClicker"
     }
 
     var appVersion: String {
@@ -59,7 +59,7 @@ struct AboutView: View {
 
                 VStack(spacing: 8) {
                     Link(NSLocalizedString("Settings.About.Repo", comment: "GitHub Repo"),
-                         destination: URL(string: "https://github.com/gitmichaelqiu/OptClick")!)
+                         destination: URL(string: "https://github.com/gitmichaelqiu/OptClicker")!)
                     .font(.body)
                     .foregroundColor(.blue)
 

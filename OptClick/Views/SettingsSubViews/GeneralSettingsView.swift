@@ -23,14 +23,14 @@ struct GeneralSettingsView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 20) {
-                SettingsSection("Settings.General.OptClick") {
-                    SettingsRow("Settings.General.OptClick.EnableOptClick") {
+                SettingsSection("Settings.General.OptClicker") {
+                    SettingsRow("Settings.General.OptClicker.EnableOptClicker") {
                         Toggle("", isOn: $inputManager.isEnabled)
                             .labelsHidden()
                             .toggleStyle(.switch)
                     }
                     Divider()
-                    SettingsRow("Settings.General.OptClick.EnableAutoToggle") {
+                    SettingsRow("Settings.General.OptClicker.EnableAutoToggle") {
                         Toggle("", isOn: $inputManager.isAutoToggleEnabled)
                             .labelsHidden()
                             .toggleStyle(.switch)

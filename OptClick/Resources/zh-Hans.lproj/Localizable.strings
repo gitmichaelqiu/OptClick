@@ -1,8 +1,8 @@
 // MARK: - Menu
 "Menu.Settings" = "设置...";
 "Menu.Quit" = "退出";
-"Menu.Toggle" = "OptClick → 右键";
-"Menu.About" = "关于 OptClick";
+"Menu.Toggle" = "Option → 右键";
+"Menu.About" = "关于 OptClicker";
 
 // Reason
 "Menu.Reason.StateStr.Enabled" = "启用";
@@ -22,17 +22,17 @@
 // MARK: - Settings/General
 "Settings.General" = "通用";
 
-// OptClick
-"Settings.General.OptClick" = "OptClick";
-"Settings.General.OptClick.EnableOptClick" = "启用 Option → 右键";
-"Settings.General.OptClick.EnableAutoToggle" = "启用自动开关";
+// OptClicker
+"Settings.General.OptClicker" = "OptClicker";
+"Settings.General.OptClicker.EnableOptClicker" = "启用 Option → 右键";
+"Settings.General.OptClicker.EnableAutoToggle" = "启用自动开关";
 
 // Auto Toggle
 "Settings.General.AutoToggle" = "自动开关";
 "Settings.General.AutoToggle.TargetApps" = "目标 App";
 "Settings.General.AutoToggle.Process" = "进程: %@";
 "Settings.General.AutoToggle.NotFrontmost" = "不在最前时";
-"Settings.General.AutoToggle.NotFrontmost.Disable" = "禁用 OptClick";
+"Settings.General.AutoToggle.NotFrontmost.Disable" = "禁用 OptClicker";
 "Settings.General.AutoToggle.NotFrontmost.FollowLast" = "跟随上一次设置";
 "Settings.General.AutoToggle.Process.Add.Msg" = "通过名称添加 App";
 "Settings.General.AutoToggle.Process.Add.Info" = "输入进程名称 (忽略大小写):";
@@ -44,7 +44,7 @@
 "Settings.General.AutoToggle.Process.Partial.Add.Msg" = "添加部分匹配进程";
 "Settings.General.AutoToggle.Process.Partial.Add.Info" = "输入匹配名（忽略大小写）。";
 "Settings.General.AutoToggle.Add.App.Failed.Msg" = "文件夹未找到";
-"Settings.General.AutoToggle.Add.App.Failed.Info" = "OptClick 无法找到 %@ App 文件夹";
+"Settings.General.AutoToggle.Add.App.Failed.Info" = "OptClicker 无法找到 %@ App 文件夹";
 "Settings.General.AutoToggle.RemoveAll.Msg" = "移除所有目标 App";
 "Settings.General.AutoToggle.RemoveAll.Info" = "确认移除所有目标 App?";
 "Settings.General.AutoToggle.Add.Duplicated.Msg" = "重复进程";
@@ -54,14 +54,14 @@
 "Settings.General.Launch" = "启动";
 "Settings.General.Launch.AtLogin" = "登录时启动";
 "Settings.General.LaunchBehavior" = "启动行为";
-"Settings.General.LaunchBehavior.Disabled" = "禁用 OptClick";
-"Settings.General.LaunchBehavior.Enabled" = "启用 OptClick";
+"Settings.General.LaunchBehavior.Disabled" = "禁用 OptClicker";
+"Settings.General.LaunchBehavior.Enabled" = "启用 OptClicker";
 "Settings.General.LaunchBehavior.LastState" = "跟随上一次设置";
 
 // Menubar
 
 "Settings.General.Menubar" = "菜单栏";
-"Settings.General.Menubar.ShowReason" = "显示 OptClick 状态说明";
+"Settings.General.Menubar.ShowReason" = "显示 OptClicker 状态说明";
 "Settings.General.Menubar.ShowFrontmostProc" = "显示当前进程名";
 
 // Update
@@ -70,15 +70,15 @@
 "Settings.General.Update.ManualCheck" = "检查更新";
 
 "Settings.General.Update.Failed.Title" = "检查更新失败";
-"Settings.General.Update.Failed.Msg" = "OptClick 无法连接至更新服务器，请检查网络连接。";
+"Settings.General.Update.Failed.Msg" = "OptClicker 无法连接至更新服务器，请检查网络连接。";
 
-"Settings.General.Update.Failed.Notif.Title" = "OptClick 检查更新失败";
+"Settings.General.Update.Failed.Notif.Title" = "OptClicker 检查更新失败";
 "Settings.General.Update.Failed.Notif.Msg" = "无法连接至更新服务器，请检查网络连接。";
 
 "Settings.General.Update.Available.Title" = "更新可用";
 "Settings.General.Update.Available.Msg" = "v%@ → v%@ 已就绪。\n是否打开发布页面下载并安装？";
 
-"Settings.General.Update.Available.Notif.Title" = "OptClick 有可用更新";
+"Settings.General.Update.Available.Notif.Title" = "OptClicker 有可用更新";
 "Settings.General.Update.Available.Notif.Msg" = "v%@ → v%@ 已就绪。点击以打开发布页面。";
 
 "Settings.General.Update.Available.Button.Update" = "更新并退出";
@@ -93,7 +93,7 @@
 "Settings.Shortcuts.Unassigned" = "未分配";
 
 "Settings.Shortcuts.General" = "通用";
-"Settings.Shortcuts.Hotkey" = "启用/禁用 OptClick";
+"Settings.Shortcuts.Hotkey" = "启用/禁用 OptClicker";
 "Settings.Shortcuts.Hotkey.Current" = "当前: %@";
 "Settings.Shotcuts.Hotkey.PressNew" = "按下新快捷键...";
 "Settings.Shortcuts.Hotkey.Change" = "修改…";
