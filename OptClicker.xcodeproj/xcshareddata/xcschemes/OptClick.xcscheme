@@ -16,9 +16,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "46A6B9092E7C16850037D562"
-               BuildableName = "OptClick.app"
-               BlueprintName = "OptClick"
-               ReferencedContainer = "container:OptClick.xcodeproj">
+               BuildableName = "OptClicker.app"
+               BlueprintName = "OptClicker"
+               ReferencedContainer = "container:OptClicker.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -38,7 +38,7 @@
                BlueprintIdentifier = "46A6B9162E7C16870037D562"
                BuildableName = "OptClickTests.xctest"
                BlueprintName = "OptClickTests"
-               ReferencedContainer = "container:OptClick.xcodeproj">
+               ReferencedContainer = "container:OptClicker.xcodeproj">
             </BuildableReference>
          </TestableReference>
          <TestableReference
@@ -49,7 +49,7 @@
                BlueprintIdentifier = "46A6B9202E7C16870037D562"
                BuildableName = "OptClickUITests.xctest"
                BlueprintName = "OptClickUITests"
-               ReferencedContainer = "container:OptClick.xcodeproj">
+               ReferencedContainer = "container:OptClicker.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -69,9 +69,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "46A6B9092E7C16850037D562"
-            BuildableName = "OptClick.app"
-            BlueprintName = "OptClick"
-            ReferencedContainer = "container:OptClick.xcodeproj">
+            BuildableName = "OptClicker.app"
+            BlueprintName = "OptClicker"
+            ReferencedContainer = "container:OptClicker.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -86,9 +86,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "46A6B9092E7C16850037D562"
-            BuildableName = "OptClick.app"
-            BlueprintName = "OptClick"
-            ReferencedContainer = "container:OptClick.xcodeproj">
+            BuildableName = "OptClicker.app"
+            BlueprintName = "OptClicker"
+            ReferencedContainer = "container:OptClicker.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

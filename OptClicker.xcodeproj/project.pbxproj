@@ -11,13 +11,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		46A6B90A2E7C16850037D562 /* OptClick.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OptClick.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		46A6B90A2E7C16850037D562 /* OptClicker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OptClicker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		46A6B90C2E7C16850037D562 /* OptClick */ = {
+		46A6B90C2E7C16850037D562 /* OptClicker */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = OptClick;
+			path = OptClicker;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -37,7 +37,7 @@
 		46A6B9012E7C16850037D562 = {
 			isa = PBXGroup;
 			children = (
-				46A6B90C2E7C16850037D562 /* OptClick */,
+				46A6B90C2E7C16850037D562 /* OptClicker */,
 				46A6B90B2E7C16850037D562 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -45,7 +45,7 @@
 		46A6B90B2E7C16850037D562 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				46A6B90A2E7C16850037D562 /* OptClick.app */,
+				46A6B90A2E7C16850037D562 /* OptClicker.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -53,9 +53,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		46A6B9092E7C16850037D562 /* OptClick */ = {
+		46A6B9092E7C16850037D562 /* OptClicker */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 46A6B92B2E7C16870037D562 /* Build configuration list for PBXNativeTarget "OptClick" */;
+			buildConfigurationList = 46A6B92B2E7C16870037D562 /* Build configuration list for PBXNativeTarget "OptClicker" */;
 			buildPhases = (
 				46A6B9062E7C16850037D562 /* Sources */,
 				46A6B9072E7C16850037D562 /* Frameworks */,
@@ -66,14 +66,14 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				46A6B90C2E7C16850037D562 /* OptClick */,
+				46A6B90C2E7C16850037D562 /* OptClicker */,
 			);
-			name = OptClick;
+			name = OptClicker;
 			packageProductDependencies = (
 				46A32F562E7D536B00FBD8D7 /* HotKey */,
 			);
 			productName = OptClick;
-			productReference = 46A6B90A2E7C16850037D562 /* OptClick.app */;
+			productReference = 46A6B90A2E7C16850037D562 /* OptClicker.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -91,7 +91,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 46A6B9052E7C16850037D562 /* Build configuration list for PBXProject "OptClick" */;
+			buildConfigurationList = 46A6B9052E7C16850037D562 /* Build configuration list for PBXProject "OptClicker" */;
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -109,7 +109,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				46A6B9092E7C16850037D562 /* OptClick */,
+				46A6B9092E7C16850037D562 /* OptClicker */,
 			);
 		};
 /* End PBXProject section */
@@ -260,7 +260,7 @@
 		46A6B92C2E7C16870037D562 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = OptClickIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = OptClickerIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
@@ -271,7 +271,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "";
-				INFOPLIST_KEY_CFBundleDisplayName = OptClick;
+				INFOPLIST_KEY_CFBundleDisplayName = OptClicker;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_LSUIElement = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
@@ -281,7 +281,7 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				MARKETING_VERSION = 1.2.1;
-				PRODUCT_BUNDLE_IDENTIFIER = michaelqiu.OptClick;
+				PRODUCT_BUNDLE_IDENTIFIER = michaelqiu.OptClicker;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				REGISTER_APP_GROUPS = YES;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
@@ -296,7 +296,7 @@
 		46A6B92D2E7C16870037D562 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = OptClickIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = OptClickerIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
@@ -307,7 +307,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "";
-				INFOPLIST_KEY_CFBundleDisplayName = OptClick;
+				INFOPLIST_KEY_CFBundleDisplayName = OptClicker;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_LSUIElement = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
@@ -317,7 +317,7 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				MARKETING_VERSION = 1.2.1;
-				PRODUCT_BUNDLE_IDENTIFIER = michaelqiu.OptClick;
+				PRODUCT_BUNDLE_IDENTIFIER = michaelqiu.OptClicker;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				REGISTER_APP_GROUPS = YES;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
@@ -332,7 +332,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		46A6B9052E7C16850037D562 /* Build configuration list for PBXProject "OptClick" */ = {
+		46A6B9052E7C16850037D562 /* Build configuration list for PBXProject "OptClicker" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				46A6B9292E7C16870037D562 /* Debug */,
@@ -341,7 +341,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		46A6B92B2E7C16870037D562 /* Build configuration list for PBXNativeTarget "OptClick" */ = {
+		46A6B92B2E7C16870037D562 /* Build configuration list for PBXNativeTarget "OptClicker" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				46A6B92C2E7C16870037D562 /* Debug */,
