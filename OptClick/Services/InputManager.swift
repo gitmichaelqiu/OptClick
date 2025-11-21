@@ -36,8 +36,18 @@ enum LaunchBehavior: String, CaseIterable {
 }
 
 class InputManager: ObservableObject {
-
     // Auto toggle properties
+    static let autoToggleEnabledKey = "isAutoToggleEnabled"
+    @Published var isAutoToggleEnabled: Bool {
+        didSet {
+            UserDefaults.standard.set(isAutoToggleEnabled, forKey: Self.autoToggleEnabledKey)
+            if isAutoToggleEnabled {
+                // Re-evaluate current frontmost app
+                refreshAutoToggleState()
+            }
+        }
+    }
+    
     private var frontmostAppMonitor: Any?
     private var lastManualState: Bool = false
     private var autoToggleAppBundleIds: [String] {
@@ -61,8 +71,7 @@ class InputManager: ObservableObject {
         }
     }
 
-    private var isAutoToggling = false
-
+    public var isAutoToggling = false
     private var keyDownMonitor: Any?
     private var keyUpMonitor: Any?
     static let launchBehaviorKey = "LaunchBehavior"
@@ -80,7 +89,8 @@ class InputManager: ObservableObject {
         case .lastState:
             isEnabled = UserDefaults.standard.bool(forKey: Self.lastStateKey)
         }
-
+        
+        isAutoToggleEnabled = UserDefaults.standard.bool(forKey: Self.autoToggleEnabledKey)
         lastManualState = isEnabled
 
         if isEnabled {
@@ -89,7 +99,7 @@ class InputManager: ObservableObject {
 
         startFrontmostAppMonitor()
         
-        if !autoToggleAppBundleIds.isEmpty {
+        if isAutoToggleEnabled && !autoToggleAppBundleIds.isEmpty {
             refreshAutoToggleState()
         }
     }
@@ -118,6 +128,8 @@ class InputManager: ObservableObject {
     }
 
     private func handleFrontmostAppChange(notification: Notification) {
+        guard self.isAutoToggleEnabled else { return }
+        
         let rules = autoToggleAppBundleIds
         guard !rules.isEmpty else { return }
 
@@ -131,13 +143,13 @@ class InputManager: ObservableObject {
             isMatch = true
         }
 
-        // 2. Process name (exact match)
+        // 2. Process name
         if !isMatch {
             if let procName = getFrontmostProcessName() {
                 for rule in rules {
                     if rule.hasPrefix("proc:") {
                         let expected = String(rule.dropFirst(5))
-                        if procName == expected {
+                        if procName.lowercased() == expected.lowercased() {
                             isMatch = true
                             break
                         }
@@ -165,6 +177,8 @@ class InputManager: ObservableObject {
     }
     
     func refreshAutoToggleState() {
+        guard self.isAutoToggleEnabled else { return }
+        
         guard let frontmostApp = NSWorkspace.shared.frontmostApplication,
               let _ = frontmostApp.bundleIdentifier else { return }
         
