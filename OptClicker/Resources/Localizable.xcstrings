@@ -1,6 +1,15 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "" : {
+
+    },
+    "© %@ Michael Yicheng Qiu" : {
+
+    },
+    "Chrome %@" : {
+
+    },
     "Common.Button.Cancel" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -68,6 +77,9 @@
           }
         }
       }
+    },
+    "CrossOver %@" : {
+
     },
     "Menu.About" : {
       "extractionState" : "manual",
@@ -323,6 +335,9 @@
           }
         }
       }
+    },
+    "Safari %@" : {
+
     },
     "Settings.About" : {
       "extractionState" : "manual",
@@ -1377,6 +1392,12 @@
           }
         }
       }
+    },
+    "Steam %@" : {
+
+    },
+    "v%@" : {
+
     }
   },
   "version" : "1.1"
