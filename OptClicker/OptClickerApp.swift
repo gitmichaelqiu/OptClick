@@ -30,6 +30,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
     }
 
     func applicationDidFinishLaunching(_ notification: Notification) {
+        NSApp.setActivationPolicy(.accessory)
+        
         // Status bar
         statusBarManager = StatusBarManager(inputManager: inputManager) {
             self.inputManager.isEnabled.toggle()
